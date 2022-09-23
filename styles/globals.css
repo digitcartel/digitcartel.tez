@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/**********************/ 
+/* Cleaners           */
+/**********************/
+
+input,
+input:focus,
+textarea:focus {
+  @apply outline-none;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: none;
+}
+
+button, a {
+  @apply cursor-pointer;
+  -webkit-tap-highlight-color: transparent;
+  outline: none !important;
+}
+
+button:focus, a:focus {
+  @apply outline-none;
+  outline: none !important;
+}
+
+div {
+  -webkit-tap-highlight-color: transparent;
+}
+
+::-webkit-scrollbar {
+  height:5px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+ 
+::-webkit-scrollbar-thumb {
+  @apply bg-black;
+  @apply rounded-base;
+  @apply shadow-xl;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.no-scroll-bar {
+  -ms-overflow-style: none;
+  scrollbar-width: none; 
+}
+
+.no-scroll-bar::-webkit-scrollbar { 
+  display: none;
+}
+
+.infinite-scroll-component__outerdiv {
+  @apply w-full;
+}
+
+/**********************/ 
+/* Main               */
+/**********************/
+
+html { filter: invert(0); }
+
+body {
+  @apply cursor-default;
+  @apply overflow-x-hidden;
+  @apply bg-black;
+  @apply select-none;
+  @apply no-scroll-bar;
+  @apply text-white;
+}
