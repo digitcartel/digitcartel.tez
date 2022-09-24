@@ -119,8 +119,14 @@ class Index extends React.Component {
     return (
       <Head>
         <title>DIGITCARTEL</title>
-        <meta property="og:title" content="Digitcartel - 999 Floor Checker" />
-        <meta name="twitter:title" content="Digitcartel - 999 Floor Checker" />
+        <meta
+          property="og:title"
+          content="Digitcartel - Join .tez digits club"
+        />
+        <meta
+          name="twitter:title"
+          content="Digitcartel - Join .tez digits club"
+        />
         <meta
           property="og:image"
           content="https://digitcartel.vercel.app/999tez.png"
