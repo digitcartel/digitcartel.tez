@@ -6,6 +6,7 @@ const Header = ({ context }) => {
     <>
       {!context.state._Profile && (
         <>
+          <Categories context={context} />
           <div className="w-full">
             <div className="w-full bg-white flex flex-row rounded-xl p-[2vw] lXs:p-[1vw] items-center">
               <h1 className="text-black text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw]">
@@ -21,7 +22,6 @@ const Header = ({ context }) => {
               </div>
             </div>
           </div>
-          <Categories context={context} />
         </>
       )}
     </>
