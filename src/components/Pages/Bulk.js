@@ -323,7 +323,7 @@ export const Bulk = ({ context }) => {
                   _BulkIndex: 0,
                   _BulkLen: 0,
                   _bulkSearch: [],
-                  _Bulk: [],
+                  _Bulk: undefined,
                 },
                 () => {
                   InputState[1]([]);
