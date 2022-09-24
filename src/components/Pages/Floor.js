@@ -15,11 +15,12 @@ const Header = ({ context }) => {
                   {context.state._floor.toFixed()}tz
                 </span>
               </h1>
-              <div className="ml-auto border-indigo-500 text-black border-2 flex flex-row items-center justify-center rounded-xl px-[1.5vw] lXs:px-[1vw]">
-                <p className="text-indigo-500 font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
-                  {"club"}
-                </p>
-              </div>
+              <a href="https://twitter.com/tezos999club" target="_blank" className="ml-auto flex flex-row items-center justify-center rounded-xl px-[1.5vw] lXs:px-[1vw]">
+                <img src="./icons/twitter.svg" className="w-10 h-10"/>
+              </a>
+              <a href="https://discord.gg/nA5k4bpuXN" target="_blank" className="ml-auto flex flex-row items-center justify-center rounded-xl px-[1.5vw] lXs:px-[1vw]">
+                <img src="./icons/discord.svg" className="w-10 h-10"/>
+              </a>
             </div>
           </div>
         </>
