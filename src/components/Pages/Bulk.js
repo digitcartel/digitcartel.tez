@@ -224,7 +224,7 @@ export const Bulk = ({ context }) => {
             tmp = tmp.filter((e) => e.length >= 3);
             tmp = new Set(tmp);
             tmp = [...tmp];
-            if (tmp.length > 1000) {
+            if (tmp.length > 500) {
               tmp = tmp.splice(0, 500);
             }
             InputState[1](tmp);
