@@ -53,7 +53,7 @@ export const Navbar = ({ context }) => {
                         getDomain(e.target.value).then((e3) => {
                           if (e3.domain === null) {
                             InputState[1](2);
-                            DomainState[1](e.target.value + ".tez");
+                            DomainState[1](e.target.value.toLowerCase() + ".tez");
                           }
                           if (e3.domain !== null) {
                             InputState[1](1);
