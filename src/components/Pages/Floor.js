@@ -18,7 +18,7 @@ const Header = ({ context }) => {
               <a href="https://twitter.com/tezos999club" target="_blank" className="ml-auto flex flex-row items-center justify-center rounded-xl px-[1.5vw] lXs:px-[1vw]">
                 <img src="./icons/twitter.svg" className="w-10 h-10"/>
               </a>
-              <a href="https://discord.gg/nA5k4bpuXN" target="_blank" className="ml-auto flex flex-row items-center justify-center rounded-xl px-[1.5vw] lXs:px-[1vw]">
+              <a href="https://discord.gg/nA5k4bpuXN" target="_blank" className="ml-2 flex flex-row items-center justify-center rounded-xl px-[1.5vw] lXs:px-[1vw]">
                 <img src="./icons/discord.svg" className="w-10 h-10"/>
               </a>
             </div>
