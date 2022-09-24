@@ -6,6 +6,7 @@ import { char2Bytes } from "@taquito/utils";
 import { MichelsonMap, OpKind } from "@taquito/taquito";
 import { Floor } from "../src/components/Pages/Floor";
 import { Profile } from "../src/components/Profile/Profile";
+import { Bulk } from "../src/components/Pages/Bulk";
 
 class Index extends React.Component {
   constructor({ props }) {
@@ -496,10 +497,28 @@ class Index extends React.Component {
         <div className={"antialiased w-full min-h-full bg-black font-main"}>
           <Navbar context={this} />
           <div className="w-full flex flex-col p-[4vw] lXs:p-[2vw]">
-            <h1 className="text-white text-[4vw] tM:text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] font-bold">
-              GM ANONS
-            </h1>
-            <Floor context={this} />
+            <div className="flex flex-row items-center">
+              <h1 className="text-white text-[4vw] tM:text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] font-bold">
+                GM ANONS
+              </h1>
+              <button
+                onClick={() => {
+                  this.setState({
+                    _bulkView: !this.state._bulkView,
+                  });
+                }}
+                className={
+                  "font-bold text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] " +
+                  (this.state._bulkView
+                    ? "text-white bg-indigo-500 rounded-full mr-2"
+                    : "text-indigo-500 border-indigo-500 border-2 rounded-full mr-2")
+                }
+              >
+                BULK SEARCH
+              </button>
+            </div>
+            {this.state._bulkView && <Bulk context={this} />}
+            {!this.state._bulkView && <Floor context={this} />}
             <Profile context={this} />
           </div>
         </div>
