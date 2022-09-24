@@ -50,10 +50,10 @@ export const Navbar = ({ context }) => {
                     if (e2.key == "Enter") {
                       if (e.target.value != "" && e.target.value.length >= 3) {
                         InputState[1](4);
-                        getDomain(e.target.value).then((e3) => {
+                        getDomain(e.target.value.toLowerCase()).then((e3) => {
                           if (e3.domain === null) {
                             InputState[1](2);
-                            DomainState[1](e.target.value.toLowerCase() + ".tez");
+                            DomainState[1](e.target.value + ".tez");
                           }
                           if (e3.domain !== null) {
                             InputState[1](1);
