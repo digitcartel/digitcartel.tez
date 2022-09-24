@@ -199,12 +199,11 @@ const ItemsMap = ({ context }) => {
             <button
               className="border-indigo-500 border-2 rounded-xl px-[1.5vw] lXs:px-[1vw] mx-auto"
               onClick={() => {
-                context.fetchOffer({
+                context.fetchOperator({
                   less: true,
                   more: false,
                   hash: context.state._Operator.domains.pageInfo.startCursor,
                 });
-                context.fetchFloor();
               }}
             >
               <p className="text-indigo-500 font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
@@ -217,12 +216,11 @@ const ItemsMap = ({ context }) => {
             <button
               className="border-indigo-500 border-2 rounded-xl px-[1.5vw] lXs:px-[1vw] mx-auto"
               onClick={() => {
-                context.fetchOffer({
+                context.fetchOperator({
                   less: false,
                   more: true,
                   hash: context.state._Operator.domains.pageInfo.endCursor,
                 });
-                context.fetchFloor();
               }}
             >
               <p className="text-indigo-500 font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
