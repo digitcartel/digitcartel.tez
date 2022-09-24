@@ -1,4 +1,8 @@
-import { OpKind } from "@taquito/taquito";
+import { packData, packDataBytes, Parser } from "@taquito/michel-codec";
+import { MichelsonMap, OpKind } from "@taquito/taquito";
+import { char2Bytes } from "@taquito/utils";
+import { sha512 } from "js-sha512";
+import utf8 from "utf8";
 
 export const BuyTX = async (context) => {
   const _Tezos = context.props.props.context.state._Tezos;
@@ -180,6 +184,9 @@ export const ReverseTx = async (context) => {
       }
     }
   );
+};
+
+export const RegisterTx = async (context) => {
 };
 
 export const ListTx = async (context, price) => {

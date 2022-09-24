@@ -44,7 +44,7 @@ const ItemsMap = ({ context }) => {
                     _batchTxInput: e.target.value,
                   });
                 } else {
-                  if (/.{3,}(.tez)/.test(e.target.value)) {
+                  if (/\w{3,}(.tez)/.test(e.target.value)) {
                     context.fetchAddress(e.target.value);
                   }
                 }

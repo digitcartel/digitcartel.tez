@@ -7,15 +7,18 @@
   },
   "dependencies": {
     "@taquito/beacon-wallet": "^13.0.1",
+    "@taquito/michel-codec": "^14.0.0",
     "@taquito/michelson-encoder": "^14.0.0",
     "@taquito/taquito": "^13.0.1",
     "@taquito/tezbridge-wallet": "^13.0.1",
     "@taquito/utils": "^14.0.0",
+    "js-sha512": "^0.8.0",
     "next": "^12.2.5",
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-router-dom": "^6.1.1",
-    "react-scripts": "^4.0.3"
+    "react-scripts": "^4.0.3",
+    "utf8": "^3.0.0"
   },
   "devDependencies": {
     "@types/node": "17.0.35",

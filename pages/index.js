@@ -6,6 +6,7 @@ import { char2Bytes } from "@taquito/utils";
 import { MichelsonMap, OpKind } from "@taquito/taquito";
 import { Floor } from "../src/components/Pages/Floor";
 import { Profile } from "../src/components/Profile/Profile";
+import { Bulk } from "../src/components/Pages/Bulk";
 
 class Index extends React.Component {
   constructor({ props }) {
@@ -102,9 +103,13 @@ class Index extends React.Component {
       _SelectOperator: [],
       _SelectList: [],
       _SelectBuy: [],
+      _SelectBulk: [],
       _Selector: [],
       _Selected: false,
       _batchTxInput: "",
+      _bulkSearch: [],
+      _BulkIndex: 0,
+      _BulkLen: 0,
       _txEntry: [],
       _txPending: false,
     };
@@ -439,6 +444,31 @@ class Index extends React.Component {
     });
   };
 
+  fetchSearch = async (domain) => {
+    const getDomain = async (e) => {
+      let DomainData = await fetch("https://api.tezos.domains/graphql", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          query: `{
+            domain(name: "${e}") {
+              name
+              tokenId
+            }
+          }
+          `,
+        }),
+      });
+
+      DomainData = await DomainData.json();
+      if (DomainData.data) {
+        return DomainData.data;
+      }
+    };
+
+    return await getDomain(domain);
+  };
+
   fetchDomain = (domain) => {
     const getDomain = async (e) => {
       let DomainData = await fetch("https://api.tezos.domains/graphql", {
@@ -493,13 +523,39 @@ class Index extends React.Component {
     return (
       <>
         <this.Title />
-        <div className={"antialiased w-full min-h-full bg-black font-main"}>
+        <div
+          className={
+            "antialiased w-full lXs:w-8/12 min-h-full mx-auto bg-black font-main"
+          }
+        >
           <Navbar context={this} />
           <div className="w-full flex flex-col p-[4vw] lXs:p-[2vw]">
-            <h1 className="text-white text-[4vw] tM:text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] font-bold">
-              GM ANONS
-            </h1>
-            <Floor context={this} />
+            <div className="flex flex-row items-center">
+              <h1 className="text-white text-[4vw] tM:text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] font-bold">
+                GM ANONS
+              </h1>
+              {!this.state._Profile && (
+                <button
+                  onClick={() => {
+                    this.setState({
+                      _bulkView: !this.state._bulkView,
+                    });
+                  }}
+                  className={
+                    "font-bold text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] mb-2 " +
+                    (this.state._bulkView
+                      ? "text-white bg-indigo-500 rounded-full mr-2"
+                      : "text-indigo-500 border-indigo-500 border-2 rounded-full mr-2")
+                  }
+                >
+                  BULK SEARCH
+                </button>
+              )}
+            </div>
+            {!this.state._Profile && (
+              <>{this.state._bulkView && <Bulk context={this} />}</>
+            )}
+            {!this.state._bulkView && <Floor context={this} />}
             <Profile context={this} />
           </div>
         </div>
