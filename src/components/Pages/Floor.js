@@ -14,21 +14,14 @@ const Header = ({ context }) => {
                   {context.state._floor.toFixed()}tz
                 </span>
               </h1>
-              <button
-                className="ml-auto border-indigo-500 text-black border-2 flex flex-row items-center justify-center rounded-xl px-[1.5vw] lXs:px-[1vw]"
-                onClick={() => {
-                  context.setState({
-                    _FilterOpen: !context.state._FilterOpen,
-                  });
-                }}
-              >
+              <div className="ml-auto border-indigo-500 text-black border-2 flex flex-row items-center justify-center rounded-xl px-[1.5vw] lXs:px-[1vw]">
                 <p className="text-indigo-500 font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
-                  {context.state._FilterOpen ? "close" : "club"}
+                  {"club"}
                 </p>
-              </button>
+              </div>
             </div>
           </div>
-          {context.state._FilterOpen && <Categories context={context} />}
+          <Categories context={context} />
         </>
       )}
     </>
