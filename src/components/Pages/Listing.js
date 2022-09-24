@@ -178,7 +178,7 @@ const ItemsMap = ({ context }) => {
             <button
               className="border-indigo-500 border-2 rounded-xl px-[1.5vw] lXs:px-[1vw] mx-auto"
               onClick={() => {
-                context.fetchOperator({
+                context.fetchListing({
                   less: true,
                   more: false,
                   hash: context.state._Listing.domains.pageInfo.startCursor,
@@ -195,7 +195,7 @@ const ItemsMap = ({ context }) => {
             <button
               className="border-indigo-500 border-2 rounded-xl px-[1.5vw] lXs:px-[1vw] mx-auto"
               onClick={() => {
-                context.fetchOperator({
+                context.fetchListing({
                   less: false,
                   more: true,
                   hash: context.state._Listing.domains.pageInfo.endCursor,
