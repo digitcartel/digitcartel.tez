@@ -16,7 +16,6 @@ export const BuyTX = async (context) => {
       let price = 0;
       while (i < context.state._SelectBuy.length) {
         price += parseInt(context.state._SelectBuy[i].price);
-        console.log(price);
         result.push({
           kind: OpKind.TRANSACTION,
           ...contract.methods
@@ -185,8 +184,11 @@ export const ReverseTx = async (context) => {
 
 export const ListTx = async (context, price) => {
   const _Tezos = context.props.props.context.state._Tezos;
-  const contract = await _Tezos.wallet.at(
+  const contractA = await _Tezos.wallet.at(
     "KT1Evxe1udtPDGWrkiRsEN3vMDdB6gNpkMPM"
+  );
+  const contractB = await _Tezos.wallet.at(
+    "KT1GBZmSxmnKJXGMdMLbugPfLyUPmuLSMwKS"
   );
 
   context.setState(
@@ -199,13 +201,27 @@ export const ListTx = async (context, price) => {
       while (i < context.state._SelectList.length) {
         result.push({
           kind: OpKind.TRANSACTION,
-          ...contract.methods
+          ...contractA.methods
             .place_offer(
               "KT1GBZmSxmnKJXGMdMLbugPfLyUPmuLSMwKS",
               context.state._SelectList[i].tokenId,
               price * 10 ** 6,
               new Date(Date.now() + 3 * 24 * 60 * 60 * 1000)
             )
+            .toTransferParams(),
+        });
+        result.push({
+          kind: OpKind.TRANSACTION,
+          ...contractB.methods
+            .update_operators([
+              {
+                add_operator: {
+                  owner: context.state._account,
+                  operator: "KT1Evxe1udtPDGWrkiRsEN3vMDdB6gNpkMPM",
+                  token_id: context.state._SelectList[i].tokenId,
+                },
+              },
+            ])
             .toTransferParams(),
         });
         i++;
