@@ -15,11 +15,25 @@ const Header = ({ context }) => {
                   {context.state._floor.toFixed()}tz
                 </span>
               </h1>
-              <a href="https://twitter.com/tezos999club" target="_blank" className="ml-auto flex flex-row items-center justify-center rounded-xl px-[1.5vw] lXs:px-[1vw]">
-                <img src="./icons/twitter.svg" className="w-4 h-4 lXs:w-8 lXs:h-8"/>
+              <a
+                href="https://twitter.com/tezos999club"
+                target="_blank"
+                className="ml-auto flex flex-row items-center justify-center rounded-xl px-[1.5vw] lXs:px-[1vw]"
+              >
+                <img
+                  src="./icons/twitter.svg"
+                  className="w-4 h-4 lXs:w-8 lXs:h-8"
+                />
               </a>
-              <a href="https://discord.gg/nA5k4bpuXN" target="_blank" className="flex flex-row items-center justify-center rounded-xl px-[1.5vw] lXs:px-[1vw]">
-                <img src="./icons/discord.svg" className="w-4 h-4 lXs:w-8 lXs:h-8"/>
+              <a
+                href="https://discord.gg/nA5k4bpuXN"
+                target="_blank"
+                className="flex flex-row items-center justify-center rounded-xl px-[1.5vw] lXs:px-[1vw]"
+              >
+                <img
+                  src="./icons/discord.svg"
+                  className="w-4 h-4 lXs:w-8 lXs:h-8"
+                />
               </a>
             </div>
           </div>
