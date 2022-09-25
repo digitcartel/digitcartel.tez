@@ -28,7 +28,9 @@ export const Categories = ({ context }) => {
                   src="./999tez.png"
                   className="w-[5vw] h-[5vw] lXs:w-[2.5vw] lXs:h-[2.5vw] mr-[1vw] rounded-full"
                 />
-                <h1 className="text-white text-[1.5vw] font-bold">999</h1>
+                <h1 className="text-white text-[2vw] lXs:text-[1vw] font-bold">
+                  999
+                </h1>
               </button>
               <button
                 onClick={() => {
@@ -49,7 +51,9 @@ export const Categories = ({ context }) => {
                   src="./10ktez.png"
                   className="w-[5vw] h-[5vw] lXs:w-[2.5vw] lXs:h-[2.5vw] mr-[1vw] rounded-full"
                 />
-                <h1 className="text-white text-[1.5vw] font-bold">10k</h1>
+                <h1 className="text-white text-[2vw] lXs:text-[1vw] font-bold">
+                  10k
+                </h1>
               </button>
               <button
                 onClick={() => {
@@ -70,7 +74,9 @@ export const Categories = ({ context }) => {
                   src="./100ktez.png"
                   className="w-[5vw] h-[5vw] lXs:w-[2.5vw] lXs:h-[2.5vw] mr-[1vw] rounded-full"
                 />
-                <h1 className="text-white text-[1.5vw] font-bold">100k</h1>
+                <h1 className="text-white text-[2vw] lXs:text-[1vw] font-bold">
+                  100k
+                </h1>
               </button>
             </div>
           </div>
@@ -101,7 +107,9 @@ export const Categories = ({ context }) => {
                   src="./999tez.png"
                   className="w-[5vw] h-[5vw] lXs:w-[2.5vw] lXs:h-[2.5vw] mr-[1vw] rounded-full"
                 />
-                <h1 className="text-white text-[1.5vw] font-bold">3Digits</h1>
+                <h1 className="text-white text-[2vw] lXs:text-[1vw] font-bold">
+                  3Digits
+                </h1>
               </button>
               <button
                 onClick={() => {
@@ -122,7 +130,9 @@ export const Categories = ({ context }) => {
                   src="./10ktez.png"
                   className="w-[5vw] h-[5vw] lXs:w-[2.5vw] lXs:h-[2.5vw] mr-[1vw] rounded-full"
                 />
-                <h1 className="text-white text-[1.5vw] font-bold">4Digits</h1>
+                <h1 className="text-white text-[2vw] lXs:text-[1vw] font-bold">
+                  4Digits
+                </h1>
               </button>
               <button
                 onClick={() => {
@@ -143,12 +153,13 @@ export const Categories = ({ context }) => {
                   src="./100ktez.png"
                   className="w-[5vw] h-[5vw] lXs:w-[2.5vw] lXs:h-[2.5vw] mr-[1vw] rounded-full"
                 />
-                <h1 className="text-white text-[1.5vw] font-bold">5Digits</h1>
+                <h1 className="text-white text-[2vw] lXs:text-[1vw] font-bold">
+                  5Digits
+                </h1>
               </button>
             </div>
           </div>
         </div>
-
         <div className="w-full">
           <div className="bg-black bg-opacity-50 rounded-xl">
             <div className="w-full h-[2px] bg-indigo-500 my-3 rounded-full uppercase" />
