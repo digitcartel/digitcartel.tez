@@ -6,7 +6,7 @@ export const Categories = ({ context }) => {
           <div className="bg-black bg-opacity-50 rounded-xl">
             <div className="w-full h-[2px] bg-indigo-500 my-3 rounded-full uppercase" />
             <div className="flex flex-row flex-wrap items-center justify-start">
-              <h1 className="text-white text-[3vw] lXs:text-[2vw] font-bold mr-4">
+              <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] font-bold mr-4">
                 Club
               </h1>
               <button
@@ -79,7 +79,7 @@ export const Categories = ({ context }) => {
           <div className="bg-black bg-opacity-50 rounded-xl">
             <div className="w-full h-[2px] bg-indigo-500 my-3 rounded-full uppercase" />
             <div className="flex flex-row flex-wrap items-center justify-start">
-              <h1 className="text-white text-[3vw] lXs:text-[2vw] font-bold mr-4">
+              <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] font-bold mr-4">
                 Palindromes
               </h1>
               <button
