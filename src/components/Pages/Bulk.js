@@ -217,6 +217,16 @@ export const Bulk = ({ context }) => {
       <textarea
         ref={InputRef}
         rows={10}
+        placeholder={
+          "To bulk search in " +
+          (context.state._SearchMode ? "MODE [ENTER]" : "MODE [SPACE]") +
+          ", please type your wordlist into the field separated by a space like:\n" +
+          (context.state._SearchMode
+            ? "420\n69420\nnft\ndao"
+            : "420 69420 nft dao") +
+          "\n\n" +
+          "Select your mode before typing your list"
+        }
         className="rounded-xl bg-transparent text-white border-2 border-indigo-500 p-[1.5vw] mt-4"
         onChange={(e) => {
           if (e.target.value !== "" && e.target.value.length >= 3) {
@@ -293,7 +303,7 @@ export const Bulk = ({ context }) => {
                         }
                         context.setState({
                           _BulkLen: context.state._bulkSearch.length,
-                          _BulkIndex: i,
+                          _BulkIndex: i + 1,
                         });
                       }
 
@@ -338,27 +348,6 @@ export const Bulk = ({ context }) => {
           </p>
         </button>
       </div>
-      <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw]">
-        To bulk search in{" "}
-        {context.state._SearchMode ? "MODE [ENTER]" : "MODE [SPACE]"}, please
-        type your wordlist into the field separated by a space like:{" "}
-        <span>
-          {context.state._SearchMode ? (
-            <>
-              <br />
-              420
-              <br />
-              69420
-              <br />
-              nft
-              <br />
-              dao
-            </>
-          ) : (
-            "420 69420 nft dao"
-          )}
-        </span>
-      </h1>
       {!context.state._Profile && (
         <>{context.state._Bulk && <ItemsMap context={context} />}</>
       )}
