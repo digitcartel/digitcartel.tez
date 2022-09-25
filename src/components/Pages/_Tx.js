@@ -1,8 +1,8 @@
-import { packData, packDataBytes, Parser } from "@taquito/michel-codec";
+import { packDataBytes } from "@taquito/michel-codec";
+import { Schema } from "@taquito/michelson-encoder";
 import { MichelsonMap, OpKind } from "@taquito/taquito";
 import { char2Bytes } from "@taquito/utils";
-import { sha512 } from "js-sha512";
-import utf8 from "utf8";
+import { getLabel, generateNonce } from "@tezos-domains/core";
 
 export const BuyTX = async (context) => {
   const _Tezos = context.props.props.context.state._Tezos;
@@ -186,8 +186,7 @@ export const ReverseTx = async (context) => {
   );
 };
 
-export const RegisterTx = async (context) => {
-};
+export const RegisterTx = async (context) => {};
 
 export const ListTx = async (context, price) => {
   const _Tezos = context.props.props.context.state._Tezos;

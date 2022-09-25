@@ -31,9 +31,9 @@ export const Navbar = ({ context }) => {
       <div className="w-full flex flex-row p-[4vw] lXs:p-[2vw]">
         <div className="w-6/12 flex flex-row">
           <div className="bg-indigo-500 flex flex-row items-center justify-center rounded-full px-[1.5vw] lXs:px-[1vw]">
-            <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw]">
+            <a className="text-white text-[2.5vw] lXs:text-[1.5vw]" href="/">
               DIGITCARTEL
-            </h1>
+            </a>
           </div>
           <div className="w-full flex flex-row mx-[2vw]">
             <div className="w-full flex flex-row items-center justify-start rounded-xl">

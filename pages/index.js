@@ -537,7 +537,7 @@ class Index extends React.Component {
           <Navbar context={this} />
           <div className="w-full flex flex-col p-[4vw] lXs:p-[2vw]">
             <div className="flex flex-row items-center">
-              <h1 className="text-white text-[4vw] tM:text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] font-bold">
+              <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] font-bold">
                 GM ANONS
               </h1>
               {!this.state._Profile && (
@@ -548,10 +548,10 @@ class Index extends React.Component {
                     });
                   }}
                   className={
-                    "font-bold text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] mb-2 " +
+                    "ml-auto font-bold text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] mb-2 " +
                     (this.state._bulkView
-                      ? "text-white bg-indigo-500 rounded-full mr-2"
-                      : "text-indigo-500 border-indigo-500 border-2 rounded-full mr-2")
+                      ? "text-white bg-indigo-500 rounded-full"
+                      : "text-indigo-500 border-indigo-500 border-2 rounded-full")
                   }
                 >
                   BULK SEARCH

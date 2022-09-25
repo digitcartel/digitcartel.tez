@@ -10,7 +10,7 @@ const ItemsMap = ({ context }) => {
         <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw]">
           DIGITS
         </h1>
-        <div className="ml-auto border-white border-2 flex flex-row items-center justify-center rounded-xl px-[1.5vw] lXs:px-[1vw]">
+        <div className="ml-auto border-white border-2 flex flex-row items-center justify-center rounded-full px-[1.5vw] lXs:px-[1vw]">
           <p className="text-white font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
             list
           </p>
@@ -26,7 +26,7 @@ const ItemsMap = ({ context }) => {
         <div className=" bg-white rounded-xl my-2 p-[1.5vw] mt-2">
           <div className="flex flex-row items-center">
             <button
-              className="border-indigo-500 border-2 rounded-xl px-[1.5vw] lXs:px-[1vw] "
+              className="border-indigo-500 border-2 rounded-full px-[1.5vw] lXs:px-[1vw] "
               onClick={() => {
                 ListTx(context, Price[0]);
               }}
@@ -39,7 +39,7 @@ const ItemsMap = ({ context }) => {
               XTZ
             </p>
             <input
-              className=" text-black bg-transparent text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[2vw]"
+              className=" text-black bg-transparent text-[2.5vw] lXs:text-[1.5vw] px-2"
               placeholder="price"
               type="number"
               onChange={(e) => {
@@ -98,7 +98,7 @@ const ItemsMap = ({ context }) => {
       {context.state._Listing.domains.items.map((e, i) => {
         return (
           <div key={i} className="w-full">
-            <div className="w-full flex flex-row rounded-xl py-[2vw] px-[1vw] items-center">
+            <div className="w-full flex flex-row rounded-full py-[2vw] px-[1vw] items-center">
               <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw]">
                 {e.name}
               </h1>
@@ -147,7 +147,7 @@ const ItemsMap = ({ context }) => {
                   }
                 }}
                 className={
-                  "ml-auto flex flex-row items-center justify-center rounded-xl px-[1.5vw] lXs:px-[1vw] border-indigo-500 border-2 " +
+                  "ml-auto flex flex-row items-center justify-center rounded-full px-[1.5vw] lXs:px-[1vw] border-indigo-500 border-2 " +
                   (context.state._Selected
                     ? context.state._Selector.includes(e.tokenId)
                       ? "bg-indigo-500"
@@ -176,7 +176,7 @@ const ItemsMap = ({ context }) => {
         {context.state._Listing &&
           context.state._Listing.domains.pageInfo.hasPreviousPage && (
             <button
-              className="border-indigo-500 border-2 rounded-xl px-[1.5vw] lXs:px-[1vw] mx-auto"
+              className="border-indigo-500 border-2 rounded-full px-[1.5vw] lXs:px-[1vw] mx-auto"
               onClick={() => {
                 context.fetchListing({
                   less: true,
@@ -193,7 +193,7 @@ const ItemsMap = ({ context }) => {
         {context.state._Listing &&
           context.state._Listing.domains.pageInfo.hasNextPage && (
             <button
-              className="border-indigo-500 border-2 rounded-xl px-[1.5vw] lXs:px-[1vw] mx-auto"
+              className="border-indigo-500 border-2 rounded-full px-[1.5vw] lXs:px-[1vw] mx-auto"
               onClick={() => {
                 context.fetchListing({
                   less: false,

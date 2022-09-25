@@ -8,7 +8,7 @@ const ItemsMap = ({ context }) => {
         <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw]">
           AVAILABLE{` ${context.state._Bulk.length}/${context.state._BulkLen}`}
         </h1>
-        <div className="ml-auto border-white border-2 flex flex-row items-center justify-center rounded-xl px-[1.5vw] lXs:px-[1vw]">
+        <div className="ml-auto border-white border-2 flex flex-row items-center justify-center rounded-full px-[1.5vw] lXs:px-[1vw]">
           <p className="text-white font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
             register
           </p>
@@ -24,9 +24,9 @@ const ItemsMap = ({ context }) => {
           <h1 className="text-indigo-500 text-sm px-[1.5vw] lXs:px-[1vw] mt-2">
             fee 2%
           </h1>
-          <div className=" bg-white rounded-xl my-2 p-[1.5vw]">
+          <div className=" bg-white rounded-full my-2 p-[1.5vw]">
             <button
-              className="border-indigo-500 border-2 rounded-xl px-[1.5vw] lXs:px-[1vw] "
+              className="border-indigo-500 border-2 rounded-full px-[1.5vw] lXs:px-[1vw] "
               onClick={() => {
                 RegisterTx(context);
               }}
@@ -87,7 +87,7 @@ const ItemsMap = ({ context }) => {
       {context.state._Bulk.map((e, i) => {
         return (
           <div key={i} className="w-full">
-            <div className="w-full flex flex-row rounded-xl py-[2vw] px-[1vw] items-center">
+            <div className="w-full flex flex-row rounded-full py-[2vw] px-[1vw] items-center">
               <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw]">
                 {e.domain.name}
               </h1>
@@ -140,7 +140,7 @@ const ItemsMap = ({ context }) => {
                     }
                   }}
                   className={
-                    "ml-auto flex flex-row items-center justify-center rounded-xl px-[1.5vw] lXs:px-[1vw] border-2 " +
+                    "ml-auto flex flex-row items-center justify-center rounded-full px-[1.5vw] lXs:px-[1vw] border-2 " +
                     (!e.domain.open
                       ? "border-red-500"
                       : context.state._Selected
@@ -175,7 +175,7 @@ const ItemsMap = ({ context }) => {
                   href={"https://app.tezos.domains/domain/" + e.domain.name}
                   target="_blank"
                   className={
-                    "ml-auto flex flex-row items-center justify-center rounded-xl px-[1.5vw] lXs:px-[1vw] border-2 " +
+                    "ml-auto flex flex-row items-center justify-center rounded-full px-[1.5vw] lXs:px-[1vw] border-2 " +
                     (!e.domain.open
                       ? "border-red-500"
                       : context.state._Selected
@@ -251,7 +251,7 @@ export const Bulk = ({ context }) => {
       />
       <div className="flex flex-row items-center">
         <button
-          className="border-indigo-500 border-2 rounded-xl px-[1.5vw] lXs:px-[1vw] my-4"
+          className="border-indigo-500 border-2 rounded-full px-[1.5vw] lXs:px-[1vw] my-4"
           onClick={() => {
             if (!context.state._bulkDisabled) {
               context.setState(
@@ -314,7 +314,7 @@ export const Bulk = ({ context }) => {
           </p>
         </button>
         <button
-          className="ml-2 bg-indigo-500 rounded-xl px-[1.5vw] lXs:px-[1vw] my-4"
+          className="ml-2 bg-indigo-500 rounded-full px-[1.5vw] lXs:px-[1vw] my-4"
           onClick={() => {
             if (!context.state._bulkDisabled) {
               context.setState(
