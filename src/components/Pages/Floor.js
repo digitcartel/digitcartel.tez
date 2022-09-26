@@ -1,3 +1,4 @@
+import { fetchFloor, fetchOffer } from "../../utils/tezosApiRequest";
 import { Categories } from "../Categories";
 import { BuyTX } from "./_Tx";
 
@@ -240,12 +241,13 @@ const ItemsMap = ({ context }) => {
             <button
               className="border-indigo-500 border-2 rounded-full px-[1.5vw] lXs:px-[1vw] mx-auto"
               onClick={() => {
-                context.fetchOffer({
+                fetchOffer({
+                  context: context,
                   less: true,
                   more: false,
                   hash: context.state._Offer.offers.pageInfo.startCursor,
                 });
-                context.fetchFloor();
+                fetchFloor(context);
               }}
             >
               <p className="text-indigo-500 font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
@@ -258,12 +260,13 @@ const ItemsMap = ({ context }) => {
             <button
               className="border-indigo-500 border-2 rounded-full px-[1.5vw] lXs:px-[1vw] mx-auto"
               onClick={() => {
-                context.fetchOffer({
+                fetchOffer({
+                  context: context,
                   less: false,
                   more: true,
                   hash: context.state._Offer.offers.pageInfo.endCursor,
                 });
-                context.fetchFloor();
+                fetchFloor(context);
               }}
             >
               <p className="text-indigo-500 font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">

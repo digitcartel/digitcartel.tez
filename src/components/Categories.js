@@ -1,3 +1,5 @@
+import { fetchFloor, fetchOffer } from "../utils/tezosApiRequest";
+
 export const Categories = ({ context }) => {
   return (
     <>
@@ -17,8 +19,13 @@ export const Categories = ({ context }) => {
                       _ShowDomains: false,
                     },
                     () => {
-                      context.fetchOffer({ less: false, more: false, hash: 0 });
-                      context.fetchFloor();
+                      fetchOffer({
+                        context: context,
+                        less: false,
+                        more: false,
+                        hash: 0,
+                      });
+                      fetchFloor(context);
                     }
                   );
                 }}
@@ -40,8 +47,13 @@ export const Categories = ({ context }) => {
                       _ShowDomains: false,
                     },
                     () => {
-                      context.fetchOffer({ less: false, more: false, hash: 0 });
-                      context.fetchFloor();
+                      fetchOffer({
+                        context: context,
+                        less: false,
+                        more: false,
+                        hash: 0,
+                      });
+                      fetchFloor(context);
                     }
                   );
                 }}
@@ -63,8 +75,13 @@ export const Categories = ({ context }) => {
                       _ShowDomains: false,
                     },
                     () => {
-                      context.fetchOffer({ less: false, more: false, hash: 0 });
-                      context.fetchFloor();
+                      fetchOffer({
+                        context: context,
+                        less: false,
+                        more: false,
+                        hash: 0,
+                      });
+                      fetchFloor(context);
                     }
                   );
                 }}
@@ -96,8 +113,13 @@ export const Categories = ({ context }) => {
                       _ShowDomains: false,
                     },
                     () => {
-                      context.fetchOffer({ less: false, more: false, hash: 0 });
-                      context.fetchFloor();
+                      fetchOffer({
+                        context: context,
+                        less: false,
+                        more: false,
+                        hash: 0,
+                      });
+                      fetchFloor(context);
                     }
                   );
                 }}
@@ -119,8 +141,13 @@ export const Categories = ({ context }) => {
                       _ShowDomains: false,
                     },
                     () => {
-                      context.fetchOffer({ less: false, more: false, hash: 0 });
-                      context.fetchFloor();
+                      fetchOffer({
+                        context: context,
+                        less: false,
+                        more: false,
+                        hash: 0,
+                      });
+                      fetchFloor(context);
                     }
                   );
                 }}
@@ -142,8 +169,13 @@ export const Categories = ({ context }) => {
                       _ShowDomains: false,
                     },
                     () => {
-                      context.fetchOffer({ less: false, more: false, hash: 0 });
-                      context.fetchFloor();
+                      fetchOffer({
+                        context: context,
+                        less: false,
+                        more: false,
+                        hash: 0,
+                      });
+                      fetchFloor(context);
                     }
                   );
                 }}

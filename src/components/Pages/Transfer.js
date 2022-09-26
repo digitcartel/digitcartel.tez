@@ -1,3 +1,4 @@
+import { fetchAddress, fetchOwned } from "../../utils/tezosApiRequest";
 import { TransferTx } from "./_Tx";
 
 const ItemsMap = ({ context }) => {
@@ -45,7 +46,7 @@ const ItemsMap = ({ context }) => {
                   });
                 } else {
                   if (/\w{3,}(.tez)/.test(e.target.value)) {
-                    context.fetchAddress(e.target.value);
+                    fetchAddress(context, e.target.value);
                   }
                 }
 
@@ -188,7 +189,8 @@ const ItemsMap = ({ context }) => {
             <button
               className="border-indigo-500 border-2 rounded-full px-[1.5vw] lXs:px-[1vw] mx-auto"
               onClick={() => {
-                context.fetchOwned({
+                fetchOwned({
+                  context: context,
                   less: true,
                   more: false,
                   hash: context.state._Owned.domains.pageInfo.startCursor,
@@ -205,7 +207,8 @@ const ItemsMap = ({ context }) => {
             <button
               className="border-indigo-500 border-2 rounded-full px-[1.5vw] lXs:px-[1vw] mx-auto"
               onClick={() => {
-                context.fetchOwned({
+                fetchOwned({
+                  context: context,
                   less: false,
                   more: true,
                   hash: context.state._Owned.domains.pageInfo.endCursor,

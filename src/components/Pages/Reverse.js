@@ -1,3 +1,4 @@
+import { fetchAddress, fetchOperator } from "../../utils/tezosApiRequest";
 import { ReverseTx } from "./_Tx";
 
 const ItemsMap = ({ context }) => {
@@ -56,7 +57,7 @@ const ItemsMap = ({ context }) => {
                   });
                 } else {
                   if (/\w{3,}(.tez)/.test(e.target.value)) {
-                    context.fetchAddress(e.target.value);
+                    fetchAddress(context, e.target.value);
                   }
                 }
 
@@ -199,7 +200,8 @@ const ItemsMap = ({ context }) => {
             <button
               className="border-indigo-500 border-2 rounded-full px-[1.5vw] lXs:px-[1vw] mx-auto"
               onClick={() => {
-                context.fetchOperator({
+                fetchOperator({
+                  context: context,
                   less: true,
                   more: false,
                   hash: context.state._Operator.domains.pageInfo.startCursor,
@@ -216,7 +218,8 @@ const ItemsMap = ({ context }) => {
             <button
               className="border-indigo-500 border-2 rounded-full px-[1.5vw] lXs:px-[1vw] mx-auto"
               onClick={() => {
-                context.fetchOperator({
+                fetchOperator({
+                  context: context,
                   less: false,
                   more: true,
                   hash: context.state._Operator.domains.pageInfo.endCursor,

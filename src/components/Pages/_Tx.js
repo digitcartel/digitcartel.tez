@@ -3,6 +3,7 @@ import { Schema } from "@taquito/michelson-encoder";
 import { MichelsonMap, OpKind } from "@taquito/taquito";
 import { char2Bytes } from "@taquito/utils";
 import { getLabel, generateNonce } from "@tezos-domains/core";
+import { fetchOffer } from "../../utils/tezosApiRequest";
 
 export const BuyTX = async (context) => {
   const _Tezos = context.props.props.context.state._Tezos;
@@ -66,7 +67,7 @@ export const BuyTX = async (context) => {
           _txPending: false,
           _batchTxInput: "",
         });
-        context.fetchOffer({ less: false, more: false, hash: 0 });
+        fetchOffer({ context: context, less: false, more: false, hash: 0 });
       }
     }
   );
@@ -124,7 +125,7 @@ export const TransferTx = async (context) => {
           _txPending: false,
           _batchTxInput: "",
         });
-        context.fetchOffer({ less: false, more: false, hash: 0 });
+        fetchOffer({ context: context, less: false, more: false, hash: 0 });
       }
     }
   );
@@ -180,7 +181,7 @@ export const ReverseTx = async (context) => {
           _txPending: false,
           _batchTxInput: "",
         });
-        context.fetchOffer({ less: false, more: false, hash: 0 });
+        fetchOffer({ context: context, less: false, more: false, hash: 0 });
       }
     }
   );
@@ -256,7 +257,7 @@ export const ListTx = async (context, price) => {
           _txPending: false,
           _batchTxInput: "",
         });
-        context.fetchOffer({ less: false, more: false, hash: 0 });
+        fetchOffer({ context: context, less: false, more: false, hash: 0 });
       }
     }
   );

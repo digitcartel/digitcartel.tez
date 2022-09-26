@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { fetchSearch } from "../../utils/tezosApiRequest";
 import { RegisterTx } from "./_Tx";
 
 const ItemsMap = ({ context }) => {
@@ -288,7 +289,8 @@ export const Bulk = ({ context }) => {
                       let i = -1;
                       let result = [];
                       while (++i < context.state._bulkSearch.length) {
-                        let data = await context.fetchSearch(
+                        let data = await fetchSearch(
+                          context,
                           context.state._bulkSearch[i]
                         );
                         if (data.domain === null) {

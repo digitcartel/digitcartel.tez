@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { fetchListing } from "../utils/tezosApiRequest";
 
 const getDomain = async (domain) => {
   let DomainData = await fetch("https://api.tezos.domains/graphql", {
@@ -96,7 +97,7 @@ export const Navbar = ({ context }) => {
               }
 
               if (context.props.props.context.state._connected == 1) {
-                context.fetchListing({ less: false, more: false, hash: 0 });
+                fetchListing({ context: context, less: false, more: false, hash: 0 });
                 context.setState(
                   {
                     _Profile: !context.state._Profile,
