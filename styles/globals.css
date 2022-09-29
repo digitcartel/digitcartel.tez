@@ -30,17 +30,16 @@ div {
 }
 
 ::-webkit-scrollbar {
-  height:5px;
+  height:10px;
+  @apply rounded-xl;
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-transparent;
+  @apply bg-white bg-opacity-20;
 }
  
 ::-webkit-scrollbar-thumb {
-  @apply bg-black;
-  @apply rounded-base;
-  @apply shadow-xl;
+  @apply bg-indigo-500;
 }
 
 input::-webkit-outer-spin-button,

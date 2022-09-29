@@ -256,26 +256,6 @@ export const fetchFloor = (context) => {
       _floor: e.offers.items[0].price / 10 ** 6,
     });
   });
-
-  fetch("https://api.coingecko.com/api/v3/coins/tezos")
-    .then((e) => {
-      return e.json();
-    })
-    .then((e) => {
-      context.setState({
-        _TezosPrice: e.market_data.current_price,
-      });
-    });
-
-  fetch("https://api.coingecko.com/api/v3/coins/ethereum")
-    .then((e) => {
-      return e.json();
-    })
-    .then((e) => {
-      context.setState({
-        _EthereumPrice: e.market_data.current_price,
-      });
-    });
 };
 
 export const fetchAddress = (context, domain) => {

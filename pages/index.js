@@ -1,80 +1,36 @@
-import React, { useState } from "react";
+import React from "react";
 import Head from "next/head";
-import { useRouter } from "next/router";
+
 import { Navbar } from "../src/components/Navbar";
-import { char2Bytes } from "@taquito/utils";
-import { MichelsonMap, OpKind } from "@taquito/taquito";
-import { Floor } from "../src/components/Pages/Floor";
-import { Profile } from "../src/components/Profile/Profile";
-import { Bulk } from "../src/components/Pages/Bulk";
-import {
-  _100kbase,
-  _10kbase,
-  _3dpalibase,
-  _4dpalibase,
-  _5dpalibase,
-  _999base,
-} from "../src/utils/generateDomains";
-import {
-  fetchDomain,
-  fetchFloor,
-  fetchOffer,
-} from "../src/utils/tezosApiRequest";
+import { Items } from "../src/components/Floor/ItemsMap";
+import { Header } from "../src/components/Floor/Header";
+
+import * as Categories from "../src/data/categories.json";
+
+import { fetchObjktCollection } from "../src/service/OBJKT/request";
+import { fetch10kSupply } from "../src/utils/fetch10kSupply";
+import { fetch999Holders } from "../src/utils/fetch999holders";
+import { Floor } from "../src/components/Floor/_Floor";
+import { Search } from "../src/components/Search/_Search";
+import { _3dpalibase, _4dpalibase, _5dpalibase } from "../src/utils/generateDomains";
 
 class Index extends React.Component {
   constructor({ props }) {
     super();
 
     this.state = {
-      _FILTERBASE: {
-        name: "999",
-        base: _999base,
-      },
-      _999Base: {
-        name: "999",
-        base: _999base,
-      },
-      _10kBase: {
-        name: "10k",
-        base: _10kbase,
-      },
-      _100kBase: {
-        name: "100k",
-        base: _100kbase,
-      },
-      _3DPaliBase: {
-        name: "3D Palindrome",
-        base: _3dpalibase,
-      },
-      _4DPaliBase: {
-        name: "4D Palindrome",
-        base: _4dpalibase,
-      },
-      _5DPaliBase: {
-        name: "5D Palindrome",
-        base: _5dpalibase,
-      },
-      _Domain: [],
       _account: "",
-      _result: [],
-      _floor: 0,
-      _Profile: false,
-      _operatorView: false,
-      _listingView: false,
-      _transferView: false,
-      _SelectOwned: [],
-      _SelectOperator: [],
-      _SelectList: [],
-      _SelectBuy: [],
-      _SelectBulk: [],
-      _Selector: [],
-      _Selected: false,
-      _batchTxInput: "",
-      _bulkSearch: [],
-      _BulkIndex: 0,
-      _BulkLen: 0,
-      _txEntry: [],
-      _txPending: false,
+      _Contract: {
+        NFT: "KT1GBZmSxmnKJXGMdMLbugPfLyUPmuLSMwKS",
+        Market: "KT1Evxe1udtPDGWrkiRsEN3vMDdB6gNpkMPM",
+      },
+      _DigitCartel: "tz1X4g93kKkH1hkRAnenzUkJe44U61AQoQn6",
+      _Collection: {},
+      _TezosPrice: 0,
+      _EthereumPrice: 0,
+      _View: "floor",
+      _Holders999: [],
+      _10kSupply: 0,
     };
   }
 
@@ -102,64 +58,42 @@ class Index extends React.Component {
     );
   };
 
-  componentDidMount() {
-    fetchFloor(this);
-    fetchOffer({ context: this, less: false, more: false, hash: 0 });
-    this.props.props.context.state._Wallet.client
-      .getActiveAccount()
-      .then((e) => {
-        if (e !== undefined) {
-          this.props.props.context.setState({
-            _connected: 2,
-          });
-        }
+  initBase = () => {
+    fetchObjktCollection({
+      contract: this.state._TEZCTR,
+    }).then((e) => {
+      this.setState({
+        _Collection: e.data.fa[0],
       });
-  }
 
-  componentDidUpdate(pP, pS) {
-    if (pS._account === "" && this.state._account.length > 0) {
-      fetchDomain(this, this.state._account);
-    }
+      fetch("https://api.coingecko.com/api/v3/coins/tezos")
+        .then((e) => {
+          return e.json();
+        })
+        .then((e) => {
+          this.setState({
+            _TezosPrice: e.market_data.current_price.usd,
+            _EthereumPrice: e.market_data.current_price.eth,
+          });
+        });
+    });
+  };
+
+  componentDidMount() {
+    this.initBase();
+    ///fetch999Holders(this);
+    ///fetch10kSupply(this);
   }
 
   render() {
     return (
       <>
         <this.Title />
-        <div
-          className={
-            "antialiased w-full lXs:w-8/12 min-h-full mx-auto bg-black font-main"
-          }
-        >
+        <div className="antialiased w-full min-h-full mx-auto bg-black font-main py-4">
           <Navbar context={this} />
-          <div className="w-full flex flex-col p-[4vw] lXs:p-[2vw]">
-            <div className="flex flex-row items-center">
-              <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] font-bold">
-                GM ANONS
-              </h1>
-              {!this.state._Profile && (
-                <button
-                  onClick={() => {
-                    this.setState({
-                      _bulkView: !this.state._bulkView,
-                    });
-                  }}
-                  className={
-                    "ml-auto font-bold text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] mb-2 " +
-                    (this.state._bulkView
-                      ? "text-white bg-indigo-500 rounded-full"
-                      : "text-indigo-500 border-indigo-500 border-2 rounded-full")
-                  }
-                >
-                  BULK SEARCH
-                </button>
-              )}
-            </div>
-            {!this.state._Profile && (
-              <>{this.state._bulkView && <Bulk context={this} />}</>
-            )}
-            {!this.state._bulkView && <Floor context={this} />}
-            <Profile context={this} />
+          <div className="ml-auto w-[95vw] lXs:w-[60vw] mx-auto">
+            {this.state._View === "floor" && <Floor context={this} />}
+            {this.state._View === "search" && <Search context={this} />}
           </div>
         </div>
       </>
@@ -168,17 +102,9 @@ class Index extends React.Component {
 }
 
 const Main = (props) => {
-  const getPath = () => {
-    const router = useRouter();
-    let path = router.asPath;
-    path = path.split("/");
-    return path;
-  };
-
-  let path = getPath();
   return (
     <>
-      <Index props={props} path={path} />
+      <Index props={props} />
     </>
   );
 };
