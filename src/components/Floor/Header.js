@@ -5,7 +5,12 @@ export const Header = ({ _FILTER }) => {
         return (
           <button
             key={i + "_FILTER"}
-            className="ml-2 border-indigo-500 border-2 flex flex-row items-center justify-center rounded-full px-[1.5vw] lXs:px-[1vw]"
+            className={
+              "ml-2 border-indigo-500 border-2 flex flex-row items-center justify-center rounded-full px-[1.5vw] lXs:px-[1vw] " +
+              (_FILTER.Base[0].name === e.name
+                ? "bg-indigo-500 text-white"
+                : "text-indigo-500")
+            }
             onClick={() => {
               if (!_FILTER.UpdateReq[0]) {
                 _FILTER.Loading[1](true);
@@ -14,7 +19,7 @@ export const Header = ({ _FILTER }) => {
               }
             }}
           >
-            <p className="text-indigo-500 font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
+            <p className="font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
               {e.name}
             </p>
           </button>
