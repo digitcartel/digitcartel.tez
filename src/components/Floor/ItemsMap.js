@@ -28,7 +28,8 @@ const Map = ({ _FILTER, context }) => {
           )}
           {!_FILTER.Loading[0] && _FILTER.Items[0].offers.items.length > 0 && (
             <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw]">
-              {_FILTER.Base[0].name} .TEZ FLOOR:{" "}
+              <span className="uppercase">{_FILTER.Base[0].name}</span> .TEZ
+              FLOOR:{" "}
               <span className="font-bold">
                 {_FILTER.Floor[0] / 10 ** 6}
                 tz
@@ -250,7 +251,7 @@ const Map = ({ _FILTER, context }) => {
                         _FILTER.SelectReq[1]([true, e]);
                       }}
                       className={
-                        "text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] my-1 uppercase " +
+                        "text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] my-1 " +
                         (_FILTER.Selector[0].includes(e.tokenId)
                           ? "bg-indigo-500 rounded-full mr-1"
                           : "")
