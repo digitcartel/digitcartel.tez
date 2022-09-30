@@ -25,10 +25,23 @@ export const Navbar = ({ context }) => {
       <button
         className="ml-4 border-2 border-indigo-500 rounded-full px-[1.5vw] lXs:px-[1vw]"
         onClick={() => {
-          requestBeaconConnection(
-            context.props.props.context.state._connected,
-            context
-          );
+          if (context.props.props.context.state._connected == 2) {
+            requestBeaconConnection(
+              context.props.props.context.state._connected,
+              context
+            );
+          } else {
+            context.setState(
+              {
+                _View: context.state._Profile ? "floor" : "listing",
+              },
+              () => {
+                context.setState({
+                  _Profile: !context.state._Profile,
+                });
+              }
+            );
+          }
         }}
       >
         {context.props.props.context.state._connected == 2 ? (
@@ -37,7 +50,11 @@ export const Navbar = ({ context }) => {
           </p>
         ) : (
           <p className="text-indigo-500 font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
-            {context.state._account.slice(0, 6)}
+            {!context.state._Profile &&
+              (context.state._domain
+                ? context.state._domain
+                : context.state._account.slice(0, 6))}
+            {context.state._Profile && "Close"}
           </p>
         )}
       </button>
@@ -162,51 +179,89 @@ export const Navbar = ({ context }) => {
           <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] font-bold">
             GM ANONS
           </h1>
-          <button
-            onClick={() => {
-              context.setState({
-                _View: context.state._View === "offers" ? "floor" : "offers",
-              });
-            }}
-            className={
-              "ml-auto font-bold text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] mb-2 border-indigo-500 border-2 " +
-              (context.state._View === "offers"
-                ? "text-white bg-indigo-500 rounded-full"
-                : "text-indigo-500 rounded-full")
-            }
-          >
-            FLOOR
-          </button>
-          <button
-            onClick={() => {
-              context.setState({
-                _View: context.state._View === "offers" ? "floor" : "offers",
-              });
-            }}
-            className={
-              "ml-2 font-bold text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] mb-2 border-indigo-500 border-2 " +
-              (context.state._View === "offers"
-                ? "text-white bg-indigo-500 rounded-full"
-                : "text-indigo-500 rounded-full")
-            }
-          >
-            OFFERS
-          </button>
-          <button
-            onClick={() => {
-              context.setState({
-                _View: context.state._View === "search" ? "floor" : "search",
-              });
-            }}
-            className={
-              "ml-2 font-bold text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] mb-2 border-indigo-500 border-2 " +
-              (context.state._View === "search"
-                ? "text-white bg-indigo-500 rounded-full"
-                : "text-indigo-500 rounded-full")
-            }
-          >
-            BULK SEARCH
-          </button>
+          {!context.state._Profile && (
+            <>
+              <button
+                onClick={() => {
+                  context.setState({
+                    _View: "floor",
+                  });
+                }}
+                className={
+                  "ml-auto font-bold text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] mb-2 border-indigo-500 border-2 " +
+                  (context.state._View === "floor"
+                    ? "text-white bg-indigo-500 rounded-full"
+                    : "text-indigo-500 rounded-full")
+                }
+              >
+                FLOOR
+              </button>
+              <button
+                onClick={() => {
+                  context.setState({
+                    _View: "search",
+                  });
+                }}
+                className={
+                  "ml-2 font-bold text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] mb-2 border-indigo-500 border-2 " +
+                  (context.state._View === "search"
+                    ? "text-white bg-indigo-500 rounded-full"
+                    : "text-indigo-500 rounded-full")
+                }
+              >
+                BULK SEARCH
+              </button>
+            </>
+          )}
+          {context.state._Profile && (
+            <>
+              <button
+                onClick={() => {
+                  context.setState({
+                    _View: "listing",
+                  });
+                }}
+                className={
+                  "ml-auto font-bold text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] mb-2 border-indigo-500 border-2 " +
+                  (context.state._View === "listing"
+                    ? "text-white bg-indigo-500 rounded-full"
+                    : "text-indigo-500 rounded-full")
+                }
+              >
+                LISTING
+              </button>
+              <button
+                onClick={() => {
+                  context.setState({
+                    _View: "offers",
+                  });
+                }}
+                className={
+                  "ml-2 font-bold text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] mb-2 border-indigo-500 border-2 " +
+                  (context.state._View === "offers"
+                    ? "text-white bg-indigo-500 rounded-full"
+                    : "text-indigo-500 rounded-full")
+                }
+              >
+                OFFERS
+              </button>
+              <button
+                onClick={() => {
+                  context.setState({
+                    _View: "transfer",
+                  });
+                }}
+                className={
+                  "ml-2 font-bold text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] mb-2 border-indigo-500 border-2 " +
+                  (context.state._View === "transfer"
+                    ? "text-white bg-indigo-500 rounded-full"
+                    : "text-indigo-500 rounded-full")
+                }
+              >
+                TRANSFER
+              </button>
+            </>
+          )}
         </div>
       </div>
     </>

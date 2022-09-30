@@ -74,3 +74,15 @@ export const fetchDomain = async (params) => {
     }`,
   });
 };
+
+export const fetchAddress = async (params) => {
+  return await TEZDOM.query({
+    query: gql`{
+      reverseRecord(address: "${params.lookFor}") {
+        domain {
+          name
+        }
+      }
+    }`,
+  });
+};

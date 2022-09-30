@@ -6,13 +6,7 @@ import { fetchObjktCollection } from "../src/service/OBJKT/request";
 import { fetch10kSupply } from "../src/utils/fetch10kSupply";
 import { fetch999Holders } from "../src/utils/fetch999holders";
 import { Floor } from "../src/components/Floor/_Floor";
-import { Offers } from "../src/components/Offers/_Offers";
 import { Search } from "../src/components/Search/_Search";
-import {
-  _3dpalibase,
-  _4dpalibase,
-  _5dpalibase,
-} from "../src/utils/generateDomains";
 
 class Index extends React.Component {
   constructor({ props }) {
@@ -23,14 +17,16 @@ class Index extends React.Component {
       _Contract: {
         NFT: "KT1GBZmSxmnKJXGMdMLbugPfLyUPmuLSMwKS",
         Market: "KT1Evxe1udtPDGWrkiRsEN3vMDdB6gNpkMPM",
+        OBJKT: "KT1WvzYHCNBvDSdwafTHv7nJ1dWmZ8GCYuuC",
       },
       _DigitCartel: "tz1X4g93kKkH1hkRAnenzUkJe44U61AQoQn6",
       _Collection: {},
       _TezosPrice: 0,
       _EthereumPrice: 0,
       _View: "floor",
-      _Holders999: [],
-      _10kSupply: 0,
+      _Profile: false,
+      _Holders999: [], //vanity
+      _10kSupply: 0, // vanity
     };
   }
 
@@ -91,11 +87,15 @@ class Index extends React.Component {
         <this.Title />
         <div className="antialiased w-full min-h-full mx-auto bg-black font-main py-4">
           <Navbar context={this} />
-          <div className="ml-auto w-[95vw] lXs:w-[60vw] mx-auto">
-            {this.state._View === "floor" && <Floor context={this} />}
-            {this.state._View === "search" && <Search context={this} />}
-            {this.state._View === "offers" && <Offers context={this} />}
-          </div>
+          {!this.state._Profile && (
+            <div className="ml-auto w-[95vw] lXs:w-[60vw] mx-auto">
+              {this.state._View === "floor" && <Floor context={this} />}
+              {this.state._View === "search" && <Search context={this} />}
+            </div>
+          )}
+          {this.state._Profile && (
+            <div className="ml-auto w-[95vw] lXs:w-[60vw] mx-auto"></div>
+          )}
         </div>
       </>
     );

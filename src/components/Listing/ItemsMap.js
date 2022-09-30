@@ -1,4 +1,5 @@
 import { requestBeaconConnection } from "../../service/Connector/request";
+import { Offers } from "../Offers/_Offers";
 
 const Map = ({ _FILTER, context }) => {
   const Head = () => {
@@ -9,7 +10,7 @@ const Map = ({ _FILTER, context }) => {
         </h1>
         <div className="ml-auto border-white border-2 flex flex-row items-center justify-center rounded-full px-[1.5vw] lXs:px-[1vw]">
           <p className="text-white font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
-            Offers
+            Buy
           </p>
         </div>
       </div>
@@ -112,12 +113,15 @@ const Map = ({ _FILTER, context }) => {
             return (
               <>
                 {context.state._account != "" && (
+                  <Offers context={context} domain={e} />
+                )}
+                {context.state._account != "" && (
                   <button
                     onClick={() => {
                       _FILTER.SelectReq[1]([true, e]);
                     }}
                     className={
-                      "flex flex-row items-center justify-center rounded-full px-[1.5vw] lXs:px-[1vw] border-indigo-500 border-2 " +
+                      "ml-2 flex flex-row items-center justify-center rounded-full px-[1.5vw] lXs:px-[1vw] border-indigo-500 border-2 " +
                       (_FILTER.Selector[0].includes(e.tokenId)
                         ? "bg-indigo-500"
                         : "")

@@ -1,36 +1,14 @@
-import { Header } from "./Header";
-import { Items } from "./ItemsMap";
-
-import * as Categories from "../../data/categories.json";
-import { useEffect, useState } from "react";
-import { fetchTezDomOffers } from "../../service/TezosDomains/request";
-import { Tezos } from "../../service/Connector/client";
 import { OpKind } from "@taquito/taquito";
-import { fetchObjktOffers } from "../../service/OBJKT/request";
+import { useEffect, useState } from "react";
+import { Tezos } from "../../service/Connector/client";
 
-export const Offers = ({ context }) => {
+export const Offers = ({ context, domain }) => {
   const _FILTER = {
-    List: Categories.default,
-    Base: useState(Categories[0]),
-    Items: useState([]),
-    Floor: useState(0),
-    Loading: useState(true),
-    Initialized: useState(false),
-    UpdateReq: useState(false),
-    SelectReq: useState([false, {}]),
-    SelectedPrice: useState(0),
+    Input: useState(0),
     Selector: useState([]),
     Selected: useState([]),
+    SelectReq: useState([false, {}]),
     Select: (e) => {
-      const compilePrice = () => {
-        let i = -1;
-        let price = 0;
-        while (++i < _FILTER.Selected[0].length) {
-          price += parseInt(_FILTER.Selected[0][i].price);
-        }
-        return price;
-      };
-
       let currentSelected = _FILTER.Selected[0];
       let currentSelector = _FILTER.Selector[0];
       if (
@@ -47,66 +25,30 @@ export const Offers = ({ context }) => {
         _FILTER.Selector[1](currentSelector);
         _FILTER.Selected[1](currentSelected);
       }
-
-      let price = compilePrice();
-      _FILTER.SelectedPrice[1](price);
       _FILTER.SelectReq[1]([false, {}]);
     },
-    Fetch: (less, more, hash) => {
-      fetchObjktOffers({}).then((e) => {
-        fetchTezDomOffers({
-          lookFor: _FILTER.Base[0].data,
-          less: less,
-          more: more,
-          hash: hash,
-        }).then((e) => {
-          if (e.data.offers.items.length > 0)
-            if (!less && !more) _FILTER.Floor[1](e.data.offers.items[0].price);
-          _FILTER.Items[1](e.data);
-          _FILTER.Loading[1](false);
-          _FILTER.UpdateReq[1](false);
-          _FILTER.Initialized[1](true);
-        });
-      });
-    },
-    Buy: async () => {
-      const contract = await Tezos.wallet.at(context.state._Contract.Market);
-      const compileTransaction = () => {
-        let i = -1;
-        let txs = [];
-        while (++i < _FILTER.Selected[0].length) {
-          txs.push({
-            kind: OpKind.TRANSACTION,
-            ...contract.methods
-              .execute_offer(
-                _FILTER.Selected[0][i].tokenContract,
-                _FILTER.Selected[0][i].tokenId,
-                _FILTER.Selected[0][i].domain.owner
-              )
-              .toTransferParams({
-                amount: _FILTER.Selected[0][i].price,
-                mutez: true,
-              }),
-          });
-        }
-        return txs;
-      };
-
-      const addFees = (txs) => {
-        txs.push({
-          kind: OpKind.TRANSACTION,
-          to: context.state._DigitCartel,
-          amount: `${(2 * _FILTER.SelectedPrice[0]) / 100}`,
-          mutez: true,
-        });
-        return txs;
-      };
-
-      let txs = addFees(compileTransaction());
+    Offer: async () => {
+      const contract = await Tezos.wallet.at(context.state._Contract.OBJKT);
 
       try {
-        Tezos.wallet.batch([...txs]).send();
-        _FILTER.SelectedPrice[1](0);
+        contract.methodsObject
+          .offer({
+            token: {
+              address: context.state._Contract.NFT,
+              token_id: _FILTER.Selected[0][0].tokenId,
+            },
+            currency: {
+              tez: "unit",
+            },
+            amount: _FILTER.Input[0],
+            shares: [],
+          })
+          .send({
+            amount: _FILTER.Input[0],
+            mutez: true,
+          });
+
+        _FILTER.Input[1](0);
         _FILTER.Selected[1]([]);
         _FILTER.Selector[1]([]);
       } catch (e) {
@@ -116,23 +58,73 @@ export const Offers = ({ context }) => {
   };
 
   useEffect(() => {
-    if (!_FILTER.Initialized[0]) {
-      _FILTER.Fetch();
-    }
-
-    if (_FILTER.UpdateReq[0]) {
-      _FILTER.Fetch();
-    }
-
     if (_FILTER.SelectReq[0][0]) {
       _FILTER.Select(_FILTER.SelectReq[0][1]);
     }
   });
 
   return (
-    <>
-      <Header _FILTER={_FILTER} />
-      <Items _FILTER={_FILTER} context={context} />
-    </>
+    <div className="flex flex-col">
+      {_FILTER.Selected[0].length === 0 && (
+        <button
+          onClick={() => {
+            _FILTER.SelectReq[1]([true, domain]);
+          }}
+          className={
+            "flex flex-row items-center justify-center rounded-full px-[1.5vw] lXs:px-[1vw] border-indigo-500 border-2 " +
+            (_FILTER.Selector[0].includes(domain.tokenId)
+              ? "bg-indigo-500"
+              : "")
+          }
+        >
+          <p
+            className={
+              "font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase " +
+              (_FILTER.Selector[0].includes(domain.tokenId)
+                ? "text-white"
+                : "text-indigo-500")
+            }
+          >
+            Offer
+          </p>
+        </button>
+      )}
+      {_FILTER.Selected[0].length > 0 && (
+        <>
+          <div className="flex flex-row items-center">
+            <input
+              onChange={(e) => {
+                _FILTER.Input[1](parseInt(e.target.value * 10 ** 6));
+              }}
+              placeholder="price xtz"
+              type="number"
+              className={
+                "text-white w-[9vw] text-[2.5vw] lXs:text-[1.5vw] px-[1vw] bg-indigo-500 border-indigo-500 border-2 rounded-l-xl text-right"
+              }
+            />
+            <button
+              className="border-indigo-500 border-2 px-[1vw]"
+              onClick={() => {
+                _FILTER.SelectReq[1]([true, _FILTER.Selected[0][0]]);
+              }}
+            >
+              <p className="text-indigo-500 font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
+                X
+              </p>
+            </button>
+            <button
+              className="border-indigo-500 border-2 rounded-r-full px-[1vw] "
+              onClick={() => {
+                _FILTER.Offer();
+              }}
+            >
+              <p className="text-indigo-500 font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
+                SEND
+              </p>
+            </button>
+          </div>
+        </>
+      )}
+    </div>
   );
 };
