@@ -2,17 +2,17 @@ import React from "react";
 import Head from "next/head";
 
 import { Navbar } from "../src/components/Navbar";
-import { Items } from "../src/components/Floor/ItemsMap";
-import { Header } from "../src/components/Floor/Header";
-
-import * as Categories from "../src/data/categories.json";
-
 import { fetchObjktCollection } from "../src/service/OBJKT/request";
 import { fetch10kSupply } from "../src/utils/fetch10kSupply";
 import { fetch999Holders } from "../src/utils/fetch999holders";
 import { Floor } from "../src/components/Floor/_Floor";
+import { Offers } from "../src/components/Offers/_Offers";
 import { Search } from "../src/components/Search/_Search";
-import { _3dpalibase, _4dpalibase, _5dpalibase } from "../src/utils/generateDomains";
+import {
+  _3dpalibase,
+  _4dpalibase,
+  _5dpalibase,
+} from "../src/utils/generateDomains";
 
 class Index extends React.Component {
   constructor({ props }) {
@@ -94,6 +94,7 @@ class Index extends React.Component {
           <div className="ml-auto w-[95vw] lXs:w-[60vw] mx-auto">
             {this.state._View === "floor" && <Floor context={this} />}
             {this.state._View === "search" && <Search context={this} />}
+            {this.state._View === "offers" && <Offers context={this} />}
           </div>
         </div>
       </>

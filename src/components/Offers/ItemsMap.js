@@ -9,7 +9,7 @@ const Map = ({ _FILTER, context }) => {
         </h1>
         <div className="ml-auto border-white border-2 flex flex-row items-center justify-center rounded-full px-[1.5vw] lXs:px-[1vw]">
           <p className="text-white font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
-            Buy
+            Offers
           </p>
         </div>
       </div>

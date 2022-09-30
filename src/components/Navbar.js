@@ -162,23 +162,51 @@ export const Navbar = ({ context }) => {
           <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] font-bold">
             GM ANONS
           </h1>
-          {!context.state._Menu && (
-            <button
-              onClick={() => {
-                context.setState({
-                  _View: context.state._View === "search" ? "floor" : "search",
-                });
-              }}
-              className={
-                "ml-auto font-bold text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] mb-2 border-indigo-500 border-2 " +
-                (context.state._View === "search"
-                  ? "text-white bg-indigo-500 rounded-full"
-                  : "text-indigo-500 rounded-full")
-              }
-            >
-              BULK SEARCH
-            </button>
-          )}
+          <button
+            onClick={() => {
+              context.setState({
+                _View: context.state._View === "offers" ? "floor" : "offers",
+              });
+            }}
+            className={
+              "ml-auto font-bold text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] mb-2 border-indigo-500 border-2 " +
+              (context.state._View === "offers"
+                ? "text-white bg-indigo-500 rounded-full"
+                : "text-indigo-500 rounded-full")
+            }
+          >
+            FLOOR
+          </button>
+          <button
+            onClick={() => {
+              context.setState({
+                _View: context.state._View === "offers" ? "floor" : "offers",
+              });
+            }}
+            className={
+              "ml-2 font-bold text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] mb-2 border-indigo-500 border-2 " +
+              (context.state._View === "offers"
+                ? "text-white bg-indigo-500 rounded-full"
+                : "text-indigo-500 rounded-full")
+            }
+          >
+            OFFERS
+          </button>
+          <button
+            onClick={() => {
+              context.setState({
+                _View: context.state._View === "search" ? "floor" : "search",
+              });
+            }}
+            className={
+              "ml-2 font-bold text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] mb-2 border-indigo-500 border-2 " +
+              (context.state._View === "search"
+                ? "text-white bg-indigo-500 rounded-full"
+                : "text-indigo-500 rounded-full")
+            }
+          >
+            BULK SEARCH
+          </button>
         </div>
       </div>
     </>
