@@ -16,86 +16,6 @@ const Map = ({ _FILTER, context }) => {
     );
   };
 
-  const Textarea = () => {
-    const InputRef = useRef();
-    const InputState = useState([]);
-
-    return (
-      <div className="w-full">
-        <div className="w-full bg-white border-indigo-500 border-2 bg-opacity-10 flex flex-col rounded-xl p-[2vw] lXs:p-[1vw] items-center">
-          <textarea
-            ref={InputRef}
-            rows={10}
-            placeholder={
-              "To bulk search in " +
-              (_FILTER.Mode[0] ? "MODE [ENTER]" : "MODE [SPACE]") +
-              ", please type your wordlist into the field separated by a space like:\n" +
-              (_FILTER.Mode[0] ? "420\n69420\nnft\ndao" : "420 69420 nft dao") +
-              "\n\n" +
-              "Select your mode before typing your list"
-            }
-            className="w-full rounded-xl bg-transparent text-white border-2 border-indigo-500 p-[1.5vw] mt-4"
-            onChange={(e) => {
-              if (e.target.value !== "" && e.target.value.length >= 3) {
-                let tmp = e.target.value;
-                if (_FILTER.Mode[0]) {
-                  tmp = tmp.split(" ");
-                  tmp = tmp.filter((e) => e);
-                  tmp = tmp[0].split("\n");
-                  tmp = tmp.filter((e) => e.length >= 3);
-                  tmp = new Set(tmp);
-                  tmp = [...tmp];
-                  if (tmp.length > 500) {
-                    tmp = tmp.splice(0, 500);
-                  }
-                } else {
-                  tmp = tmp.split("\n");
-                  tmp = tmp.filter((e) => e);
-                  tmp = tmp[0].split(" ");
-                  tmp = tmp.filter((e) => e.length >= 3);
-                  tmp = new Set(tmp);
-                  tmp = [...tmp];
-                  if (tmp.length > 500) {
-                    tmp = tmp.splice(0, 500);
-                  }
-                }
-                InputState[1](tmp);
-              } else {
-                InputState[1]([]);
-              }
-            }}
-          />
-          <div className="flex flex-row items-center">
-            <button
-              className="border-indigo-500 border-2 rounded-full px-[1.5vw] lXs:px-[1vw] my-4"
-              onClick={() => {
-                _FILTER.UpdateReq[1]([true, InputState[0]]);
-              }}
-            >
-              <p className="text-indigo-500 font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
-                {_FILTER.UpdateReq[0][0]
-                  ? `searching ${_FILTER.SearchIndex[0]}/${_FILTER.SearchLength[0]}`
-                  : "search"}
-              </p>
-            </button>
-            <button
-              className="ml-2 bg-indigo-500 rounded-full px-[1.5vw] lXs:px-[1vw] my-4"
-              onClick={() => {
-                _FILTER.Reset();
-                InputState[1]([]);
-                InputRef.current.value = "";
-              }}
-            >
-              <p className="text-white font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
-                {!_FILTER.Mode[0] ? "mode [SPACE]" : "mode [ENTER]"}
-              </p>
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
   const Map = () => {
     return (
       <>
@@ -180,7 +100,6 @@ const Map = ({ _FILTER, context }) => {
 
   return (
     <>
-      <Textarea />
       {!_FILTER.Loading[0] && (
         <>
           <Head />
@@ -202,5 +121,86 @@ const Map = ({ _FILTER, context }) => {
 };
 
 export const Items = ({ _FILTER, context }) => {
-  return <Map _FILTER={_FILTER} context={context} />;
+  const InputRef = useRef();
+  const InputState = useState([]);
+  const TmpInputeState = useState("");
+
+  return (
+    <>
+      <div className="w-full">
+        <div className="w-full bg-white border-indigo-500 border-2 bg-opacity-10 flex flex-col rounded-xl p-[2vw] lXs:p-[1vw] items-center">
+          <textarea
+            ref={InputRef}
+            rows={10}
+            placeholder={
+              "To bulk search in " +
+              (_FILTER.Mode[0] ? "MODE [ENTER]" : "MODE [SPACE]") +
+              ", please type your wordlist into the field separated by a space like:\n" +
+              (_FILTER.Mode[0] ? "420\n69420\nnft\ndao" : "420 69420 nft dao") +
+              "\n\n" +
+              "Select your mode before typing your list"
+            }
+            className="w-full rounded-xl bg-transparent text-white border-2 border-indigo-500 p-[1.5vw] mt-4"
+            onChange={(e) => {
+              if (e.target.value !== "" && e.target.value.length >= 3) {
+                let tmp = e.target.value;
+                TmpInputeState[1](e.target.value);
+                if (_FILTER.Mode[0]) {
+                  tmp = tmp.split(" ");
+                  tmp = tmp.filter((e) => e);
+                  tmp = tmp[0].split("\n");
+                  tmp = tmp.filter((e) => e.length >= 3);
+                  tmp = new Set(tmp);
+                  tmp = [...tmp];
+                  if (tmp.length > 500) {
+                    tmp = tmp.splice(0, 500);
+                  }
+                } else {
+                  tmp = tmp.split("\n");
+                  tmp = tmp.filter((e) => e);
+                  tmp = tmp[0].split(" ");
+                  tmp = tmp.filter((e) => e.length >= 3);
+                  tmp = new Set(tmp);
+                  tmp = [...tmp];
+                  if (tmp.length > 500) {
+                    tmp = tmp.splice(0, 500);
+                  }
+                }
+                InputState[1](tmp);
+              } else {
+                InputState[1]([]);
+              }
+            }}
+          />
+          <div className="flex flex-row items-center">
+            <button
+              className="border-indigo-500 border-2 rounded-full px-[1.5vw] lXs:px-[1vw] my-4"
+              onClick={() => {
+                _FILTER.UpdateReq[1]([true, InputState[0]]);
+              }}
+            >
+              <p className="text-indigo-500 font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
+                {_FILTER.UpdateReq[0][0]
+                  ? `searching ${_FILTER.SearchIndex[0]}/${_FILTER.SearchLength[0]}`
+                  : "search"}
+              </p>
+            </button>
+            <button
+              className="ml-2 bg-indigo-500 rounded-full px-[1.5vw] lXs:px-[1vw] my-4"
+              onClick={() => {
+                _FILTER.Reset();
+                InputState[1]([]);
+                InputRef.current.value = "";
+              }}
+            >
+              <p className="text-white font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
+                {!_FILTER.Mode[0] ? "mode [SPACE]" : "mode [ENTER]"}
+              </p>
+            </button>
+          </div>
+        </div>
+      </div>
+      <Map _FILTER={_FILTER} context={context} />
+    </>
+  );
 };
