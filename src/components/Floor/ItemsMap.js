@@ -250,7 +250,7 @@ const Map = ({ _FILTER, context }) => {
                         _FILTER.SelectReq[1]([true, e]);
                       }}
                       className={
-                        "text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] my-1 " +
+                        "text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] my-1 uppercase " +
                         (_FILTER.Selector[0].includes(e.tokenId)
                           ? "bg-indigo-500 rounded-full mr-1"
                           : "")
