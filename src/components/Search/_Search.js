@@ -2,7 +2,9 @@ import { Items } from "./ItemsMap";
 
 import * as Categories from "../../data/categories.json";
 import { useEffect, useState } from "react";
-import { fetchDomain } from "../../service/TezosDomains/request";
+import {
+  fetchDomain,
+} from "../../service/TezosDomains/request";
 
 export const Search = ({ context }) => {
   const _FILTER = {
