@@ -72,7 +72,7 @@ const Map = ({ _FILTER, context }) => {
         {_FILTER.Items[0].offers.items.map((e, i) => {
           const Domain = () => {
             return (
-              <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw]">
+              <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] whitespace-nowrap">
                 {e.domain.name}
               </h1>
             );
