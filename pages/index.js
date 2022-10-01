@@ -96,7 +96,6 @@ class Index extends React.Component {
   };
 
   componentDidMount() {
-
     this.initBase();
     ///fetch999Holders(this);
     ///fetch10kSupply(this);
