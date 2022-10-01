@@ -7,6 +7,8 @@ import { fetch10kSupply } from "../src/utils/fetch10kSupply";
 import { fetch999Holders } from "../src/utils/fetch999holders";
 import { Floor } from "../src/components/Floor/_Floor";
 import { Search } from "../src/components/Search/_Search";
+import { Listing } from "../src/components/Profile/Listing/_Listing";
+import { Bids } from "../src/components/Profile/Bids/_Bids";
 
 class Index extends React.Component {
   constructor({ props }) {
@@ -82,7 +84,6 @@ class Index extends React.Component {
   }
 
   render() {
-    console.log(this.state)
     return (
       <>
         <this.Title />
@@ -95,7 +96,10 @@ class Index extends React.Component {
             </div>
           )}
           {this.state._Profile && (
-            <div className="ml-auto w-[95vw] lXs:w-[60vw] mx-auto"></div>
+            <div className="ml-auto w-[95vw] lXs:w-[60vw] mx-auto">
+              {this.state._View === "listing" && <Listing context={this} />}
+              {this.state._View === "bids" && <Bids context={this} />}
+            </div>
           )}
         </div>
       </>

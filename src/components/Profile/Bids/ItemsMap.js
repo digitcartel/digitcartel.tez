@@ -1,0 +1,361 @@
+import { useState } from "react";
+
+const Map = ({ _FILTER, context }) => {
+  const HeadBids = () => {
+    return (
+      <div className="mt-2 w-full flex flex-row p-[2vw] lXs:p-[1vw] items-center bg-indigo-500 border-2 rounded-xl border-white">
+        <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw]">
+          DOMAIN
+        </h1>
+        <div className="ml-auto border-white border-2 flex flex-row items-center justify-center rounded-full px-[1.5vw] lXs:px-[1vw]">
+          <p className="text-white font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
+            ACCEPT
+          </p>
+        </div>
+      </div>
+    );
+  };
+  const HeadDeBids = () => {
+    return (
+      <div className="mt-2 w-full flex flex-row p-[2vw] lXs:p-[1vw] items-center bg-indigo-500 border-2 rounded-xl border-white">
+        <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw]">
+          DOMAIN
+        </h1>
+        <div className="ml-auto border-white border-2 flex flex-row items-center justify-center rounded-full px-[1.5vw] lXs:px-[1vw]">
+          <p className="text-white font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
+            CANCEL
+          </p>
+        </div>
+      </div>
+    );
+  };
+
+  const Floor = () => {
+    return (
+      <div className="w-full">
+        <div className="w-full bg-white border-indigo-500 border-2 bg-opacity-10 flex flex-row rounded-xl p-[2vw] lXs:p-[1vw] items-center">
+          {_FILTER.Loading[0] && (
+            <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw]">
+              LOADING, PLEASE WAIT
+            </h1>
+          )}
+          {!_FILTER.Loading[0] && (
+            <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw]">
+              MANAGE BIDS
+            </h1>
+          )}
+          <a
+            href="https://twitter.com/tezos999club"
+            target="_blank"
+            className="ml-auto flex flex-row items-center justify-center rounded-full px-[1.5vw] lXs:px-[1vw]"
+          >
+            <img
+              src="./icons/twitter.svg"
+              className="w-4 h-4 lXs:w-8 lXs:h-8"
+            />
+          </a>
+          <a
+            href="https://discord.gg/nA5k4bpuXN"
+            target="_blank"
+            className="flex flex-row items-center justify-center rounded-full px-[1.5vw] lXs:px-[1vw]"
+          >
+            <img
+              src="./icons/discord.svg"
+              className="w-4 h-4 lXs:w-8 lXs:h-8"
+            />
+          </a>
+        </div>
+      </div>
+    );
+  };
+
+  const MapDeBids = () => {
+    return (
+      <>
+        {_FILTER.ItemsDeBids[0].offer.map((e, i) => {
+          const Domain = () => {
+            return (
+              <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw]">
+                {e.token.name}
+              </h1>
+            );
+          };
+
+          const Price = () => {
+            return (
+              <div className="relative w-full mr-auto flex flex-row items-center justify-end">
+                <h1 className=" text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] truncate">
+                  {(e.price / 10 ** 6 || 0).toFixed(2)}
+                  tz
+                </h1>
+                <h1 className=" text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] truncate">
+                  <span className="text-indigo-500">
+                    {(
+                      context.state._EthereumPrice * (e.price / 10 ** 6 || 0)
+                    ).toFixed(2)}
+                    Ξ
+                  </span>
+                </h1>
+                <h1 className=" text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] truncate">
+                  <span className="text-purple-500">
+                    {(
+                      context.state._TezosPrice * (e.price / 10 ** 6 || 0)
+                    ).toFixed(2)}
+                    $
+                  </span>
+                </h1>
+              </div>
+            );
+          };
+
+          const ActionButton = () => {
+            return (
+              <div className="ml-auto flex flex-row">
+                <button
+                  onClick={() => {
+                    _FILTER.DeBidsSelectReq[1]([true, e]);
+                  }}
+                  className={
+                    "ml-2 flex flex-row items-center justify-center rounded-full px-[1.5vw] lXs:px-[1vw] border-purple-500 border-2 " +
+                    (_FILTER.DeBidsSelector[0].includes(e.tokenId)
+                      ? "bg-purple-500"
+                      : "")
+                  }
+                >
+                  <p
+                    className={
+                      "font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase " +
+                      (_FILTER.DeBidsSelector[0].includes(e.tokenId)
+                        ? "text-white"
+                        : "text-purple-500")
+                    }
+                  >
+                    Cancel
+                  </p>
+                </button>
+              </div>
+            );
+          };
+
+          return (
+            <div key={i + "_mapCollection"} className="w-full">
+              <div className="w-full flex flex-row rounded-full py-[2vw] px-[1vw] items-center">
+                <Domain />
+                <Price />
+                <ActionButton />
+              </div>
+            </div>
+          );
+        })}
+      </>
+    );
+  };
+
+  const MapBids = () => {
+    return (
+      <>
+        {_FILTER.ItemsBids[0].offer.map((e, i) => {
+          const Domain = () => {
+            return (
+              <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw]">
+                {e.token.name}
+              </h1>
+            );
+          };
+
+          const Price = () => {
+            return (
+              <div className="relative w-full mr-auto flex flex-row items-center justify-end">
+                <h1 className=" text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] truncate">
+                  {(e.price / 10 ** 6 || 0).toFixed(2)}
+                  tz
+                </h1>
+                <h1 className=" text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] truncate">
+                  <span className="text-indigo-500">
+                    {(
+                      context.state._EthereumPrice * (e.price / 10 ** 6 || 0)
+                    ).toFixed(2)}
+                    Ξ
+                  </span>
+                </h1>
+                <h1 className=" text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] truncate">
+                  <span className="text-purple-500">
+                    {(
+                      context.state._TezosPrice * (e.price / 10 ** 6 || 0)
+                    ).toFixed(2)}
+                    $
+                  </span>
+                </h1>
+              </div>
+            );
+          };
+
+          const ActionButton = () => {
+            return (
+              <div className="ml-auto flex flex-row">
+                <button
+                  onClick={() => {
+                    _FILTER.BidsSelectReq[1]([true, e]);
+                  }}
+                  className={
+                    "ml-2 flex flex-row items-center justify-center rounded-full px-[1.5vw] lXs:px-[1vw] border-indigo-500 border-2 " +
+                    (_FILTER.BidsSelector[0].includes(e.tokenId)
+                      ? "bg-indigo-500"
+                      : "")
+                  }
+                >
+                  <p
+                    className={
+                      "font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase " +
+                      (_FILTER.BidsSelector[0].includes(e.tokenId)
+                        ? "text-white"
+                        : "text-indigo-500")
+                    }
+                  >
+                    ACCEPT
+                  </p>
+                </button>
+              </div>
+            );
+          };
+
+          return (
+            <div key={i + "_mapCollection"} className="w-full">
+              <div className="w-full flex flex-row rounded-full py-[2vw] px-[1vw] items-center">
+                <Domain />
+                <Price />
+                <ActionButton />
+              </div>
+            </div>
+          );
+        })}
+      </>
+    );
+  };
+
+  const TxManager = () => {
+    return (
+      <>
+        {_FILTER.BidsSelected[0].length > 0 && (
+          <>
+            <div className=" bg-white rounded-xl my-2 p-[1.5vw]">
+              <div className="flex flex-row items-center">
+                <button
+                  className="border-indigo-500 border-2 rounded-full px-[1.5vw] lXs:px-[1vw] "
+                  onClick={() => {
+                    _FILTER.Bids();
+                  }}
+                >
+                  <p className="text-indigo-500 font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
+                    ACCEPT
+                  </p>
+                </button>
+              </div>
+              <div className="flex flex-row flex-wrap items-center justify-start">
+                {_FILTER.BidsSelected[0].map((e, i) => {
+                  return (
+                    <button
+                      onClick={() => {
+                        _FILTER.BidsSelectReq[1]([true, e]);
+                      }}
+                      className={
+                        "text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] my-1 " +
+                        (_FILTER.BidsSelector[0].includes(e.tokenId)
+                          ? "bg-indigo-500 rounded-full mr-1"
+                          : "")
+                      }
+                    >
+                      {e.token.name}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </>
+        )}
+        {_FILTER.DeBidsSelected[0].length > 0 && (
+          <>
+            <div className=" bg-white rounded-xl my-2 p-[1.5vw]">
+              <div className="flex flex-row items-center">
+                <button
+                  className="border-indigo-500 border-2 rounded-full px-[1.5vw] lXs:px-[1vw] "
+                  onClick={() => {
+                    _FILTER.DeBids();
+                  }}
+                >
+                  <p className="text-indigo-500 font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
+                    CANCEL
+                  </p>
+                </button>
+              </div>
+              <div className="flex flex-row flex-wrap items-center justify-start">
+                {_FILTER.DeBidsSelected[0].map((e, i) => {
+                  return (
+                    <button
+                      onClick={() => {
+                        _FILTER.DeBidsSelectReq[1]([true, e]);
+                      }}
+                      className={
+                        "text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] my-1 " +
+                        (_FILTER.DeBidsSelector[0].includes(e.tokenId)
+                          ? "bg-indigo-500 rounded-full mr-1"
+                          : "")
+                      }
+                    >
+                      {e.token.name}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </>
+        )}
+      </>
+    );
+  };
+
+  return (
+    <>
+      <Floor />
+      {!_FILTER.Loading[0] && (
+        <>
+          <TxManager />
+          {_FILTER.ItemsDeBids[0].offer && (
+            <>
+              <HeadDeBids />
+              <div className="bg-white bg-opacity-10 border-indigo-500 border-2 my-2 rounded-xl">
+                {_FILTER.ItemsDeBids[0].offer.length > 0 && <MapDeBids />}
+                {_FILTER.ItemsDeBids[0].offer.length == 0 && (
+                  <div className="w-full flex flex-row rounded-full py-[2vw] px-[1vw] items-center">
+                    <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw]">
+                      No result
+                    </h1>
+                  </div>
+                )}
+              </div>
+            </>
+          )}
+          {_FILTER.ItemsBids[0].offer && (
+            <>
+              <HeadBids />
+              <div className="bg-white bg-opacity-10 border-indigo-500 border-2 my-2 rounded-xl">
+                {_FILTER.ItemsBids[0].offer.length > 0 && <MapBids />}
+                {_FILTER.ItemsBids[0].offer.length == 0 && (
+                  <div className="w-full flex flex-row rounded-full py-[2vw] px-[1vw] items-center">
+                    <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw]">
+                      No result
+                    </h1>
+                  </div>
+                )}
+              </div>
+            </>
+          )}
+        </>
+      )}
+    </>
+  );
+};
+
+export const Items = ({ _FILTER, context }) => {
+  return <Map _FILTER={_FILTER} context={context} />;
+};

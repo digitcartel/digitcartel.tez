@@ -103,7 +103,7 @@ export const Offers = ({ context, domain }) => {
               }
             />
             <button
-              className="border-indigo-500 border-2 px-[1vw]"
+              className="border-indigo-500 border-y-2 px-[1vw]"
               onClick={() => {
                 _FILTER.SelectReq[1]([true, _FILTER.Selected[0][0]]);
               }}
@@ -115,7 +115,7 @@ export const Offers = ({ context, domain }) => {
             <button
               className="border-indigo-500 border-2 rounded-r-full px-[1vw] "
               onClick={() => {
-                _FILTER.Offer();
+                if (_FILTER.Input[0] > 0) _FILTER.Offer();
               }}
             >
               <p className="text-indigo-500 font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">

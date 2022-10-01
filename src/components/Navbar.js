@@ -1,6 +1,7 @@
 import { requestBeaconConnection } from "../service/Connector/request";
 import { useRef, useState } from "react";
 import { fetchDomain } from "../service/TezosDomains/request";
+import { Offers } from "./Offers/_Offers";
 
 export const Navbar = ({ context }) => {
   const InputRef = useRef();
@@ -73,23 +74,32 @@ export const Navbar = ({ context }) => {
             <h1 className="text-black text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] truncate">
               {DomainState[0].domain.owner.slice(0, 16)}
             </h1>
-            <a
-              href={
-                "https://app.tezos.domains/domain/" + DomainState[0].domain.name
-              }
-              target="_blank"
-              className="ml-auto border-indigo-500 text-black border-2 flex flex-row items-center justify-center rounded-xl px-[1.5vw] lXs:px-[1vw]"
-            >
-              <p className="text-indigo-500 font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
-                VIEW
-              </p>
-            </a>
+            <div className="ml-auto">
+              {context.state._account != "" && (
+                <Offers context={context} domain={DomainState[0].domain} />
+              )}
+              {context.state._account === "" && (
+                <button
+                  className="flex flex-row items-center justify-center rounded-full px-[1.5vw] lXs:px-[1vw] border-indigo-500 border-2"
+                  onClick={() => {
+                    requestBeaconConnection(
+                      context.props.props.context.state._connected,
+                      context
+                    );
+                  }}
+                >
+                  <p className="font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase text-indigo-500">
+                    Connect
+                  </p>
+                </button>
+              )}
+            </div>
           </div>
         )}
         {InputState[0] === 2 && (
           <div className="w-full flex flex-row bg-white rounded-xl p-[4vw] lXs:p-[2vw] items-center">
             <h1 className="text-black text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw]">
-              context domain isn't registered yet
+              This domain isn't registered yet
             </h1>
             <a
               href={"https://app.tezos.domains/domain/" + DomainState[0]}
@@ -97,7 +107,7 @@ export const Navbar = ({ context }) => {
               className="ml-auto border-indigo-500 border-2 flex flex-row items-center justify-center rounded-xl px-[1.5vw] lXs:px-[1vw]"
             >
               <p className="text-indigo-500 font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
-                VIEW
+                Register
               </p>
             </a>
           </div>
@@ -124,14 +134,15 @@ export const Navbar = ({ context }) => {
     e.target.addEventListener("keyup", (e2) => {
       if (e2.key == "Enter") {
         if (e.target.value != "" && e.target.value.length >= 3) {
+          let tmp = e.target.value.split(".tez")[0];
+
           InputState[1](4);
           fetchDomain({
-            lookFor: e.target.value.toLowerCase() + ".tez",
+            lookFor: tmp.toLowerCase() + ".tez",
           }).then((e3) => {
-            console.log(e3);
             if (e3.data.domain === null) {
               InputState[1](2);
-              DomainState[1](e.target.value + ".tez");
+              DomainState[1](tmp + ".tez");
             }
             if (e3.data.domain !== null) {
               InputState[1](1);
@@ -233,32 +244,17 @@ export const Navbar = ({ context }) => {
               <button
                 onClick={() => {
                   context.setState({
-                    _View: "offers",
+                    _View: "bids",
                   });
                 }}
                 className={
                   "ml-2 font-bold text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] mb-2 border-indigo-500 border-2 " +
-                  (context.state._View === "offers"
+                  (context.state._View === "bids"
                     ? "text-white bg-indigo-500 rounded-full"
                     : "text-indigo-500 rounded-full")
                 }
               >
-                OFFERS
-              </button>
-              <button
-                onClick={() => {
-                  context.setState({
-                    _View: "transfer",
-                  });
-                }}
-                className={
-                  "ml-2 font-bold text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] mb-2 border-indigo-500 border-2 " +
-                  (context.state._View === "transfer"
-                    ? "text-white bg-indigo-500 rounded-full"
-                    : "text-indigo-500 rounded-full")
-                }
-              >
-                TRANSFER
+                BIDS
               </button>
             </>
           )}
