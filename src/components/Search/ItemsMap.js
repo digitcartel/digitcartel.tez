@@ -140,7 +140,7 @@ export const Items = ({ _FILTER, context }) => {
               "\n\n" +
               "Select your mode before typing your list"
             }
-            className="w-full rounded-xl bg-transparent text-white border-2 border-indigo-500 p-[1.5vw] mt-4"
+            className="w-full rounded-xl bg-transparent text-[2.5vw] lXs:text-[1.5vw] text-white border-2 border-indigo-500 p-[2vw] mt-4"
             onChange={(e) => {
               if (e.target.value !== "" && e.target.value.length >= 3) {
                 let tmp = e.target.value;
