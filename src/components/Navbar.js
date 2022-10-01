@@ -1,4 +1,7 @@
-import { requestBeaconConnection } from "../service/Connector/request";
+import {
+  requestBeaconConnection,
+  requestBeaconDisconnection,
+} from "../service/Connector/request";
 import { useRef, useState } from "react";
 import { fetchDomain } from "../service/TezosDomains/request";
 import { Offers } from "./Offers/_Offers";
@@ -23,49 +26,51 @@ export const Navbar = ({ context }) => {
 
   const ConnectButton = () => {
     return (
-      <div className="relative flex flex-row">
-        <button
-          className="ml-4 border-2 border-indigo-500 rounded-full px-[1.5vw] lXs:px-[1vw]"
-          onClick={() => {
-            if (context.props.props.context.state._connected == 2) {
-              requestBeaconConnection(
-                context.props.props.context.state._connected,
-                context
-              );
-            } else {
-              context.setState(
-                {
-                  _View: context.state._Profile ? "floor" : "listing",
-                },
-                () => {
-                  context.setState({
-                    _Profile: !context.state._Profile,
-                  });
-                }
-              );
-            }
-          }}
-        >
-          {context.props.props.context.state._connected == 2 ? (
-            <p className="text-indigo-500 font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
-              connect
-            </p>
-          ) : (
-            <p className="text-indigo-500 font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
-              {!context.state._Profile &&
-                (context.state._domain
-                  ? context.state._domain
-                  : context.state._account.slice(0, 6))}
-              {context.state._Profile && "Close"}
-            </p>
+      <>
+        <div className="relative flex flex-row">
+          <button
+            className="ml-4 border-2 border-indigo-500 rounded-full px-[1.5vw] lXs:px-[1vw]"
+            onClick={() => {
+              if (context.props.props.context.state._connected == 2) {
+                requestBeaconConnection(
+                  context.props.props.context.state._connected,
+                  context
+                );
+              } else {
+                context.setState(
+                  {
+                    _View: context.state._Profile ? "floor" : "bids",
+                  },
+                  () => {
+                    context.setState({
+                      _Profile: !context.state._Profile,
+                    });
+                  }
+                );
+              }
+            }}
+          >
+            {context.props.props.context.state._connected == 2 ? (
+              <p className="text-indigo-500 font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
+                connect
+              </p>
+            ) : (
+              <p className="text-indigo-500 font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
+                {!context.state._Profile &&
+                  (context.state._domain
+                    ? context.state._domain
+                    : context.state._account.slice(0, 6))}
+                {context.state._Profile && "Close"}
+              </p>
+            )}
+          </button>
+          {context.state._account != "" && !context.state._Profile && (
+            <div className="absolute left-3 tM:left-1 top-0 flex flex-col items-center justify-center w-3 h-3 tM:w-5 tM:h-5 rounded-full bg-purple-500 text-white font-bold text-[2vw] lXs:text-base">
+              {context.state._OffersReceived}
+            </div>
           )}
-        </button>
-        {context.state._account != "" && !context.state._Profile && (
-          <div className="absolute left-3 tM:left-1 top-0 flex flex-col items-center justify-center w-3 h-3 tM:w-5 tM:h-5 rounded-full bg-purple-500 text-white font-bold text-[2vw] lXs:text-base">
-            {context.state._OffersReceived}
-          </div>
-        )}
-      </div>
+        </div>
+      </>
     );
   };
 
@@ -249,22 +254,7 @@ export const Navbar = ({ context }) => {
           )}
           {context.state._Profile && (
             <>
-              <button
-                onClick={() => {
-                  context.setState({
-                    _View: "listing",
-                  });
-                }}
-                className={
-                  "ml-auto font-bold text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] mb-2 border-indigo-500 border-2 " +
-                  (context.state._View === "listing"
-                    ? "text-white bg-indigo-500 rounded-full"
-                    : "text-indigo-500 rounded-full")
-                }
-              >
-                LISTING
-              </button>
-              <div className="relative flex flex-row">
+              <div className="ml-auto relative flex flex-row">
                 <button
                   onClick={() => {
                     context.setState({
@@ -286,6 +276,38 @@ export const Navbar = ({ context }) => {
                   </div>
                 )}
               </div>
+              <button
+                onClick={() => {
+                  context.setState({
+                    _View: "listing",
+                  });
+                }}
+                className={
+                  "ml-2 font-bold text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] mb-2 border-indigo-500 border-2 " +
+                  (context.state._View === "listing"
+                    ? "text-white bg-indigo-500 rounded-full"
+                    : "text-indigo-500 rounded-full")
+                }
+              >
+                LISTING
+              </button>
+              {context.props.props.context.state._connected == 1 && (
+                <button
+                  className="ml-2 border-2 border-purple-500 rounded-full px-[1.5vw] lXs:px-[1vw] mb-2"
+                  onClick={() => {
+                    if (context.props.props.context.state._connected == 1) {
+                      requestBeaconDisconnection(
+                        context.props.props.context.state._connected,
+                        context
+                      );
+                    }
+                  }}
+                >
+                  <p className="text-purple-500 font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
+                    Disconnect
+                  </p>
+                </button>
+              )}
             </>
           )}
         </div>

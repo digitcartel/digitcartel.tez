@@ -11,11 +11,32 @@ export const requestBeaconConnection = (connected, context) => {
           }).then((e2) => {
             context.setState({
               _account: e.address,
-              _domain: e2.data.reverseRecord && e2.data.reverseRecord.domain.name,
+              _domain:
+                e2.data.reverseRecord && e2.data.reverseRecord.domain.name,
             });
           });
         }
       });
+    });
+  }
+};
+
+export const requestBeaconDisconnection = async (connected, context) => {
+  if (connected == 1) {
+    Client.client.clearActiveAccount().then(() => {
+      context.setState(
+        {
+          _account: "",
+          _domain: "",
+          _Profile: false,
+          _View: "floor"
+        },
+        () => {
+          context.props.props.context.setState({
+            _connected: 2,
+          });
+        }
+      );
     });
   }
 };

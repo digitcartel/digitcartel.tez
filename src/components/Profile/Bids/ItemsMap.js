@@ -499,8 +499,8 @@ const Map = ({ _FILTER, context }) => {
                   {_FILTER.ItemsCollectionOffers[0].length === 0 && (
                     <div className="w-full flex flex-row rounded-full py-[2vw] px-[1vw] items-center">
                       <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw]">
-                        There is no collection offers on the domains you own
-                        for now
+                        There is no collection offers on the domains you own for
+                        now
                       </h1>
                     </div>
                   )}
