@@ -1,19 +1,21 @@
 import { useEffect, useState } from "react";
 
-import * as Categories from "../../../data/categories.json";
 import { Tezos } from "../../../service/Connector/client";
 import { OpKind } from "@taquito/taquito";
 import { Items } from "./ItemsMap";
 import {
-  fetchObjktOffers,
+  fetchObjktCollectionOffers,
   fetchObjktOffersReceived,
   fetchObjktOffersSent,
 } from "../../../service/OBJKT/request";
+import { fetchOwned } from "../../../service/TezosDomains/request";
 
 export const Bids = ({ context }) => {
   const _FILTER = {
     ItemsBids: useState([]),
     ItemsDeBids: useState([]),
+    ItemsCollectionBids: useState([]),
+    ItemsCollectionOffers: useState([]),
     Loading: useState(true),
     Initialized: useState(false),
     UpdateReq: useState(false),
@@ -90,20 +92,82 @@ export const Bids = ({ context }) => {
       _FILTER.DeBidsSelectedPrice[1](price);
       _FILTER.DeBidsSelectReq[1]([false, {}]);
     },
-    Fetch: () => {
-      fetchObjktOffersSent({
+    CollectionBidsSelectReq: useState([false, {}]),
+    CollectionBidsSelectedPrice: useState(0),
+    CollectionBidsSelector: useState([]),
+    CollectionBidsSelected: useState([]),
+    CollectionBidsSelect: (e) => {
+      const compilePrice = () => {
+        let i = -1;
+        let price = 0;
+        while (++i < _FILTER.CollectionBidsSelected[0].length) {
+          price += parseInt(_FILTER.ItemsCollectionOffers[0].price);
+        }
+        return price;
+      };
+
+      let currentCollectionBidsSelected = _FILTER.CollectionBidsSelected[0];
+      let currentCollectionBidsSelector = _FILTER.CollectionBidsSelector[0];
+      if (
+        !currentCollectionBidsSelected.includes(e) &&
+        !currentCollectionBidsSelector.includes(e.tokenId)
+      ) {
+        if (_FILTER.CollectionBidsSelected[0].length === 0) {
+          currentCollectionBidsSelected.push(e);
+          currentCollectionBidsSelector.push(e.tokenId);
+          _FILTER.CollectionBidsSelector[1](currentCollectionBidsSelector);
+          _FILTER.CollectionBidsSelected[1](currentCollectionBidsSelected);
+        }
+      } else {
+        currentCollectionBidsSelected.splice(
+          currentCollectionBidsSelected.indexOf(e),
+          1
+        );
+        currentCollectionBidsSelector.splice(
+          currentCollectionBidsSelector.indexOf(e.tokenId),
+          1
+        );
+        _FILTER.CollectionBidsSelector[1](currentCollectionBidsSelector);
+        _FILTER.CollectionBidsSelected[1](currentCollectionBidsSelected);
+      }
+
+      let price = compilePrice();
+      _FILTER.CollectionBidsSelectedPrice[1](price);
+      _FILTER.CollectionBidsSelectReq[1]([false, {}]);
+    },
+    Fetch: (less, more, hash) => {
+      fetchObjktCollectionOffers({
         owner: context.state._account,
         contract: context.state._Contract.NFT,
-      }).then(async (e) => {
-        _FILTER.ItemsDeBids[1](e.data);
-        fetchObjktOffersReceived({
+      }).then((e) => {
+        if (e.data.offer.length > 0)
+          _FILTER.ItemsCollectionOffers[1](
+            e.data.offer.reduce((x, y) => {
+              return +y.price > +x.price ? y : x;
+            })
+          );
+        fetchOwned({
           owner: context.state._account,
-          contract: context.state._Contract.NFT,
-        }).then(async (e) => {
-          _FILTER.ItemsBids[1](e.data);
-          _FILTER.Loading[1](false);
-          _FILTER.UpdateReq[1](false);
-          _FILTER.Initialized[1](true);
+          less: less,
+          more: more,
+          hash: hash,
+        }).then((e2) => {
+          _FILTER.ItemsCollectionBids[1](e2.data);
+          fetchObjktOffersSent({
+            owner: context.state._account,
+            contract: context.state._Contract.NFT,
+          }).then(async (e3) => {
+            _FILTER.ItemsDeBids[1](e3.data);
+            fetchObjktOffersReceived({
+              owner: context.state._account,
+              contract: context.state._Contract.NFT,
+            }).then(async (e4) => {
+              _FILTER.ItemsBids[1](e4.data);
+              _FILTER.Loading[1](false);
+              _FILTER.UpdateReq[1](false);
+              _FILTER.Initialized[1](true);
+            });
+          });
         });
       });
     },
@@ -191,6 +255,66 @@ export const Bids = ({ context }) => {
         console.log(e);
       }
     },
+    CollectionBids: async () => {
+      const contractA = await Tezos.wallet.at(context.state._Contract.OBJKT);
+      const contractB = await Tezos.wallet.at(context.state._Contract.NFT);
+
+      const compileTransaction = () => {
+        let i = -1;
+        let txs = [];
+        let price = 0;
+        while (++i < _FILTER.CollectionBidsSelected[0].length) {
+          price += _FILTER.ItemsCollectionOffers[0].price;
+          txs.push({
+            kind: OpKind.TRANSACTION,
+            ...contractB.methods
+              .update_operators([
+                {
+                  add_operator: {
+                    owner: context.state._account,
+                    operator: context.state._Contract.OBJKT,
+                    token_id: parseInt(
+                      _FILTER.CollectionBidsSelected[0][i].tokenId
+                    ),
+                  },
+                },
+              ])
+              .toTransferParams(),
+          });
+          txs.push({
+            kind: OpKind.TRANSACTION,
+            ...contractA.methods
+              .fulfill_offer(
+                _FILTER.ItemsCollectionOffers[0].bigmap_key,
+                _FILTER.CollectionBidsSelected[0][i].tokenId
+              )
+              .toTransferParams(),
+          });
+        }
+
+        return [txs, price];
+      };
+
+      const addFees = (txs) => {
+        txs[0].push({
+          kind: OpKind.TRANSACTION,
+          to: context.state._DigitCartel,
+          amount: `${(2 * txs[1]) / 100}`,
+          mutez: true,
+        });
+        return txs[0];
+      };
+
+      let txs = addFees(compileTransaction());
+
+      try {
+        Tezos.wallet.batch([...txs]).send();
+        _FILTER.BidsSelected[1]([]);
+        _FILTER.BidsSelector[1]([]);
+      } catch (e) {
+        console.log(e);
+      }
+    },
   };
 
   useEffect(() => {
@@ -208,6 +332,10 @@ export const Bids = ({ context }) => {
 
     if (_FILTER.DeBidsSelectReq[0][0]) {
       _FILTER.DeBidsSelect(_FILTER.DeBidsSelectReq[0][1]);
+    }
+
+    if (_FILTER.CollectionBidsSelectReq[0][0]) {
+      _FILTER.CollectionBidsSelect(_FILTER.CollectionBidsSelectReq[0][1]);
     }
   });
 

@@ -73,6 +73,34 @@ export const fetchObjktOffersReceived = async (params) => {
   });
 };
 
+export const fetchObjktCollectionOffers = async (params) => {
+  return await OBJKT.query({
+    query: gql`
+      query fetchOffers {
+        offer(
+          where: {
+            status: { _eq: "active" }
+            fa_contract: { _eq: "${params.contract}" }
+            buyer_address: { _neq: "${params.owner}" }
+            collection_offer: { _eq: "${params.contract}" }
+          }
+          order_by: { timestamp: desc }
+        ) {
+          id
+          price
+          status
+          token {
+            token_id
+            name
+          }
+          bigmap_key
+          collection_offer
+        }
+      }
+    `,
+  });
+};
+
 export const fetchObjktFor = async (params) => {
   return await OBJKT.query({
     query: gql`query fetchFa {
