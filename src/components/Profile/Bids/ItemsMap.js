@@ -488,7 +488,7 @@ const Map = ({ _FILTER, context }) => {
               )}
               <div className="my-4">
                 <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] font-bold uppercase px-2">
-                  Collections Offers Available
+                  Collection Offers Available
                 </h1>
                 <HeadBids />
                 <div className="bg-white bg-opacity-10 border-indigo-500 border-2 my-2 rounded-xl">
@@ -499,7 +499,7 @@ const Map = ({ _FILTER, context }) => {
                   {_FILTER.ItemsCollectionOffers[0].length === 0 && (
                     <div className="w-full flex flex-row rounded-full py-[2vw] px-[1vw] items-center">
                       <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw]">
-                        There is no collections offers on the domains you own
+                        There is no collection offers on the domains you own
                         for now
                       </h1>
                     </div>
