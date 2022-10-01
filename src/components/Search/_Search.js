@@ -54,12 +54,6 @@ export const Search = ({ context }) => {
     },
   };
 
-  useEffect(() => {
-    if (_FILTER.UpdateReq[0][0]) {
-      _FILTER.Fetch(_FILTER.UpdateReq[0][1]);
-    }
-  });
-
   return (
     <>
       <Items _FILTER={_FILTER} context={context} />

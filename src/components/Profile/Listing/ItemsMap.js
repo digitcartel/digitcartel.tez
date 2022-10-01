@@ -1,5 +1,4 @@
-import { requestBeaconConnection } from "../../service/Connector/request";
-import { Offers } from "../Offers/_Offers";
+import { useState } from "react";
 
 const Map = ({ _FILTER, context }) => {
   const Head = () => {
@@ -10,7 +9,7 @@ const Map = ({ _FILTER, context }) => {
         </h1>
         <div className="ml-auto border-white border-2 flex flex-row items-center justify-center rounded-full px-[1.5vw] lXs:px-[1vw]">
           <p className="text-white font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
-            Buy
+            Manage
           </p>
         </div>
       </div>
@@ -20,28 +19,17 @@ const Map = ({ _FILTER, context }) => {
   const Floor = () => {
     return (
       <div className="w-full">
-        <div className="w-full bg-white border-indigo-500 border-2 bg-opacity-10 flex flex-row rounded-b-xl p-[2vw] lXs:p-[1vw] items-center">
+        <div className="w-full bg-white border-indigo-500 border-2 bg-opacity-10 flex flex-row rounded-xl p-[2vw] lXs:p-[1vw] items-center">
           {_FILTER.Loading[0] && (
             <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw]">
               LOADING, PLEASE WAIT
             </h1>
           )}
-          {!_FILTER.Loading[0] && _FILTER.Items[0].offers.items.length > 0 && (
+          {!_FILTER.Loading[0] && (
             <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw]">
-              <span className="uppercase">{_FILTER.Base[0].name}</span> .TEZ
-              FLOOR:{" "}
-              <span className="font-bold">
-                {_FILTER.Floor[0] / 10 ** 6}
-                tz
-              </span>
+              MANAGE LISTING
             </h1>
           )}
-          {!_FILTER.Loading[0] &&
-            _FILTER.Items[0].offers.items.length === 0 && (
-              <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw]">
-                {_FILTER.Base[0].name} .TEZ
-              </h1>
-            )}
           <a
             href="https://twitter.com/tezos999club"
             target="_blank"
@@ -70,60 +58,26 @@ const Map = ({ _FILTER, context }) => {
   const Map = () => {
     return (
       <>
-        {_FILTER.Items[0].offers.items.map((e, i) => {
+        {_FILTER.Items[0].domains.items.map((e, i) => {
           const Domain = () => {
             return (
-              <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] whitespace-nowrap">
-                {e.domain.name}
+              <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw]">
+                {e.name}
               </h1>
-            );
-          };
-
-          const Price = () => {
-            return (
-              <div className="relative w-full mr-auto flex flex-row items-center justify-end">
-                <h1 className=" text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] truncate">
-                  {(
-                    _FILTER.Items[0].offers.items[i].price / 10 ** 6 || 0
-                  ).toFixed(2)}
-                  tz
-                </h1>
-                <h1 className=" text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] truncate">
-                  <span className="text-indigo-500">
-                    {(
-                      context.state._EthereumPrice *
-                      (_FILTER.Items[0].offers.items[i].price / 10 ** 6 || 0)
-                    ).toFixed(2)}
-                    Ξ
-                  </span>
-                </h1>
-                <h1 className=" text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] truncate">
-                  <span className="text-purple-500">
-                    {(
-                      context.state._TezosPrice *
-                      (_FILTER.Items[0].offers.items[i].price / 10 ** 6 || 0)
-                    ).toFixed(2)}
-                    $
-                  </span>
-                </h1>
-              </div>
             );
           };
 
           const ActionButton = () => {
             return (
-              <>
-                {context.state._account != "" && (
-                  <Offers context={context} domain={e} />
-                )}
-                {context.state._account != "" && (
+              <div className="ml-auto flex flex-row">
+                {_FILTER.Listing[0][i].length === 0 && (
                   <button
                     onClick={() => {
-                      _FILTER.SelectReq[1]([true, e]);
+                      _FILTER.ListSelectReq[1]([true, e]);
                     }}
                     className={
                       "ml-2 flex flex-row items-center justify-center rounded-full px-[1.5vw] lXs:px-[1vw] border-indigo-500 border-2 " +
-                      (_FILTER.Selector[0].includes(e.tokenId)
+                      (_FILTER.ListSelector[0].includes(e.tokenId)
                         ? "bg-indigo-500"
                         : "")
                     }
@@ -131,31 +85,40 @@ const Map = ({ _FILTER, context }) => {
                     <p
                       className={
                         "font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase " +
-                        (_FILTER.Selector[0].includes(e.tokenId)
+                        (_FILTER.ListSelector[0].includes(e.tokenId)
                           ? "text-white"
                           : "text-indigo-500")
                       }
                     >
-                      Buy
+                      List
                     </p>
                   </button>
                 )}
-                {context.state._account === "" && (
+                {_FILTER.Listing[0][i].length > 0 && (
                   <button
-                    className="flex flex-row items-center justify-center rounded-full px-[1.5vw] lXs:px-[1vw] border-indigo-500 border-2"
                     onClick={() => {
-                      requestBeaconConnection(
-                        context.props.props.context.state._connected,
-                        context
-                      );
+                      _FILTER.DeListSelectReq[1]([true, e]);
                     }}
+                    className={
+                      "ml-2 flex flex-row items-center justify-center rounded-full px-[1.5vw] lXs:px-[1vw] border-purple-500 border-2 " +
+                      (_FILTER.DeListSelector[0].includes(e.tokenId)
+                        ? "bg-purple-500"
+                        : "")
+                    }
                   >
-                    <p className="font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase text-indigo-500">
-                      Connect
+                    <p
+                      className={
+                        "font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase " +
+                        (_FILTER.DeListSelector[0].includes(e.tokenId)
+                          ? "text-white"
+                          : "text-purple-500")
+                      }
+                    >
+                      Delist
                     </p>
                   </button>
                 )}
-              </>
+              </div>
             );
           };
 
@@ -163,7 +126,6 @@ const Map = ({ _FILTER, context }) => {
             <div key={i + "_mapCollection"} className="w-full">
               <div className="w-full flex flex-row rounded-full py-[2vw] px-[1vw] items-center">
                 <Domain />
-                <Price />
                 <ActionButton />
               </div>
             </div>
@@ -176,16 +138,16 @@ const Map = ({ _FILTER, context }) => {
   const PageManager = () => {
     return (
       <>
-        {_FILTER.Items[0].offers && (
+        {_FILTER.Items[0].domains && (
           <div className="w-full flex flex-row bg-indigo-500 border-white border-2 rounded-xl p-[2vw] lXs:p-[1vw]">
-            {_FILTER.Items[0].offers.pageInfo.hasPreviousPage && (
+            {_FILTER.Items[0].domains.pageInfo.hasPreviousPage && (
               <button
                 className="border-white border-2 rounded-full px-[1.5vw] lXs:px-[1vw] mr-auto"
                 onClick={() => {
                   _FILTER.Fetch(
                     true,
                     false,
-                    _FILTER.Items[0].offers.pageInfo.startCursor
+                    _FILTER.Items[0].domains.pageInfo.startCursor
                   );
                 }}
               >
@@ -194,14 +156,14 @@ const Map = ({ _FILTER, context }) => {
                 </p>
               </button>
             )}
-            {_FILTER.Items[0].offers.pageInfo.hasNextPage && (
+            {_FILTER.Items[0].domains.pageInfo.hasNextPage && (
               <button
                 className="border-white border-2 rounded-full px-[1.5vw] lXs:px-[1vw] ml-auto"
                 onClick={() => {
                   _FILTER.Fetch(
                     false,
                     true,
-                    _FILTER.Items[0].offers.pageInfo.endCursor
+                    _FILTER.Items[0].domains.pageInfo.endCursor
                   );
                 }}
               >
@@ -217,47 +179,88 @@ const Map = ({ _FILTER, context }) => {
   };
 
   const TxManager = () => {
+    const Price = useState(0);
+
     return (
       <>
-        {_FILTER.Selected[0].length > 0 && (
+        {_FILTER.ListSelected[0].length > 0 && (
           <>
             <div className=" bg-white rounded-xl my-2 p-[1.5vw]">
               <div className="flex flex-row items-center">
                 <button
                   className="border-indigo-500 border-2 rounded-full px-[1.5vw] lXs:px-[1vw] "
                   onClick={() => {
-                    _FILTER.Buy();
+                    _FILTER.List(Price[0]);
                   }}
                 >
                   <p className="text-indigo-500 font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
-                    buy
+                    List
                   </p>
                 </button>
                 <p className="ml-2 text-indigo-500 font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
-                  total
+                  XTZ
                 </p>
-                <p className="ml-2 text-indigo-500 text-opacity-80 text-[2.5vw] lXs:text-[1.5vw]">
-                  {(_FILTER.SelectedPrice[0] +
-                    (2 * _FILTER.SelectedPrice[0]) / 100) /
-                    10 ** 6}
-                  tz
-                </p>
+                <input
+                  className=" text-black bg-transparent text-[2.5vw] lXs:text-[1.5vw] px-2"
+                  placeholder="price"
+                  type="number"
+                  onChange={(e) => {
+                    Price[1](e.target.value);
+                  }}
+                />
               </div>
               <div className="flex flex-row flex-wrap items-center justify-start">
-                {_FILTER.Selected[0].map((e, i) => {
+                {_FILTER.ListSelected[0].map((e, i) => {
                   return (
                     <button
                       onClick={() => {
-                        _FILTER.SelectReq[1]([true, e]);
+                        _FILTER.ListSelectReq[1]([true, e]);
                       }}
                       className={
                         "text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] my-1 " +
-                        (_FILTER.Selector[0].includes(e.tokenId)
+                        (_FILTER.ListSelector[0].includes(e.tokenId)
                           ? "bg-indigo-500 rounded-full mr-1"
                           : "")
                       }
                     >
-                      {e.domain.name}
+                      {e.name}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </>
+        )}
+        {_FILTER.DeListSelected[0].length > 0 && (
+          <>
+            <div className=" bg-white rounded-xl my-2 p-[1.5vw]">
+              <div className="flex flex-row items-center">
+                <button
+                  className="border-indigo-500 border-2 rounded-full px-[1.5vw] lXs:px-[1vw] "
+                  onClick={() => {
+                    _FILTER.DeList();
+                  }}
+                >
+                  <p className="text-indigo-500 font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
+                    Delist
+                  </p>
+                </button>
+              </div>
+              <div className="flex flex-row flex-wrap items-center justify-start">
+                {_FILTER.DeListSelected[0].map((e, i) => {
+                  return (
+                    <button
+                      onClick={() => {
+                        _FILTER.DeListSelectReq[1]([true, e]);
+                      }}
+                      className={
+                        "text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] my-1 " +
+                        (_FILTER.DeListSelector[0].includes(e.tokenId)
+                          ? "bg-indigo-500 rounded-full mr-1"
+                          : "")
+                      }
+                    >
+                      {e.name}
                     </button>
                   );
                 })}
@@ -277,8 +280,8 @@ const Map = ({ _FILTER, context }) => {
           <Head />
           <TxManager />
           <div className="bg-white bg-opacity-10 border-indigo-500 border-2 my-2 rounded-xl">
-            {_FILTER.Items[0].offers.items.length > 0 && <Map />}
-            {_FILTER.Items[0].offers.items.length == 0 && (
+            {_FILTER.Items[0].domains.items.length > 0 && <Map />}
+            {_FILTER.Items[0].domains.items.length == 0 && (
               <div className="w-full flex flex-row rounded-full py-[2vw] px-[1vw] items-center">
                 <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw]">
                   No result

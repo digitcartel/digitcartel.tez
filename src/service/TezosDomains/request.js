@@ -74,3 +74,58 @@ export const fetchDomain = async (params) => {
     }`,
   });
 };
+
+export const fetchAddress = async (params) => {
+  return await TEZDOM.query({
+    query: gql`{
+      reverseRecord(address: "${params.lookFor}") {
+        domain {
+          name
+        }
+      }
+    }`,
+  });
+};
+
+export const fetchOwned = async (params) => {
+  return await TEZDOM.query({
+    query: gql`{
+      domains(
+        where: { 
+          owner: {
+            equalTo: "${params.owner}"
+          }
+        }
+        order: { direction:ASC field:NAME } 
+        ${params.more ? `after: "${params.hash}"` : ""}
+        ${params.less ? `before: "${params.hash}"` : ""}
+      ) {
+        pageInfo {
+          hasNextPage
+          hasPreviousPage
+          endCursor
+          startCursor
+        }
+        items {
+          name
+          tokenId
+        }
+      }
+    }`,
+  });
+};
+
+export const fetchListing = async (params) => {
+  return await TEZDOM.query({
+    query: gql`{
+      offers(
+        where: { domainName: { in: ["${params.lookFor}"] }, state: { in: ACTIVE } }
+        order: { direction: ASC, field: PRICE }
+      ) {
+        items {
+          price
+        }
+      }
+    }`,
+  });
+};

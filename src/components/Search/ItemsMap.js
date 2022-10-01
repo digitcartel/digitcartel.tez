@@ -177,6 +177,7 @@ export const Items = ({ _FILTER, context }) => {
               className="border-indigo-500 border-2 rounded-full px-[1.5vw] lXs:px-[1vw] my-4"
               onClick={() => {
                 _FILTER.UpdateReq[1]([true, InputState[0]]);
+                _FILTER.Fetch(InputState[0]);
               }}
             >
               <p className="text-indigo-500 font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
