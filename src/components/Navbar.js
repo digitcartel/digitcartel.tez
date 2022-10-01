@@ -187,9 +187,21 @@ export const Navbar = ({ context }) => {
 
       <div className="w-[95vw] lXs:w-[60vw] flex flex-col mt-10 mx-auto">
         <div className="flex flex-row items-center px-2">
-          <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] font-bold">
-            GM ANONS
-          </h1>
+          <div className="flex flex-col">
+            <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] font-bold leading-none">
+              GM ANONS
+            </h1>
+            <div className="flex flex-row leading-none">
+              <h1 className="text-white uppercase text-[1.2vw]">Owners</h1>
+              <h1 className="text-white font-bold text-[1.2vw] ml-1">
+                {context.state._Collection.owners}
+              </h1>
+              <h1 className="text-white uppercase text-[1.2vw] ml-2">Supply</h1>
+              <h1 className="text-white font-bold text-[1.2vw] ml-1">
+                {context.state._Collection.items}
+              </h1>
+            </div>
+          </div>
           {!context.state._Profile && (
             <>
               <button
@@ -258,6 +270,73 @@ export const Navbar = ({ context }) => {
               </button>
             </>
           )}
+        </div>
+        <div className="flex flex-row items-center">
+          <div className="w-full  bg-white bg-opacity-10 border-indigo-500 border-2 mb-2 rounded-xl">
+            <div className="w-full flex flex-row rounded-full pt-[1vw] px-[1vw] items-center">
+              <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw]">
+                🔥Sales
+              </h1>
+            </div>
+            <div className="w-full flex flex-col mb-[1vw] items-center">
+              {context.state._LastSales.slice(0, 5).map((e, i) => {
+                return (
+                  <div className="w-full flex flex-row rounded-full px-[1vw] items-center justify-between">
+                    <h1 className="text-white text-[2vw] lXs:text-[1vw] px-[1.5vw] lXs:px-[1vw] truncate">
+                      {e.domainName}
+                    </h1>
+                    <h1 className="text-indigo-500 font-bold text-[2vw] lXs:text-[1vw] px-[1.5vw] lXs:px-[1vw]">
+                      {e.price / 10 ** 6}tz
+                    </h1>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          <div className="w-full mx-2 bg-white bg-opacity-10 border-indigo-500 border-2 mb-2 rounded-xl">
+            <div className="w-full flex flex-row rounded-full pt-[1vw] px-[1vw] items-center">
+              <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw]">
+                🎈Offers
+              </h1>
+            </div>
+            <div className="w-full flex flex-col mb-[1vw] items-center">
+              {context.state._LastOffers.slice(0, 5).map((e, i) => {
+                return (
+                  <div className="w-full flex flex-row rounded-full px-[1vw] items-center justify-between">
+                    <h1 className="text-white text-[2vw] lXs:text-[1vw] px-[1.5vw] lXs:px-[1vw] truncate">
+                      {e.token && e.token.name}
+                      {!e.token && (
+                        <span className="text-purple-500 uppercase">
+                          Collection
+                        </span>
+                      )}
+                    </h1>
+                    <h1 className="text-indigo-500 font-bold text-[2vw] lXs:text-[1vw] px-[1.5vw] lXs:px-[1vw]">
+                      {e.price / 10 ** 6}tz
+                    </h1>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          <div className="w-full bg-white bg-opacity-10 border-indigo-500 border-2 mb-2 rounded-xl">
+            <div className="w-full flex flex-row rounded-full pt-[1vw] px-[1vw] items-center">
+              <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw]">
+                💾Registration
+              </h1>
+            </div>
+            <div className="w-full flex flex-col mb-[1vw] items-center">
+              {context.state._LastRegs.slice(0, 5).map((e, i) => {
+                return (
+                  <div className="w-full flex flex-row rounded-full px-[1vw] items-center justify-between">
+                    <h1 className="text-white text-[2vw] lXs:text-[1vw] px-[1.5vw] lXs:px-[1vw] truncate">
+                      {e.domainName}
+                    </h1>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </div>
     </>

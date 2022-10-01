@@ -129,3 +129,43 @@ export const fetchListing = async (params) => {
     }`,
   });
 };
+
+export const fetchTezDomLastSales = async (params) => {
+  return await TEZDOM.query({
+    query: gql`
+      query fetchLastSales {
+        events(
+          where: { type: { in: OFFER_EXECUTED_EVENT } }
+          order: { direction: DESC, field: TIMESTAMP }
+        ) {
+          items {
+            ... on OfferExecutedEvent {
+              domainName
+              price
+            }
+          }
+        }
+      }
+    `,
+  });
+};
+
+export const fetchTezDomLastReg = async (params) => {
+  return await TEZDOM.query({
+    query: gql`
+      query fetchLastReg {
+        events(
+          where: { type: { in: DOMAIN_BUY_EVENT } }
+          order: { direction: DESC, field: TIMESTAMP }
+        ) {
+          items {
+            ... on DomainBuyEvent {
+              domainName
+              price
+            }
+          }
+        }
+      }
+    `,
+  });
+};

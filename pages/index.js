@@ -2,13 +2,20 @@ import React from "react";
 import Head from "next/head";
 
 import { Navbar } from "../src/components/Navbar";
-import { fetchObjktCollection } from "../src/service/OBJKT/request";
+import {
+  fetchObjktCollection,
+  fetchObjktLastOffers,
+} from "../src/service/OBJKT/request";
 import { fetch10kSupply } from "../src/utils/fetch10kSupply";
 import { fetch999Holders } from "../src/utils/fetch999holders";
 import { Floor } from "../src/components/Floor/_Floor";
 import { Search } from "../src/components/Search/_Search";
 import { Listing } from "../src/components/Profile/Listing/_Listing";
 import { Bids } from "../src/components/Profile/Bids/_Bids";
+import {
+  fetchTezDomLastReg,
+  fetchTezDomLastSales,
+} from "../src/service/TezosDomains/request";
 
 class Index extends React.Component {
   constructor({ props }) {
@@ -23,6 +30,9 @@ class Index extends React.Component {
       },
       _DigitCartel: "tz1X4g93kKkH1hkRAnenzUkJe44U61AQoQn6",
       _Collection: {},
+      _LastOffers: [],
+      _LastSales: [],
+      _LastRegs: [],
       _TezosPrice: 0,
       _EthereumPrice: 0,
       _View: "floor",
@@ -58,22 +68,31 @@ class Index extends React.Component {
 
   initBase = () => {
     fetchObjktCollection({
-      contract: this.state._TEZCTR,
+      contract: this.state._Contract.NFT,
     }).then((e) => {
-      this.setState({
-        _Collection: e.data.fa[0],
+      console.log(e)
+      fetchTezDomLastReg({ contract: this.state._Contract.NFT }).then((e2) => {
+        fetchTezDomLastSales({ contract: this.state._Contract.NFT }).then(
+          (e3) => {
+            fetchObjktLastOffers({ contract: this.state._Contract.NFT }).then(
+              async (e4) => {
+                (await fetch("https://api.coingecko.com/api/v3/coins/tezos"))
+                  .json()
+                  .then((e5) => {
+                    this.setState({
+                      _Collection: e.data.fa[0],
+                      _LastRegs: e2.data.events.items,
+                      _LastSales: e3.data.events.items,
+                      _LastOffers: e4.data.offer,
+                      _TezosPrice: e5.market_data.current_price.usd,
+                      _EthereumPrice: e5.market_data.current_price.eth,
+                    });
+                  });
+              }
+            );
+          }
+        );
       });
-
-      fetch("https://api.coingecko.com/api/v3/coins/tezos")
-        .then((e) => {
-          return e.json();
-        })
-        .then((e) => {
-          this.setState({
-            _TezosPrice: e.market_data.current_price.usd,
-            _EthereumPrice: e.market_data.current_price.eth,
-          });
-        });
     });
   };
 
@@ -84,6 +103,7 @@ class Index extends React.Component {
   }
 
   render() {
+    console.log(this.state)
     return (
       <>
         <this.Title />
