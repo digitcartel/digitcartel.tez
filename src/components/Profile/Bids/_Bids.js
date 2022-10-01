@@ -162,10 +162,17 @@ export const Bids = ({ context }) => {
               owner: context.state._account,
               contract: context.state._Contract.NFT,
             }).then(async (e4) => {
-              _FILTER.ItemsBids[1](e4.data);
-              _FILTER.Loading[1](false);
-              _FILTER.UpdateReq[1](false);
-              _FILTER.Initialized[1](true);
+              context.setState(
+                {
+                  _OffersReceived: e4.data.offer.length,
+                },
+                () => {
+                  _FILTER.ItemsBids[1](e4.data);
+                  _FILTER.Loading[1](false);
+                  _FILTER.UpdateReq[1](false);
+                  _FILTER.Initialized[1](true);
+                }
+              );
             });
           });
         });

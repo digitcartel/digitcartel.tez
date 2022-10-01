@@ -23,42 +23,49 @@ export const Navbar = ({ context }) => {
 
   const ConnectButton = () => {
     return (
-      <button
-        className="ml-4 border-2 border-indigo-500 rounded-full px-[1.5vw] lXs:px-[1vw]"
-        onClick={() => {
-          if (context.props.props.context.state._connected == 2) {
-            requestBeaconConnection(
-              context.props.props.context.state._connected,
-              context
-            );
-          } else {
-            context.setState(
-              {
-                _View: context.state._Profile ? "floor" : "listing",
-              },
-              () => {
-                context.setState({
-                  _Profile: !context.state._Profile,
-                });
-              }
-            );
-          }
-        }}
-      >
-        {context.props.props.context.state._connected == 2 ? (
-          <p className="text-indigo-500 font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
-            connect
-          </p>
-        ) : (
-          <p className="text-indigo-500 font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
-            {!context.state._Profile &&
-              (context.state._domain
-                ? context.state._domain
-                : context.state._account.slice(0, 6))}
-            {context.state._Profile && "Close"}
-          </p>
+      <div className="relative">
+        <button
+          className="ml-4 border-2 border-indigo-500 rounded-full px-[1.5vw] lXs:px-[1vw]"
+          onClick={() => {
+            if (context.props.props.context.state._connected == 2) {
+              requestBeaconConnection(
+                context.props.props.context.state._connected,
+                context
+              );
+            } else {
+              context.setState(
+                {
+                  _View: context.state._Profile ? "floor" : "listing",
+                },
+                () => {
+                  context.setState({
+                    _Profile: !context.state._Profile,
+                  });
+                }
+              );
+            }
+          }}
+        >
+          {context.props.props.context.state._connected == 2 ? (
+            <p className="text-indigo-500 font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
+              connect
+            </p>
+          ) : (
+            <p className="text-indigo-500 font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
+              {!context.state._Profile &&
+                (context.state._domain
+                  ? context.state._domain
+                  : context.state._account.slice(0, 6))}
+              {context.state._Profile && "Close"}
+            </p>
+          )}
+        </button>
+        {context.state._account != "" && (
+          <div className="absolute left-2 top-0 flex flex-col items-center justify-center w-5 h-5 rounded-full bg-purple-500 text-white font-bold">
+            {context.state._OffersReceived}
+          </div>
         )}
-      </button>
+      </div>
     );
   };
 

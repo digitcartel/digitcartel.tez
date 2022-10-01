@@ -35,6 +35,7 @@ class Index extends React.Component {
       _LastOffers: [],
       _LastSales: [],
       _LastRegs: [],
+      _OffersReceived: 0,
       _TezosPrice: 0,
       _EthereumPrice: 0,
       _View: "floor",
