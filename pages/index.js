@@ -70,7 +70,6 @@ class Index extends React.Component {
     fetchObjktCollection({
       contract: this.state._Contract.NFT,
     }).then((e) => {
-      console.log(e)
       fetchTezDomLastReg({ contract: this.state._Contract.NFT }).then((e2) => {
         fetchTezDomLastSales({ contract: this.state._Contract.NFT }).then(
           (e3) => {
@@ -97,13 +96,13 @@ class Index extends React.Component {
   };
 
   componentDidMount() {
+
     this.initBase();
     ///fetch999Holders(this);
     ///fetch10kSupply(this);
   }
 
   render() {
-    console.log(this.state)
     return (
       <>
         <this.Title />

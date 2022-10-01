@@ -192,11 +192,11 @@ export const Navbar = ({ context }) => {
               GM ANONS
             </h1>
             <div className="flex flex-row leading-none">
-              <h1 className="text-white uppercase text-[1.2vw]">Owners</h1>
+              <h1 className="text-indigo-500 font-bold uppercase text-[1.2vw]">Owners</h1>
               <h1 className="text-white font-bold text-[1.2vw] ml-1">
                 {context.state._Collection.owners}
               </h1>
-              <h1 className="text-white uppercase text-[1.2vw] ml-2">Supply</h1>
+              <h1 className="text-purple-500 font-bold uppercase text-[1.2vw] ml-2">Supply</h1>
               <h1 className="text-white font-bold text-[1.2vw] ml-1">
                 {context.state._Collection.items}
               </h1>
