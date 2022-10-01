@@ -13,9 +13,11 @@ import { Search } from "../src/components/Search/_Search";
 import { Listing } from "../src/components/Profile/Listing/_Listing";
 import { Bids } from "../src/components/Profile/Bids/_Bids";
 import {
+  fetchAddress,
   fetchTezDomLastReg,
   fetchTezDomLastSales,
 } from "../src/service/TezosDomains/request";
+import { Client } from "../src/service/Connector/client";
 
 class Index extends React.Component {
   constructor({ props }) {
@@ -96,6 +98,26 @@ class Index extends React.Component {
   };
 
   componentDidMount() {
+    Client.client.getActiveAccount().then((e) => {
+      if (e !== undefined) {
+        fetchAddress({
+          lookFor: e.address,
+        }).then((e2) => {
+          this.setState(
+            {
+              _account: e.address,
+              _domain:
+                e2.data.reverseRecord && e2.data.reverseRecord.domain.name,
+            },
+            () => {
+              this.props.props.context.setState({
+                _connected: 1,
+              });
+            }
+          );
+        });
+      }
+    });
     this.initBase();
     ///fetch999Holders(this);
     ///fetch10kSupply(this);
