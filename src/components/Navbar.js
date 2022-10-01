@@ -23,7 +23,7 @@ export const Navbar = ({ context }) => {
 
   const ConnectButton = () => {
     return (
-      <div className="relative">
+      <div className="relative flex flex-row">
         <button
           className="ml-4 border-2 border-indigo-500 rounded-full px-[1.5vw] lXs:px-[1vw]"
           onClick={() => {
@@ -61,7 +61,7 @@ export const Navbar = ({ context }) => {
           )}
         </button>
         {context.state._account != "" && !context.state._Profile && (
-          <div className="absolute left-2 top-0 flex flex-col items-center justify-center w-5 h-5 rounded-full bg-purple-500 text-white font-bold">
+          <div className="absolute left-3 tM:left-1 top-0 flex flex-col items-center justify-center w-3 h-3 tM:w-5 tM:h-5 rounded-full bg-purple-500 text-white font-bold text-[2vw] lXs:text-base">
             {context.state._OffersReceived}
           </div>
         )}
@@ -264,7 +264,7 @@ export const Navbar = ({ context }) => {
               >
                 LISTING
               </button>
-              <div className="relative">
+              <div className="relative flex flex-row">
                 <button
                   onClick={() => {
                     context.setState({
@@ -281,7 +281,7 @@ export const Navbar = ({ context }) => {
                   BIDS
                 </button>
                 {context.state._account != "" && context.state._Profile && (
-                  <div className="absolute left-1 top-0 flex flex-col items-center justify-center w-5 h-5 rounded-full bg-purple-500 text-white font-bold">
+                  <div className="absolute left-1 tM:left-0 top-0 flex flex-col items-center justify-center w-3 h-3 tM:w-5 tM:h-5 rounded-full bg-purple-500 text-white font-bold text-[2vw] lXs:text-base">
                     {context.state._OffersReceived}
                   </div>
                 )}
