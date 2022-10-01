@@ -321,191 +321,193 @@ const Map = ({ _FILTER, context }) => {
     );
   };
 
-  const TxManager = () => {
-    return (
-      <>
-        {_FILTER.BidsSelected[0].length > 0 && (
-          <>
-            <div className=" bg-white rounded-xl my-2 p-[1.5vw]">
-              <div className="flex flex-row items-center">
-                <button
-                  className="border-indigo-500 border-2 rounded-full px-[1.5vw] lXs:px-[1vw] "
-                  onClick={() => {
-                    _FILTER.Bids();
-                  }}
-                >
-                  <p className="text-indigo-500 font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
-                    ACCEPT
-                  </p>
-                </button>
-              </div>
-              <div className="flex flex-row flex-wrap items-center justify-start">
-                {_FILTER.BidsSelected[0].map((e, i) => {
-                  return (
-                    <button
-                      onClick={() => {
-                        _FILTER.BidsSelectReq[1]([true, e]);
-                      }}
-                      className={
-                        "text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] my-1 " +
-                        (_FILTER.BidsSelector[0].includes(e.tokenId)
-                          ? "bg-indigo-500 rounded-full mr-1"
-                          : "")
-                      }
-                    >
-                      {e.token.name}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          </>
-        )}
-        {_FILTER.DeBidsSelected[0].length > 0 && (
-          <>
-            <div className=" bg-white rounded-xl my-2 p-[1.5vw]">
-              <div className="flex flex-row items-center">
-                <button
-                  className="border-indigo-500 border-2 rounded-full px-[1.5vw] lXs:px-[1vw] "
-                  onClick={() => {
-                    _FILTER.DeBids();
-                  }}
-                >
-                  <p className="text-indigo-500 font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
-                    CANCEL
-                  </p>
-                </button>
-              </div>
-              <div className="flex flex-row flex-wrap items-center justify-start">
-                {_FILTER.DeBidsSelected[0].map((e, i) => {
-                  return (
-                    <button
-                      onClick={() => {
-                        _FILTER.DeBidsSelectReq[1]([true, e]);
-                      }}
-                      className={
-                        "text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] my-1 " +
-                        (_FILTER.DeBidsSelector[0].includes(e.tokenId)
-                          ? "bg-indigo-500 rounded-full mr-1"
-                          : "")
-                      }
-                    >
-                      {e.token.name}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          </>
-        )}
-        {_FILTER.CollectionBidsSelected[0].length > 0 && (
-          <>
-            <div className=" bg-white rounded-xl my-2 p-[1.5vw]">
-              <div className="flex flex-row items-center">
-                <button
-                  className="border-indigo-500 border-2 rounded-full px-[1.5vw] lXs:px-[1vw] "
-                  onClick={() => {
-                    _FILTER.CollectionBids();
-                  }}
-                >
-                  <p className="text-indigo-500 font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
-                    ACCEPT
-                  </p>
-                </button>
-              </div>
-              <div className="flex flex-row flex-wrap items-center justify-start">
-                {_FILTER.CollectionBidsSelected[0].map((e, i) => {
-                  return (
-                    <button
-                      onClick={() => {
-                        _FILTER.CollectionBidsSelectReq[1]([true, e]);
-                      }}
-                      className={
-                        "text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] my-1 " +
-                        (_FILTER.CollectionBidsSelector[0].includes(e.tokenId)
-                          ? "bg-indigo-500 rounded-full mr-1"
-                          : "")
-                      }
-                    >
-                      {e.name}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          </>
-        )}
-      </>
-    );
-  };
-
   return (
     <>
       <Floor />
       {!_FILTER.Loading[0] && (
         <>
-          <TxManager />
           {_FILTER.ItemsDeBids[0].offer && (
-            <div className="my-4">
-              <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] font-bold uppercase px-2">
-                Offers Placed
-              </h1>
-              <HeadDeBids />
-              <div className="bg-white bg-opacity-10 border-indigo-500 border-2 my-2 rounded-xl">
-                {_FILTER.ItemsDeBids[0].offer.length > 0 && <MapDeBids />}
-                {_FILTER.ItemsDeBids[0].offer.length == 0 && (
-                  <div className="w-full flex flex-row rounded-full py-[2vw] px-[1vw] items-center">
-                    <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw]">
-                      You didn't placed any offers yet, if you want to place an
-                      offer use the Floor checker or the search bar at the top
-                    </h1>
+            <>
+              {_FILTER.DeBidsSelected[0].length > 0 && (
+                <>
+                  <div className=" bg-white rounded-xl my-2 p-[1.5vw]">
+                    <div className="flex flex-row items-center">
+                      <button
+                        className="border-indigo-500 border-2 rounded-full px-[1.5vw] lXs:px-[1vw] "
+                        onClick={() => {
+                          _FILTER.DeBids();
+                        }}
+                      >
+                        <p className="text-indigo-500 font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
+                          CANCEL
+                        </p>
+                      </button>
+                    </div>
+                    <div className="flex flex-row flex-wrap items-center justify-start">
+                      {_FILTER.DeBidsSelected[0].map((e, i) => {
+                        return (
+                          <button
+                            onClick={() => {
+                              _FILTER.DeBidsSelectReq[1]([true, e]);
+                            }}
+                            className={
+                              "text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] my-1 " +
+                              (_FILTER.DeBidsSelector[0].includes(e.tokenId)
+                                ? "bg-indigo-500 rounded-full mr-1"
+                                : "")
+                            }
+                          >
+                            {e.token && e.token.name}
+                            {!e.token && "Collection Offer"}
+                          </button>
+                        );
+                      })}
+                    </div>
                   </div>
-                )}
+                </>
+              )}
+              <div className="my-4">
+                <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] font-bold uppercase px-2">
+                  Offers Placed
+                </h1>
+                <HeadDeBids />
+                <div className="bg-white bg-opacity-10 border-indigo-500 border-2 my-2 rounded-xl">
+                  {_FILTER.ItemsDeBids[0].offer.length > 0 && <MapDeBids />}
+                  {_FILTER.ItemsDeBids[0].offer.length == 0 && (
+                    <div className="w-full flex flex-row rounded-full py-[2vw] px-[1vw] items-center">
+                      <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw]">
+                        You didn't placed any offers yet, if you want to place
+                        an offer use the Floor checker or the search bar at the
+                        top
+                      </h1>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
+            </>
           )}
           {_FILTER.ItemsBids[0].offer && (
-            <div className="my-4">
-              <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] font-bold uppercase px-2">
-                Offers Received
-              </h1>
-              <HeadBids />
-              <div className="bg-white bg-opacity-10 border-indigo-500 border-2 my-2 rounded-xl">
-                {_FILTER.ItemsBids[0].offer.length > 0 && <MapBids />}
-                {_FILTER.ItemsBids[0].offer.length == 0 && (
-                  <div className="w-full flex flex-row rounded-full py-[2vw] px-[1vw] items-center">
-                    <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw]">
-                      You didn't received any offers yet, if someone place an
-                      offer on one of your domains it will show here
-                    </h1>
+            <>
+              {_FILTER.BidsSelected[0].length > 0 && (
+                <>
+                  <div className=" bg-white rounded-xl my-2 p-[1.5vw]">
+                    <div className="flex flex-row items-center">
+                      <button
+                        className="border-indigo-500 border-2 rounded-full px-[1.5vw] lXs:px-[1vw] "
+                        onClick={() => {
+                          _FILTER.Bids();
+                        }}
+                      >
+                        <p className="text-indigo-500 font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
+                          ACCEPT
+                        </p>
+                      </button>
+                    </div>
+                    <div className="flex flex-row flex-wrap items-center justify-start">
+                      {_FILTER.BidsSelected[0].map((e, i) => {
+                        return (
+                          <button
+                            onClick={() => {
+                              _FILTER.BidsSelectReq[1]([true, e]);
+                            }}
+                            className={
+                              "text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] my-1 " +
+                              (_FILTER.BidsSelector[0].includes(e.tokenId)
+                                ? "bg-indigo-500 rounded-full mr-1"
+                                : "")
+                            }
+                          >
+                            {e.token.name}
+                          </button>
+                        );
+                      })}
+                    </div>
                   </div>
-                )}
+                </>
+              )}
+              <div className="my-4">
+                <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] font-bold uppercase px-2">
+                  Offers Received
+                </h1>
+                <HeadBids />
+                <div className="bg-white bg-opacity-10 border-indigo-500 border-2 my-2 rounded-xl">
+                  {_FILTER.ItemsBids[0].offer.length > 0 && <MapBids />}
+                  {_FILTER.ItemsBids[0].offer.length == 0 && (
+                    <div className="w-full flex flex-row rounded-full py-[2vw] px-[1vw] items-center">
+                      <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw]">
+                        You didn't received any offers yet, if someone place an
+                        offer on one of your domains it will show here
+                      </h1>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
+            </>
           )}
           {_FILTER.ItemsCollectionBids[0].domains.items && (
-            <div className="my-4">
-              <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] font-bold uppercase px-2">
-                Collections Offers Available
-              </h1>
-              <HeadBids />
-              <div className="bg-white bg-opacity-10 border-indigo-500 border-2 my-2 rounded-xl">
-                {_FILTER.ItemsCollectionBids[0].domains.items.length > 0 &&
-                  _FILTER.ItemsCollectionOffers[1] !== [] && (
-                    <MapCollectionBids />
-                  )}
-                {_FILTER.ItemsCollectionBids[0].domains.items.length == 0 &&
-                  _FILTER.ItemsCollectionOffers[1] ===
-                    [](
-                      <div className="w-full flex flex-row rounded-full py-[2vw] px-[1vw] items-center">
-                        <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw]">
-                          There is no collections offers on the domains you own
-                          for now
-                        </h1>
-                      </div>
+            <>
+              {_FILTER.CollectionBidsSelected[0].length > 0 && (
+                <>
+                  <div className=" bg-white rounded-xl my-2 p-[1.5vw]">
+                    <div className="flex flex-row items-center">
+                      <button
+                        className="border-indigo-500 border-2 rounded-full px-[1.5vw] lXs:px-[1vw] "
+                        onClick={() => {
+                          _FILTER.CollectionBids();
+                        }}
+                      >
+                        <p className="text-indigo-500 font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
+                          ACCEPT
+                        </p>
+                      </button>
+                    </div>
+                    <div className="flex flex-row flex-wrap items-center justify-start">
+                      {_FILTER.CollectionBidsSelected[0].map((e, i) => {
+                        return (
+                          <button
+                            onClick={() => {
+                              _FILTER.CollectionBidsSelectReq[1]([true, e]);
+                            }}
+                            className={
+                              "text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] my-1 " +
+                              (_FILTER.CollectionBidsSelector[0].includes(
+                                e.tokenId
+                              )
+                                ? "bg-indigo-500 rounded-full mr-1"
+                                : "")
+                            }
+                          >
+                            {e.name}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </>
+              )}
+              <div className="my-4">
+                <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] font-bold uppercase px-2">
+                  Collections Offers Available
+                </h1>
+                <HeadBids />
+                <div className="bg-white bg-opacity-10 border-indigo-500 border-2 my-2 rounded-xl">
+                  {_FILTER.ItemsCollectionBids[0].domains.items.length > 0 &&
+                    _FILTER.ItemsCollectionOffers[1] !== [] && (
+                      <MapCollectionBids />
                     )}
+                  {_FILTER.ItemsCollectionBids[0].domains.items.length == 0 &&
+                    _FILTER.ItemsCollectionOffers[1] ===
+                      [](
+                        <div className="w-full flex flex-row rounded-full py-[2vw] px-[1vw] items-center">
+                          <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw]">
+                            There is no collections offers on the domains you
+                            own for now
+                          </h1>
+                        </div>
+                      )}
+                </div>
               </div>
-            </div>
+            </>
           )}
         </>
       )}
