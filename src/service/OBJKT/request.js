@@ -81,7 +81,6 @@ export const fetchObjktCollectionOffers = async (params) => {
           where: {
             status: { _eq: "active" }
             fa_contract: { _eq: "${params.contract}" }
-            buyer_address: { _neq: "${params.owner}" }
             collection_offer: { _eq: "${params.contract}" }
           }
           order_by: { timestamp: desc }
