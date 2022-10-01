@@ -101,7 +101,7 @@ export const Bids = ({ context }) => {
         let i = -1;
         let price = 0;
         while (++i < _FILTER.CollectionBidsSelected[0].length) {
-          price += parseInt(_FILTER.ItemsCollectionOffers[0].price);
+          price += parseInt(_FILTER.ItemsCollectionOffers[0][0].price);
         }
         return price;
       };
@@ -141,11 +141,11 @@ export const Bids = ({ context }) => {
         contract: context.state._Contract.NFT,
       }).then((e) => {
         if (e.data.offer.length > 0)
-          _FILTER.ItemsCollectionOffers[1](
+          _FILTER.ItemsCollectionOffers[1]([
             e.data.offer.reduce((x, y) => {
               return +y.price > +x.price ? y : x;
             })
-          );
+          ]);
         fetchOwned({
           owner: context.state._account,
           less: less,
@@ -271,7 +271,7 @@ export const Bids = ({ context }) => {
         let txs = [];
         let price = 0;
         while (++i < _FILTER.CollectionBidsSelected[0].length) {
-          price += _FILTER.ItemsCollectionOffers[0].price;
+          price += _FILTER.ItemsCollectionOffers[0][0].price;
           txs.push({
             kind: OpKind.TRANSACTION,
             ...contractB.methods
@@ -292,7 +292,7 @@ export const Bids = ({ context }) => {
             kind: OpKind.TRANSACTION,
             ...contractA.methods
               .fulfill_offer(
-                _FILTER.ItemsCollectionOffers[0].bigmap_key,
+                _FILTER.ItemsCollectionOffers[0][0].bigmap_key,
                 _FILTER.CollectionBidsSelected[0][i].tokenId
               )
               .toTransferParams(),

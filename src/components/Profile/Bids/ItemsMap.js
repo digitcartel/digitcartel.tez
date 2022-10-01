@@ -252,7 +252,7 @@ const Map = ({ _FILTER, context }) => {
               <div className="relative w-full mr-auto flex flex-row items-center justify-end">
                 <h1 className=" text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] truncate">
                   {(
-                    _FILTER.ItemsCollectionOffers[0].price / 10 ** 6 || 0
+                    _FILTER.ItemsCollectionOffers[0][0].price / 10 ** 6 || 0
                   ).toFixed(2)}
                   tz
                 </h1>
@@ -260,7 +260,7 @@ const Map = ({ _FILTER, context }) => {
                   <span className="text-indigo-500">
                     {(
                       context.state._EthereumPrice *
-                      (_FILTER.ItemsCollectionOffers[0].price / 10 ** 6 || 0)
+                      (_FILTER.ItemsCollectionOffers[0][0].price / 10 ** 6 || 0)
                     ).toFixed(2)}
                     Ξ
                   </span>
@@ -269,7 +269,7 @@ const Map = ({ _FILTER, context }) => {
                   <span className="text-purple-500">
                     {(
                       context.state._TezosPrice *
-                      (_FILTER.ItemsCollectionOffers[0].price / 10 ** 6 || 0)
+                      (_FILTER.ItemsCollectionOffers[0][0].price / 10 ** 6 || 0)
                     ).toFixed(2)}
                     $
                   </span>
@@ -321,6 +321,7 @@ const Map = ({ _FILTER, context }) => {
     );
   };
 
+  console.log(_FILTER.ItemsCollectionOffers[0]);
   return (
     <>
       <Floor />
@@ -492,19 +493,17 @@ const Map = ({ _FILTER, context }) => {
                 <HeadBids />
                 <div className="bg-white bg-opacity-10 border-indigo-500 border-2 my-2 rounded-xl">
                   {_FILTER.ItemsCollectionBids[0].domains.items.length > 0 &&
-                    _FILTER.ItemsCollectionOffers[1] !== [] && (
+                    _FILTER.ItemsCollectionOffers[0].length > 0 && (
                       <MapCollectionBids />
                     )}
-                  {_FILTER.ItemsCollectionBids[0].domains.items.length == 0 &&
-                    _FILTER.ItemsCollectionOffers[1] ===
-                      [](
-                        <div className="w-full flex flex-row rounded-full py-[2vw] px-[1vw] items-center">
-                          <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw]">
-                            There is no collections offers on the domains you
-                            own for now
-                          </h1>
-                        </div>
-                      )}
+                  {_FILTER.ItemsCollectionOffers[0].length === 0 && (
+                    <div className="w-full flex flex-row rounded-full py-[2vw] px-[1vw] items-center">
+                      <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw]">
+                        There is no collections offers on the domains you own
+                        for now
+                      </h1>
+                    </div>
+                  )}
                 </div>
               </div>
             </>
