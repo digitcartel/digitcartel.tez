@@ -60,7 +60,7 @@ export const Navbar = ({ context }) => {
             </p>
           )}
         </button>
-        {context.state._account != "" && (
+        {context.state._account != "" && !context.state._Profile && (
           <div className="absolute left-2 top-0 flex flex-col items-center justify-center w-5 h-5 rounded-full bg-purple-500 text-white font-bold">
             {context.state._OffersReceived}
           </div>
@@ -264,21 +264,28 @@ export const Navbar = ({ context }) => {
               >
                 LISTING
               </button>
-              <button
-                onClick={() => {
-                  context.setState({
-                    _View: "bids",
-                  });
-                }}
-                className={
-                  "ml-2 font-bold text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] mb-2 border-indigo-500 border-2 " +
-                  (context.state._View === "bids"
-                    ? "text-white bg-indigo-500 rounded-full"
-                    : "text-indigo-500 rounded-full")
-                }
-              >
-                BIDS
-              </button>
+              <div className="relative">
+                <button
+                  onClick={() => {
+                    context.setState({
+                      _View: "bids",
+                    });
+                  }}
+                  className={
+                    "ml-2 font-bold text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] mb-2 border-indigo-500 border-2 " +
+                    (context.state._View === "bids"
+                      ? "text-white bg-indigo-500 rounded-full"
+                      : "text-indigo-500 rounded-full")
+                  }
+                >
+                  BIDS
+                </button>
+                {context.state._account != "" && context.state._Profile && (
+                  <div className="absolute left-1 top-0 flex flex-col items-center justify-center w-5 h-5 rounded-full bg-purple-500 text-white font-bold">
+                    {context.state._OffersReceived}
+                  </div>
+                )}
+              </div>
             </>
           )}
         </div>
