@@ -250,6 +250,25 @@ export const Navbar = ({ context }) => {
               >
                 BULK SEARCH
               </button>
+              {context.state._account === context.state._DigitCartel && (
+                <>
+                  <button
+                    onClick={() => {
+                      context.setState({
+                        _View: "airdrop",
+                      });
+                    }}
+                    className={
+                      "ml-2 font-bold text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] mb-2 border-indigo-500 border-2 " +
+                      (context.state._View === "airdrop"
+                        ? "text-white bg-indigo-500 rounded-full"
+                        : "text-indigo-500 rounded-full")
+                    }
+                  >
+                    AIRDROP
+                  </button>
+                </>
+              )}
             </>
           )}
           {context.state._Profile && (
@@ -311,73 +330,90 @@ export const Navbar = ({ context }) => {
             </>
           )}
         </div>
-        <div className="flex flex-row items-center">
-          <div className="w-full  bg-white bg-opacity-10 border-indigo-500 border-2 mb-2 rounded-xl">
-            <div className="w-full flex flex-row rounded-full pt-[1vw] px-[1vw] items-center">
-              <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw]">
-                🔥Sales
-              </h1>
+        {context.state._View === "floor" && (
+          <div className="flex flex-row items-center">
+            <div className="w-full lex flex-col">
+              <div className="mb-2 w-full flex flex-row px-[2vw] lXs:px-[1vw] py-2 items-center bg-indigo-500 border-2 rounded-xl border-white">
+                <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw]">
+                  🔥SALES
+                </h1>
+              </div>
+              <div className="w-full bg-white bg-opacity-10 border-indigo-500 border-2 mb-2 rounded-xl">
+                <div className="w-full flex flex-col my-[1vw] items-center">
+                  {context.state._LastSales.slice(0, 5).map((e, i) => {
+                    return (
+                      <div
+                        key={i + "_lastSales"}
+                        className="w-full flex flex-row rounded-full px-[1vw] items-center justify-between"
+                      >
+                        <h1 className="text-white text-[2vw] lXs:text-[1vw] px-[1.5vw] lXs:px-[1vw] truncate">
+                          {e.domainName}
+                        </h1>
+                        <h1 className="text-indigo-500 font-bold text-[2vw] lXs:text-[1vw] px-[1.5vw] lXs:px-[1vw]">
+                          {e.price / 10 ** 6}tz
+                        </h1>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
-            <div className="w-full flex flex-col mb-[1vw] items-center">
-              {context.state._LastSales.slice(0, 5).map((e, i) => {
-                return (
-                  <div className="w-full flex flex-row rounded-full px-[1vw] items-center justify-between">
-                    <h1 className="text-white text-[2vw] lXs:text-[1vw] px-[1.5vw] lXs:px-[1vw] truncate">
-                      {e.domainName}
-                    </h1>
-                    <h1 className="text-indigo-500 font-bold text-[2vw] lXs:text-[1vw] px-[1.5vw] lXs:px-[1vw]">
-                      {e.price / 10 ** 6}tz
-                    </h1>
-                  </div>
-                );
-              })}
+            <div className="w-full lex flex-col mx-2">
+              <div className="mb-2 w-full flex flex-row px-[2vw] lXs:px-[1vw] py-2 items-center bg-indigo-500 border-2 rounded-xl border-white">
+                <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw]">
+                  🎈OFFERS
+                </h1>
+              </div>
+              <div className="w-full bg-white bg-opacity-10 border-indigo-500 border-2 mb-2 rounded-xl">
+                <div className="w-full flex flex-col my-[1vw] items-center">
+                  {context.state._LastOffers.slice(0, 5).map((e, i) => {
+                    return (
+                      <div
+                        key={i + "_lastOffers"}
+                        className="w-full flex flex-row rounded-full px-[1vw] items-center justify-between"
+                      >
+                        <h1 className="text-white text-[2vw] lXs:text-[1vw] px-[1.5vw] lXs:px-[1vw] truncate">
+                          {e.token && e.token.name}
+                          {!e.token && (
+                            <span className="text-purple-500 uppercase">
+                              Collection
+                            </span>
+                          )}
+                        </h1>
+                        <h1 className="text-indigo-500 font-bold text-[2vw] lXs:text-[1vw] px-[1.5vw] lXs:px-[1vw]">
+                          {e.price / 10 ** 6}tz
+                        </h1>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+            <div className="w-full lex flex-col">
+              <div className="mb-2 w-full flex flex-row px-[2vw] lXs:px-[1vw] py-2 items-center bg-indigo-500 border-2 rounded-xl border-white">
+                <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw]">
+                  💾REGISTRATION
+                </h1>
+              </div>
+              <div className="w-full bg-white bg-opacity-10 border-indigo-500 border-2 mb-2 rounded-xl">
+                <div className="w-full flex flex-col my-[1vw] items-center">
+                  {context.state._LastRegs.slice(0, 5).map((e, i) => {
+                    return (
+                      <div
+                        key={i + "_lastReg"}
+                        className="w-full flex flex-row rounded-full px-[1vw] items-center justify-between"
+                      >
+                        <h1 className="text-white text-[2vw] lXs:text-[1vw] px-[1.5vw] lXs:px-[1vw] truncate">
+                          {e.domainName}
+                        </h1>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
           </div>
-          <div className="w-full mx-2 bg-white bg-opacity-10 border-indigo-500 border-2 mb-2 rounded-xl">
-            <div className="w-full flex flex-row rounded-full pt-[1vw] px-[1vw] items-center">
-              <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw]">
-                🎈Offers
-              </h1>
-            </div>
-            <div className="w-full flex flex-col mb-[1vw] items-center">
-              {context.state._LastOffers.slice(0, 5).map((e, i) => {
-                return (
-                  <div className="w-full flex flex-row rounded-full px-[1vw] items-center justify-between">
-                    <h1 className="text-white text-[2vw] lXs:text-[1vw] px-[1.5vw] lXs:px-[1vw] truncate">
-                      {e.token && e.token.name}
-                      {!e.token && (
-                        <span className="text-purple-500 uppercase">
-                          Collection
-                        </span>
-                      )}
-                    </h1>
-                    <h1 className="text-indigo-500 font-bold text-[2vw] lXs:text-[1vw] px-[1.5vw] lXs:px-[1vw]">
-                      {e.price / 10 ** 6}tz
-                    </h1>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-          <div className="w-full bg-white bg-opacity-10 border-indigo-500 border-2 mb-2 rounded-xl">
-            <div className="w-full flex flex-row rounded-full pt-[1vw] px-[1vw] items-center">
-              <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw]">
-                💾Registration
-              </h1>
-            </div>
-            <div className="w-full flex flex-col mb-[1vw] items-center">
-              {context.state._LastRegs.slice(0, 5).map((e, i) => {
-                return (
-                  <div className="w-full flex flex-row rounded-full px-[1vw] items-center justify-between">
-                    <h1 className="text-white text-[2vw] lXs:text-[1vw] px-[1.5vw] lXs:px-[1vw] truncate">
-                      {e.domainName}
-                    </h1>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
+        )}
       </div>
     </>
   );

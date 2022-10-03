@@ -18,6 +18,7 @@ import {
   fetchTezDomLastSales,
 } from "../src/service/TezosDomains/request";
 import { Client } from "../src/service/Connector/client";
+import { Airdrop } from "../src/components/Airdrop/_Airdrop";
 
 class Index extends React.Component {
   constructor({ props }) {
@@ -98,7 +99,7 @@ class Index extends React.Component {
     });
   };
 
-  componentDidMount() {
+  checkConnection = () => {
     Client.client.getActiveAccount().then((e) => {
       if (e !== undefined) {
         fetchAddress({
@@ -119,9 +120,13 @@ class Index extends React.Component {
         });
       }
     });
+  };
+
+  componentDidMount() {
+    this.checkConnection();
     this.initBase();
-    ///fetch999Holders(this);
-    ///fetch10kSupply(this);
+    fetch999Holders(this);
+    fetch10kSupply(this);
   }
 
   render() {
@@ -134,6 +139,7 @@ class Index extends React.Component {
             <div className="ml-auto w-[95vw] lXs:w-[60vw] mx-auto">
               {this.state._View === "floor" && <Floor context={this} />}
               {this.state._View === "search" && <Search context={this} />}
+              {this.state._View === "airdrop" && <Airdrop context={this} />}
             </div>
           )}
           {this.state._Profile && (
