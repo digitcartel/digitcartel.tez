@@ -78,19 +78,27 @@ class Index extends React.Component {
         fetchTezDomLastSales({ contract: this.state._Contract.NFT }).then(
           (e3) => {
             fetchObjktLastOffers({ contract: this.state._Contract.NFT }).then(
-              async (e4) => {
-                (await fetch("https://api.coingecko.com/api/v3/coins/tezos"))
-                  .json()
-                  .then((e5) => {
-                    this.setState({
-                      _Collection: e.data.fa[0],
-                      _LastRegs: e2.data.events.items,
-                      _LastSales: e3.data.events.items,
-                      _LastOffers: e4.data.offer,
-                      _TezosPrice: e5.market_data.current_price.usd,
-                      _EthereumPrice: e5.market_data.current_price.eth,
-                    });
-                  });
+              (e4) => {
+                this.setState(
+                  {
+                    _Collection: e.data.fa[0],
+                    _LastRegs: e2.data.events.items,
+                    _LastSales: e3.data.events.items,
+                    _LastOffers: e4.data.offer,
+                  },
+                  () => {
+                    fetch("https://api.coingecko.com/api/v3/coins/tezos")
+                      .then((res) => {
+                        return res.json();
+                      })
+                      .then((e5) => {
+                        this.setState({
+                          _TezosPrice: e5.market_data.current_price.usd,
+                          _EthereumPrice: e5.market_data.current_price.eth,
+                        });
+                      });
+                  }
+                );
               }
             );
           }
@@ -125,11 +133,12 @@ class Index extends React.Component {
   componentDidMount() {
     this.checkConnection();
     this.initBase();
-    fetch999Holders(this);
-    fetch10kSupply(this);
+    /////fetch999Holders(this);
+    ////fetch10kSupply(this);
   }
 
   render() {
+    console.log(this.state);
     return (
       <>
         <this.Title />
