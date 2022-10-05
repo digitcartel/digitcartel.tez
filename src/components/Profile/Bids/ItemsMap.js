@@ -321,7 +321,6 @@ const Map = ({ _FILTER, context }) => {
     );
   };
 
-  console.log(_FILTER.ItemsCollectionOffers[0]);
   return (
     <>
       <Floor />
