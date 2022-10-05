@@ -4,7 +4,9 @@ import Head from "next/head";
 import { Navbar } from "../src/components/Navbar";
 import {
   fetchObjktCollection,
+  fetchObjktCollectionOffers,
   fetchObjktLastOffers,
+  fetchObjktOffersReceived,
 } from "../src/service/OBJKT/request";
 import { fetch10kSupply } from "../src/utils/fetch10kSupply";
 import { fetch999Holders } from "../src/utils/fetch999holders";
@@ -79,26 +81,32 @@ class Index extends React.Component {
           (e3) => {
             fetchObjktLastOffers({ contract: this.state._Contract.NFT }).then(
               (e4) => {
-                this.setState(
-                  {
-                    _Collection: e.data.fa[0],
-                    _LastRegs: e2.data.events.items,
-                    _LastSales: e3.data.events.items,
-                    _LastOffers: e4.data.offer,
-                  },
-                  () => {
-                    fetch("https://api.coingecko.com/api/v3/coins/tezos")
-                      .then((res) => {
-                        return res.json();
-                      })
-                      .then((e5) => {
-                        this.setState({
-                          _TezosPrice: e5.market_data.current_price.usd,
-                          _EthereumPrice: e5.market_data.current_price.eth,
+                fetchObjktOffersReceived({
+                  owner: this.state._account,
+                  contract: this.state._Contract.NFT,
+                }).then(async (e5) => {
+                  this.setState(
+                    {
+                      _Collection: e.data.fa[0],
+                      _LastRegs: e2.data.events.items,
+                      _LastSales: e3.data.events.items,
+                      _LastOffers: e4.data.offer,
+                      _OffersReceived: e5.data.offer.length,
+                    },
+                    () => {
+                      fetch("https://api.coingecko.com/api/v3/coins/tezos")
+                        .then((res) => {
+                          return res.json();
+                        })
+                        .then((e6) => {
+                          this.setState({
+                            _TezosPrice: e6.market_data.current_price.usd,
+                            _EthereumPrice: e6.market_data.current_price.eth,
+                          });
                         });
-                      });
-                  }
-                );
+                    }
+                  );
+                });
               }
             );
           }
