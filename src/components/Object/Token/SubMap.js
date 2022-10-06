@@ -2,7 +2,7 @@ export const SubMap = ({ _FILTER, context }) => {
   return (
     <>
       {_FILTER.Initialized[0] && (
-        <div className="w-full lex flex-col mt-2">
+        <div className="w-full flex flex-col mt-2">
           <div className="mb-2 w-full flex flex-row p-[2vw] lXs:p-[1vw] items-center bg-indigo-500 border-2 rounded-xl border-white">
             <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw]">
               🎈OFFERS
@@ -11,7 +11,7 @@ export const SubMap = ({ _FILTER, context }) => {
           {_FILTER.Offers[0].offer.length > 0 && (
             <div className="w-full bg-white bg-opacity-10 border-indigo-500 border-2 mb-2 rounded-xl">
               <div className="overflow-auto no-scroll-bar h-[10vh] lXs:h-[20vh] w-full flex flex-col items-center">
-                <div className="w-full flex flex-row rounded-full py-[2vw] px-[1vw] items-center">
+                <div className="w-full flex flex-col rounded-full py-[2vw] px-[1vw] items-center">
                   {_FILTER.Offers[0] &&
                     _FILTER.Offers[0].offer.map((e, i) => {
                       return (
@@ -66,6 +66,15 @@ export const SubMap = ({ _FILTER, context }) => {
                                 $
                               </span>
                             </h1>
+                            {e.status === "concluded" && (
+                              <h1 className="w-2 h-2 rounded-full bg-purple-500" />
+                            )}
+                            {e.status === "active" && (
+                              <h1 className="w-2 h-2 rounded-full bg-indigo-500" />
+                            )}
+                            {e.status === "cancelled" && (
+                              <h1 className="w-2 h-2 rounded-full bg-red-500" />
+                            )}
                           </div>
                         </div>
                       );

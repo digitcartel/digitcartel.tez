@@ -82,7 +82,6 @@ export const fetchObjktOffersReceivedForItems = async (params) => {
             token: {
               name: { _eq: "${params.lookFor}" }
             }
-            status: {_eq: "active"}
           }
         ) {
           id
@@ -199,7 +198,6 @@ export const fetchObjktLastOffers = async (params) => {
       query fetchOffers {
         offer(
           where: {
-            status: { _eq: "active" }
             fa_contract: { _eq: "${params.contract}" }
           }
           order_by: { timestamp: desc }

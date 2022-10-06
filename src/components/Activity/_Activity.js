@@ -6,7 +6,7 @@ export const Activity = ({ context }) => {
           <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw]">🔥SALES</h1>
         </div>
         <div className="w-full bg-white bg-opacity-10 border-indigo-500 border-2 mb-2 rounded-xl">
-          <div className="overflow-auto no-scroll-bar h-[8vh] lXs:h-[15vh] w-full flex flex-col my-[1vw] items-center">
+          <div className="overflow-auto no-scroll-bar h-[10vh] lXs:h-[15vh] w-full flex flex-col my-[1vw] items-center">
             {context.state._LastSales &&
               context.state._LastSales.map((e, i) => {
                 return (
@@ -40,7 +40,7 @@ export const Activity = ({ context }) => {
           <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw]">🎈OFFERS</h1>
         </div>
         <div className="w-full bg-white bg-opacity-10 border-indigo-500 border-2 mb-2 rounded-xl">
-          <div className="overflow-auto no-scroll-bar h-[8vh] lXs:h-[15vh] w-full flex flex-col my-[1vw] items-center">
+          <div className="overflow-auto no-scroll-bar h-[10vh] lXs:h-[15vh] w-full flex flex-col my-[1vw] items-center justify-start">
             {context.state._LastOffers &&
               context.state._LastOffers.map((e, i) => {
                 return (
@@ -49,7 +49,7 @@ export const Activity = ({ context }) => {
                     className="w-full flex flex-row rounded-full px-[1vw] items-center justify-between"
                   >
                     {!e.token && (
-                      <h1 className="text-white text-[2vw] lXs:text-[1vw] px-[1.5vw] lXs:px-[1vw] truncate">
+                      <h1 className="text-white text-[2vw] lXs:text-[1vw] px-[1.5vw] lXs:px-[1vw] whitespace-nowrap truncate w-full text-left">
                         {!e.token && (
                           <span className="text-purple-500 uppercase">
                             Collection
@@ -71,9 +71,18 @@ export const Activity = ({ context }) => {
                         {e.token.name}
                       </button>
                     )}
-                    <h1 className="text-indigo-500 font-bold text-[2vw] lXs:text-[1vw] px-[1.5vw] lXs:px-[1vw]">
+                    <h1 className="ml-auto text-indigo-500 font-bold text-[2vw] lXs:text-[1vw] px-[1.5vw] lXs:px-[1vw]">
                       {e.price / 10 ** 6}tz
                     </h1>
+                    {e.status === "concluded" && (
+                      <h1 className="w-2 h-2 rounded-full bg-purple-500" />
+                    )}
+                    {e.status === "active" && (
+                      <h1 className="w-2 h-2 rounded-full bg-indigo-500" />
+                    )}
+                    {e.status === "cancelled" && (
+                      <h1 className="w-2 h-2 rounded-full bg-red-500" />
+                    )}
                   </div>
                 );
               })}
@@ -82,12 +91,10 @@ export const Activity = ({ context }) => {
       </div>
       <div className="w-full lex flex-col">
         <div className="mb-2 w-full flex flex-row px-[2vw] lXs:px-[1vw] py-2 items-center bg-indigo-500 border-2 rounded-xl border-white">
-          <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw]">
-            💾REGISTRATION
-          </h1>
+          <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw]">💾MINT</h1>
         </div>
         <div className="w-full bg-white bg-opacity-10 border-indigo-500 border-2 mb-2 rounded-xl">
-          <div className="overflow-auto no-scroll-bar h-[8vh] lXs:h-[15vh] w-full flex flex-col my-[1vw] items-center">
+          <div className="overflow-auto no-scroll-bar h-[10vh] lXs:h-[15vh] w-full flex flex-col my-[1vw] items-center">
             {context.state._LastRegs &&
               context.state._LastRegs.map((e, i) => {
                 return (
