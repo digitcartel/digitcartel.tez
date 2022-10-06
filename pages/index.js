@@ -4,7 +4,6 @@ import Head from "next/head";
 import { Navbar } from "../src/components/Navbar";
 import {
   fetchObjktCollection,
-  fetchObjktCollectionOffers,
   fetchObjktLastOffers,
   fetchObjktOffersReceived,
 } from "../src/service/OBJKT/request";
@@ -19,28 +18,14 @@ import {
   fetchTezDomLastReg,
   fetchTezDomLastSales,
 } from "../src/service/TezosDomains/request";
-import { Client } from "../src/service/Connector/client";
 import { Airdrop } from "../src/components/Airdrop/_Airdrop";
+import { Client } from "../src/service/Connector/client";
 
 class Index extends React.Component {
   constructor({ props }) {
     super();
 
     this.state = {
-      _account: "",
-      _Contract: {
-        NFT: "KT1GBZmSxmnKJXGMdMLbugPfLyUPmuLSMwKS",
-        Market: "KT1Evxe1udtPDGWrkiRsEN3vMDdB6gNpkMPM",
-        OBJKT: "KT1WvzYHCNBvDSdwafTHv7nJ1dWmZ8GCYuuC",
-      },
-      _DigitCartel: "tz1X4g93kKkH1hkRAnenzUkJe44U61AQoQn6",
-      _Collection: {},
-      _LastOffers: [],
-      _LastSales: [],
-      _LastRegs: [],
-      _OffersReceived: 0,
-      _TezosPrice: 0,
-      _EthereumPrice: 0,
       _View: "floor",
       _Profile: false,
       _Holders999: [], //vanity
@@ -72,49 +57,6 @@ class Index extends React.Component {
     );
   };
 
-  initBase = () => {
-    fetchObjktCollection({
-      contract: this.state._Contract.NFT,
-    }).then((e) => {
-      fetchTezDomLastReg({ contract: this.state._Contract.NFT }).then((e2) => {
-        fetchTezDomLastSales({ contract: this.state._Contract.NFT }).then(
-          (e3) => {
-            fetchObjktLastOffers({ contract: this.state._Contract.NFT }).then(
-              (e4) => {
-                fetchObjktOffersReceived({
-                  owner: this.state._account,
-                  contract: this.state._Contract.NFT,
-                }).then(async (e5) => {
-                  this.setState(
-                    {
-                      _Collection: e.data.fa[0],
-                      _LastRegs: e2.data.events.items,
-                      _LastSales: e3.data.events.items,
-                      _LastOffers: e4.data.offer,
-                      _OffersReceived: e5.data.offer.length,
-                    },
-                    () => {
-                      fetch("https://api.coingecko.com/api/v3/coins/tezos")
-                        .then((res) => {
-                          return res.json();
-                        })
-                        .then((e6) => {
-                          this.setState({
-                            _TezosPrice: e6.market_data.current_price.usd,
-                            _EthereumPrice: e6.market_data.current_price.eth,
-                          });
-                        });
-                    }
-                  );
-                });
-              }
-            );
-          }
-        );
-      });
-    });
-  };
-
   checkConnection = () => {
     Client.client.getActiveAccount().then((e) => {
       if (e !== undefined) {
@@ -128,9 +70,21 @@ class Index extends React.Component {
                 e2.data.reverseRecord && e2.data.reverseRecord.domain.name,
             },
             () => {
-              this.props.props.context.setState({
-                _connected: 1,
-              });
+              this.props.props.context.setState(
+                {
+                  _connected: 1,
+                },
+                async () => {
+                  this.setState({
+                    _OffersReceived: (
+                      await fetchObjktOffersReceived({
+                        owner: this.state._account,
+                        contract: this.state._Contract.NFT,
+                      })
+                    ).data.offer.length,
+                  });
+                }
+              );
             }
           );
         });
@@ -138,10 +92,23 @@ class Index extends React.Component {
     });
   };
 
-  componentDidMount() {
+  init = () => {
+    this.setState({
+      _Contract: this.props.props.contract,
+      _DigitCartel: "tz1X4g93kKkH1hkRAnenzUkJe44U61AQoQn6",
+      _Collection: this.props.props.base._Collection,
+      _LastOffers: this.props.props.base._LastOffers,
+      _LastSales: this.props.props.base._LastSales,
+      _LastRegs: this.props.props.base._LastRegs,
+      _TezosPrice: this.props.props.base._TezosPrice,
+      _EthereumPrice: this.props.props.base._EthereumPrice,
+    });
+  };
+
+  async componentDidMount() {
     this.checkConnection();
-    this.initBase();
-    ////fetch999Holders(this);
+    this.init();
+    fetch999Holders(this);
     ////fetch10kSupply(this);
   }
 
@@ -169,6 +136,53 @@ class Index extends React.Component {
     );
   }
 }
+
+export const getStaticProps = async (context) => {
+  const _Contract = {
+    NFT: "KT1GBZmSxmnKJXGMdMLbugPfLyUPmuLSMwKS",
+    Market: "KT1Evxe1udtPDGWrkiRsEN3vMDdB6gNpkMPM",
+    OBJKT: "KT1WvzYHCNBvDSdwafTHv7nJ1dWmZ8GCYuuC",
+  };
+
+  const initBase = async () => {
+    return {
+      _Collection: (
+        await fetchObjktCollection({
+          contract: _Contract.NFT,
+        })
+      ).data.fa[0],
+      _LastRegs: (await fetchTezDomLastReg({ contract: _Contract.NFT })).data
+        .events.items,
+      _LastSales: (
+        await fetchTezDomLastSales({
+          contract: _Contract.NFT,
+        })
+      ).data.events.items,
+      _LastOffers: (
+        await fetchObjktLastOffers({
+          contract: _Contract.NFT,
+        })
+      ).data.offer,
+      _TezosPrice: (
+        await (
+          await fetch("https://api.coingecko.com/api/v3/coins/tezos")
+        ).json()
+      ).market_data.current_price.usd,
+      _EthereumPrice: (
+        await (
+          await fetch("https://api.coingecko.com/api/v3/coins/tezos")
+        ).json()
+      ).market_data.current_price.eth,
+    };
+  };
+
+  return {
+    props: {
+      contract: _Contract,
+      base: await initBase(),
+    },
+  };
+};
 
 const Main = (props) => {
   return (
