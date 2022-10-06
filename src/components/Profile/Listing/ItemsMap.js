@@ -65,6 +65,7 @@ const Map = ({ _FILTER, context }) => {
                 onClick={() => {
                   context.setState({
                     _Object: true,
+                    _Profile: false,
                     _View: "token",
                     _Viewed: e.name,
                   });
