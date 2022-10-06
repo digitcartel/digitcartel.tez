@@ -67,13 +67,13 @@ export const SubMap = ({ _FILTER, context }) => {
                               </span>
                             </h1>
                             {e.status === "concluded" && (
-                              <h1 className="w-2 h-2 rounded-full bg-purple-500" />
+                              <h1 className="w-1 h-1 rounded-full bg-purple-500" />
                             )}
                             {e.status === "active" && (
-                              <h1 className="w-2 h-2 rounded-full bg-indigo-500" />
+                              <h1 className="w-1 h-1 rounded-full bg-indigo-500" />
                             )}
                             {e.status === "cancelled" && (
-                              <h1 className="w-2 h-2 rounded-full bg-red-500" />
+                              <h1 className="w-1 h-1 rounded-full bg-red-500" />
                             )}
                           </div>
                         </div>
