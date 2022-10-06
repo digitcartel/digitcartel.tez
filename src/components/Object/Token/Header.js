@@ -4,7 +4,7 @@ export const Header = ({ _FILTER, context }) => {
   return (
     <div className="flex flex-row">
       <div className="w-[100px] tS:w-[200px] tL:w-[300px] lXs:w-[200px] lS:w-[300px] h-[100px] tS:h-[200px] tL:h-[300px] lXs:h-[200px] lS:h-[300px] bg-white bg-opacity-10 rounded-xl border-2 border-indigo-500 flex flex-col items-center justify-center">
-        <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] break-all mx-6 text-center">
+        <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] break-all text-center">
           {context.state._Viewed}
         </h1>
       </div>
