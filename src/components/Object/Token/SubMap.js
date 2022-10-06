@@ -10,7 +10,7 @@ export const SubMap = ({ _FILTER, context }) => {
           </div>
           {_FILTER.Offers[0].offer.length > 0 && (
             <div className="w-full bg-white bg-opacity-10 border-indigo-500 border-2 mb-2 rounded-xl">
-              <div className="overflow-auto no-scroll-bar h-[10vh] lXs:h-[20vh] w-full flex flex-col items-center">
+              <div className="overflow-auto no-scroll-bar h-[20vh] w-full flex flex-col items-center">
                 <div className="w-full flex flex-col rounded-full py-[2vw] px-[1vw] items-center">
                   {_FILTER.Offers[0] &&
                     _FILTER.Offers[0].offer.map((e, i) => {
