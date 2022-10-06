@@ -1,18 +1,18 @@
 export const Activity = ({ context }) => {
   return (
     <div className="flex flex-row items-center">
-      <div className="w-full lex flex-col">
+    <div className="w-4/12 lex flex-col">
         <div className="mb-2 w-full flex flex-row px-[2vw] lXs:px-[1vw] py-2 items-center bg-indigo-500 border-2 rounded-xl border-white">
           <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw]">🔥SALES</h1>
         </div>
         <div className="w-full bg-white bg-opacity-10 border-indigo-500 border-2 mb-2 rounded-xl">
-          <div className="overflow-auto no-scroll-bar h-[10vh] lXs:h-[15vh] w-full flex flex-col my-[1vw] items-center">
+          <div className="overflow-y-auto no-scroll-bar h-[10vh] lXs:h-[15vh] flex flex-col my-[1vw]">
             {context.state._LastSales &&
               context.state._LastSales.map((e, i) => {
                 return (
                   <div
                     key={i + "_lastSales"}
-                    className="w-full flex flex-row rounded-full px-[1vw] items-center justify-between"
+                    className="flex flex-row rounded-full px-[1vw] items-center"
                   >
                     <button
                       onClick={() => {
@@ -22,7 +22,7 @@ export const Activity = ({ context }) => {
                           _Viewed: e.domainName,
                         });
                       }}
-                      className="text-white text-[2vw] lXs:text-[1vw] px-[1.5vw] lXs:px-[1vw] whitespace-nowrap truncate w-full hover:bg-indigo-500 hover:text-white rounded-full text-left"
+                      className="text-white text-[2vw] lXs:text-[1vw] px-[1.5vw] lXs:px-[1vw] whitespace-nowrap w-full truncate hover:bg-indigo-500 hover:text-white rounded-full text-left"
                     >
                       {e.domainName}
                     </button>
@@ -89,18 +89,18 @@ export const Activity = ({ context }) => {
           </div>
         </div>
       </div>
-      <div className="w-full lex flex-col">
+      <div className="w-4/12 lex flex-col">
         <div className="mb-2 w-full flex flex-row px-[2vw] lXs:px-[1vw] py-2 items-center bg-indigo-500 border-2 rounded-xl border-white">
           <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw]">💾MINT</h1>
         </div>
         <div className="w-full bg-white bg-opacity-10 border-indigo-500 border-2 mb-2 rounded-xl">
-          <div className="overflow-auto no-scroll-bar h-[10vh] lXs:h-[15vh] w-full flex flex-col my-[1vw] items-center">
+          <div className="overflow-y-auto no-scroll-bar h-[10vh] lXs:h-[15vh] flex flex-col my-[1vw]">
             {context.state._LastRegs &&
               context.state._LastRegs.map((e, i) => {
                 return (
                   <div
                     key={i + "_lastReg"}
-                    className="w-full flex flex-row rounded-full px-[1vw] items-center justify-between"
+                    className="flex flex-row rounded-full px-[1vw] items-center"
                   >
                     <button
                       onClick={() => {
@@ -110,7 +110,7 @@ export const Activity = ({ context }) => {
                           _Viewed: e.domainName,
                         });
                       }}
-                      className="text-white text-[2vw] lXs:text-[1vw] px-[1.5vw] lXs:px-[1vw] whitespace-nowrap truncate w-full hover:bg-indigo-500 hover:text-white rounded-full text-left"
+                      className="text-white text-[2vw] lXs:text-[1vw] px-[1.5vw] lXs:px-[1vw] whitespace-nowrap w-full truncate hover:bg-indigo-500 hover:text-white rounded-full text-left"
                     >
                       {e.domainName}
                     </button>
