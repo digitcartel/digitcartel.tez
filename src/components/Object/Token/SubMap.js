@@ -19,7 +19,7 @@ export const SubMap = ({ _FILTER, context }) => {
                           key={i + "_lastOffers"}
                           className="w-full flex flex-row rounded-full items-center justify-between"
                         >
-                          <span className="text-indigo-500">from:</span>
+                          <span className="text-indigo-500">FROM:</span>
                           {e.buyer.tzdomain == null && e.buyer.address && (
                             <a
                               href={`https://tzkt.io/${e.ophash}`}
