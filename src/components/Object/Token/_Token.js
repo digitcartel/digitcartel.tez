@@ -29,7 +29,6 @@ export const Token = ({ context }) => {
         fetchAddress({
           lookFor: e.data.domain.owner,
         }).then((e2) => {
-          console.log(e2);
           fetchListing({
             lookFor: context.state._Viewed,
           }).then((e3) => {
@@ -105,8 +104,6 @@ export const Token = ({ context }) => {
       _FILTER.Fetch();
     }
   });
-
-  console.log(_FILTER);
 
   return (
     <>
