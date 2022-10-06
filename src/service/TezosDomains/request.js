@@ -124,6 +124,9 @@ export const fetchListing = async (params) => {
       ) {
         items {
           price
+          sellerAddress
+          tokenContract
+          tokenId
         }
       }
     }`,
@@ -162,6 +165,100 @@ export const fetchTezDomLastReg = async (params) => {
             ... on DomainBuyEvent {
               domainName
               price
+            }
+          }
+        }
+      }
+    `,
+  });
+};
+
+export const fetchTezDomEventFor = async (params) => {
+  return await TEZDOM.query({
+    query: gql`
+      query fetchLastReg {
+        events(
+          where: { domainName: { equalTo: "${params.lookFor}" } }
+          order: { direction: DESC, field: TIMESTAMP }
+          ${params.more ? `after: "${params.hash}"` : ""}
+          ${params.less ? `before: "${params.hash}"` : ""}
+        ) {
+          pageInfo {
+            hasNextPage
+            hasPreviousPage
+            endCursor
+            startCursor
+          }
+          items {
+            ... on DomainBuyEvent {
+              price
+              type
+              operationGroupHash
+            }
+            ... on DomainClaimEvent {
+              type
+              operationGroupHash
+            }
+            ... on DomainRenewEvent {
+              type
+              durationInDays
+              operationGroupHash
+            }
+            ... on DomainTransferEvent {
+              type
+              newOwner
+              sourceAddress
+              newOwnerReverseRecord {
+                domain {
+                  name
+                }
+              }
+              sourceAddressReverseRecord {
+                domain {
+                  name
+                }
+              }
+              operationGroupHash
+            }
+            ... on OfferPlacedEvent{
+              price
+              type
+              operationGroupHash
+            }
+            ... on OfferExecutedEvent {
+              price
+              type
+              operationGroupHash
+            }
+            ... on OfferRemovedEvent {
+              type
+              operationGroupHash
+            }
+            ... on OfferUpdatedEvent {
+              price
+              type
+              operationGroupHash
+            }
+            ... on AuctionBidEvent {
+              type
+              bidAmount
+            }
+            ... on AuctionEndEvent {
+              type
+              winningBid
+            }
+            ... on AuctionSettleEvent {
+              type
+              winningBid
+            }
+            ... on AuctionWithdrawEvent {
+              type
+              sourceAddress
+              sourceAddressReverseRecord {
+                domain {
+                  name
+                }
+              }
             }
           }
         }

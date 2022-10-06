@@ -20,6 +20,8 @@ import {
 } from "../src/service/TezosDomains/request";
 import { Airdrop } from "../src/components/Airdrop/_Airdrop";
 import { Client } from "../src/service/Connector/client";
+import { Token } from "../src/components/Object/Token/_Token";
+import { Owner } from "../src/components/Object/Owner/_Owner";
 
 class Index extends React.Component {
   constructor({ props }) {
@@ -28,6 +30,7 @@ class Index extends React.Component {
     this.state = {
       _View: "floor",
       _Profile: false,
+      _Object: false,
       _Holders999: [], //vanity
       _10kSupply: 0, // vanity
     };
@@ -118,17 +121,23 @@ class Index extends React.Component {
         <this.Title />
         <div className="antialiased w-full min-h-full mx-auto bg-black font-main py-4">
           <Navbar context={this} />
-          {!this.state._Profile && (
+          {!this.state._Profile && !this.state._Object && (
             <div className="ml-auto w-[95vw] lXs:w-[60vw] mx-auto">
               {this.state._View === "floor" && <Floor context={this} />}
               {this.state._View === "search" && <Search context={this} />}
               {this.state._View === "airdrop" && <Airdrop context={this} />}
             </div>
           )}
-          {this.state._Profile && (
+          {this.state._Profile && !this.state._Object && (
             <div className="ml-auto w-[95vw] lXs:w-[60vw] mx-auto">
               {this.state._View === "listing" && <Listing context={this} />}
               {this.state._View === "bids" && <Bids context={this} />}
+            </div>
+          )}
+          {this.state._Object && !this.state._Profile && (
+            <div className="ml-auto w-[95vw] lXs:w-[60vw] mx-auto">
+              {this.state._View === "token" && <Token context={this} />}
+              {this.state._View === "wallet" && <Owner context={this} />}
             </div>
           )}
         </div>

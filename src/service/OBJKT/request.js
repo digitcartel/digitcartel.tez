@@ -73,6 +73,37 @@ export const fetchObjktOffersReceived = async (params) => {
   });
 };
 
+export const fetchObjktOffersReceivedForItems = async (params) => {
+  return await OBJKT.query({
+    query: gql`
+      query fetchOffers {
+        offer(
+          where: {
+            token: {
+              name: { _eq: "${params.lookFor}" }
+            }
+            status: {_eq: "active"}
+          }
+        ) {
+          id
+          price
+          status
+          token {
+            token_id
+            name
+          }
+          bigmap_key
+          buyer {
+            address
+            tzdomain
+          }
+          ophash
+        }
+      }
+    `,
+  });
+};
+
 export const fetchObjktCollectionOffers = async (params) => {
   return await OBJKT.query({
     query: gql`

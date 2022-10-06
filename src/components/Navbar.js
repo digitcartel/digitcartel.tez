@@ -57,7 +57,7 @@ export const Navbar = ({ context }) => {
               </p>
             ) : (
               <p className="text-indigo-500 font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
-                {!context.state._Profile && context.state._account != "" &&
+                {!context.state._Profile &&
                   (context.state._domain
                     ? context.state._domain
                     : context.state._account.slice(0, 6))}
@@ -65,11 +65,13 @@ export const Navbar = ({ context }) => {
               </p>
             )}
           </button>
-          {context.state._account != "" && context.state._OffersReceived > 0 && !context.state._Profile && (
-            <div className="absolute left-3 tM:left-1 top-0 flex flex-col items-center justify-center w-3 h-3 tM:w-5 tM:h-5 rounded-full bg-purple-500 text-white font-bold text-[2vw] lXs:text-base">
-              {context.state._OffersReceived}
-            </div>
-          )}
+          {context.state._account != "" &&
+            context.state._OffersReceived > 0 &&
+            !context.state._Profile && (
+              <div className="absolute left-3 tM:left-1 top-0 flex flex-col items-center justify-center w-3 h-3 tM:w-5 tM:h-5 rounded-full bg-purple-500 text-white font-bold text-[2vw] lXs:text-base">
+                {context.state._OffersReceived}
+              </div>
+            )}
         </div>
       </>
     );
@@ -80,13 +82,58 @@ export const Navbar = ({ context }) => {
       <div className="w-[95vw] lXs:w-[60vw] mx-auto">
         {InputState[0] === 1 && (
           <div className="w-full flex flex-row bg-white rounded-xl p-[4vw] lXs:p-[2vw] items-center">
-            <div className="w-[3vw] h-[3vw] bg-black border-indigo-500 border-8 rounded-full" />
-            <h1 className="text-black text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw]">
+            <button
+              onClick={() => {
+                context.setState(
+                  {
+                    _Object: false,
+                    _View: "floor",
+                    _Viewed: "",
+                  },
+                  () => {
+                    context.setState(
+                      {
+                        _Object: true,
+                        _View: "token",
+                        _Viewed: DomainState[0].domain.name,
+                      },
+                      () => {
+                        InputState[1](0);
+                      }
+                    );
+                  }
+                );
+              }}
+              className="text-black text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] whitespace-nowrap truncate w-full hover:bg-indigo-500 hover:text-white rounded-full text-left"
+            >
               {DomainState[0].domain.name}
-            </h1>
-            <h1 className="text-black text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] truncate">
+            </button>
+            <button
+              onClick={() => {
+                context.setState(
+                  {
+                    _Object: false,
+                    _View: "floor",
+                    _Viewed: "",
+                  },
+                  () => {
+                    context.setState(
+                      {
+                        _Object: true,
+                        _View: "wallet",
+                        _Viewed: DomainState[0].domain.owner,
+                      },
+                      () => {
+                        InputState[1](0);
+                      }
+                    );
+                  }
+                );
+              }}
+              className="text-black text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] whitespace-nowrap w-auto hover:bg-indigo-500 hover:text-white rounded-full text-left mx-2"
+            >
               {DomainState[0].domain.owner.slice(0, 16)}
-            </h1>
+            </button>
             <div className="ml-auto">
               {context.state._account != "" && (
                 <Offers context={context} domain={DomainState[0].domain} />
@@ -219,7 +266,7 @@ export const Navbar = ({ context }) => {
               </h1>
             </div>
           </div>
-          {!context.state._Profile && (
+          {!context.state._Profile && !context.state._Object && (
             <>
               <button
                 onClick={() => {
@@ -272,7 +319,7 @@ export const Navbar = ({ context }) => {
               )}
             </>
           )}
-          {context.state._Profile && (
+          {context.state._Profile && !context.state._Object && (
             <>
               <div className="ml-auto relative flex flex-row">
                 <button
@@ -330,10 +377,23 @@ export const Navbar = ({ context }) => {
               )}
             </>
           )}
+          {!context.state._Profile && context.state._Object && (
+            <button
+              className="ml-auto border-2 border-purple-500 rounded-full px-[1.5vw] lXs:px-[1vw] mb-2"
+              onClick={() => {
+                context.setState({
+                  _Object: false,
+                  _View: "floor",
+                });
+              }}
+            >
+              <p className="text-purple-500 font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
+                Back
+              </p>
+            </button>
+          )}
         </div>
-        {context.state._View === "floor" && (
-          <Activity context={context} />
-        )}
+        {context.state._View === "floor" && <Activity context={context} />}
       </div>
     </>
   );

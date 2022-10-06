@@ -7,21 +7,31 @@ export const Activity = ({ context }) => {
         </div>
         <div className="w-full bg-white bg-opacity-10 border-indigo-500 border-2 mb-2 rounded-xl">
           <div className="overflow-auto no-scroll-bar h-[8vh] lXs:h-[15vh] w-full flex flex-col my-[1vw] items-center">
-            {context.state._LastSales && context.state._LastSales.map((e, i) => {
-              return (
-                <div
-                  key={i + "_lastSales"}
-                  className="w-full flex flex-row rounded-full px-[1vw] items-center justify-between"
-                >
-                  <h1 className="text-white text-[2vw] lXs:text-[1vw] px-[1.5vw] lXs:px-[1vw] truncate">
-                    {e.domainName}
-                  </h1>
-                  <h1 className="text-indigo-500 font-bold text-[2vw] lXs:text-[1vw] px-[1.5vw] lXs:px-[1vw]">
-                    {e.price / 10 ** 6}tz
-                  </h1>
-                </div>
-              );
-            })}
+            {context.state._LastSales &&
+              context.state._LastSales.map((e, i) => {
+                return (
+                  <div
+                    key={i + "_lastSales"}
+                    className="w-full flex flex-row rounded-full px-[1vw] items-center justify-between"
+                  >
+                    <button
+                      onClick={() => {
+                        context.setState({
+                          _Object: true,
+                          _View: "token",
+                          _Viewed: e.domainName,
+                        });
+                      }}
+                      className="text-white text-[2vw] lXs:text-[1vw] px-[1.5vw] lXs:px-[1vw] whitespace-nowrap truncate w-full hover:bg-indigo-500 hover:text-white rounded-full text-left"
+                    >
+                      {e.domainName}
+                    </button>
+                    <h1 className="text-indigo-500 font-bold text-[2vw] lXs:text-[1vw] px-[1.5vw] lXs:px-[1vw]">
+                      {e.price / 10 ** 6}tz
+                    </h1>
+                  </div>
+                );
+              })}
           </div>
         </div>
       </div>
@@ -31,26 +41,42 @@ export const Activity = ({ context }) => {
         </div>
         <div className="w-full bg-white bg-opacity-10 border-indigo-500 border-2 mb-2 rounded-xl">
           <div className="overflow-auto no-scroll-bar h-[8vh] lXs:h-[15vh] w-full flex flex-col my-[1vw] items-center">
-            {context.state._LastOffers && context.state._LastOffers.map((e, i) => {
-              return (
-                <div
-                  key={i + "_lastOffers"}
-                  className="w-full flex flex-row rounded-full px-[1vw] items-center justify-between"
-                >
-                  <h1 className="text-white text-[2vw] lXs:text-[1vw] px-[1.5vw] lXs:px-[1vw] truncate">
-                    {e.token && e.token.name}
+            {context.state._LastOffers &&
+              context.state._LastOffers.map((e, i) => {
+                return (
+                  <div
+                    key={i + "_lastOffers"}
+                    className="w-full flex flex-row rounded-full px-[1vw] items-center justify-between"
+                  >
                     {!e.token && (
-                      <span className="text-purple-500 uppercase">
-                        Collection
-                      </span>
+                      <h1 className="text-white text-[2vw] lXs:text-[1vw] px-[1.5vw] lXs:px-[1vw] truncate">
+                        {!e.token && (
+                          <span className="text-purple-500 uppercase">
+                            Collection
+                          </span>
+                        )}
+                      </h1>
                     )}
-                  </h1>
-                  <h1 className="text-indigo-500 font-bold text-[2vw] lXs:text-[1vw] px-[1.5vw] lXs:px-[1vw]">
-                    {e.price / 10 ** 6}tz
-                  </h1>
-                </div>
-              );
-            })}
+                    {e.token && (
+                      <button
+                        onClick={() => {
+                          context.setState({
+                            _Object: true,
+                            _View: "token",
+                            _Viewed: e.token.name,
+                          });
+                        }}
+                        className="text-white text-[2vw] lXs:text-[1vw] px-[1.5vw] lXs:px-[1vw] whitespace-nowrap truncate w-full hover:bg-indigo-500 hover:text-white rounded-full text-left"
+                      >
+                        {e.token.name}
+                      </button>
+                    )}
+                    <h1 className="text-indigo-500 font-bold text-[2vw] lXs:text-[1vw] px-[1.5vw] lXs:px-[1vw]">
+                      {e.price / 10 ** 6}tz
+                    </h1>
+                  </div>
+                );
+              })}
           </div>
         </div>
       </div>
@@ -62,18 +88,28 @@ export const Activity = ({ context }) => {
         </div>
         <div className="w-full bg-white bg-opacity-10 border-indigo-500 border-2 mb-2 rounded-xl">
           <div className="overflow-auto no-scroll-bar h-[8vh] lXs:h-[15vh] w-full flex flex-col my-[1vw] items-center">
-            {context.state._LastRegs && context.state._LastRegs.map((e, i) => {
-              return (
-                <div
-                  key={i + "_lastReg"}
-                  className="w-full flex flex-row rounded-full px-[1vw] items-center justify-between"
-                >
-                  <h1 className="text-white text-[2vw] lXs:text-[1vw] px-[1.5vw] lXs:px-[1vw] truncate">
-                    {e.domainName}
-                  </h1>
-                </div>
-              );
-            })}
+            {context.state._LastRegs &&
+              context.state._LastRegs.map((e, i) => {
+                return (
+                  <div
+                    key={i + "_lastReg"}
+                    className="w-full flex flex-row rounded-full px-[1vw] items-center justify-between"
+                  >
+                    <button
+                      onClick={() => {
+                        context.setState({
+                          _Object: true,
+                          _View: "token",
+                          _Viewed: e.domainName,
+                        });
+                      }}
+                      className="text-white text-[2vw] lXs:text-[1vw] px-[1.5vw] lXs:px-[1vw] whitespace-nowrap truncate w-full hover:bg-indigo-500 hover:text-white rounded-full text-left"
+                    >
+                      {e.domainName}
+                    </button>
+                  </div>
+                );
+              })}
           </div>
         </div>
       </div>

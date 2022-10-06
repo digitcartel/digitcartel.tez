@@ -73,9 +73,18 @@ const Map = ({ _FILTER, context }) => {
         {_FILTER.Items[0].offers.items.map((e, i) => {
           const Domain = () => {
             return (
-              <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] whitespace-nowrap truncate w-full">
+              <button
+                onClick={() => {
+                  context.setState({
+                    _Object: true,
+                    _View: "token",
+                    _Viewed: e.domain.name,
+                  });
+                }}
+                className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] whitespace-nowrap truncate w-full hover:bg-indigo-500 rounded-full text-left"
+              >
                 {e.domain.name}
-              </h1>
+              </button>
             );
           };
 
