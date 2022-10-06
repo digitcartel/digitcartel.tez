@@ -34,7 +34,7 @@ export const Airdrop = ({ context }) => {
 
   return (
     <>
-      <div className=" bg-white rounded-xl my-2 p-[1.5vw]">
+      <div className=" bg-white rounded-xl p-[1.5vw]">
         <div className="flex flex-row items-center">
           <p className="ml-2 text-indigo-500 font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
             CONTRACT
