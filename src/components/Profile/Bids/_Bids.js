@@ -356,8 +356,6 @@ export const Bids = ({ context }) => {
     }
   });
 
-  console.log(_FILTER);
-
   return (
     <>
       <Items _FILTER={_FILTER} context={context} />

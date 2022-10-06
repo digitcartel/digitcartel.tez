@@ -79,7 +79,6 @@ export const Navbar = ({ context }) => {
   };
 
   const InputResult = () => {
-    console.log(DomainState[0]);
     return (
       <div className="w-[95vw] lXs:w-[60vw] mx-auto">
         {InputState[0] === 1 && (
