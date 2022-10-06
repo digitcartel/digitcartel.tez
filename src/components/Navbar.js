@@ -339,8 +339,8 @@ export const Navbar = ({ context }) => {
                 </h1>
               </div>
               <div className="w-full bg-white bg-opacity-10 border-indigo-500 border-2 mb-2 rounded-xl">
-                <div className="w-full flex flex-col my-[1vw] items-center">
-                  {context.state._LastSales.slice(0, 5).map((e, i) => {
+                <div className="overflow-auto no-scroll-bar h-[8vh] lXs:h-[15vh] w-full flex flex-col my-[1vw] items-center">
+                  {context.state._LastSales.map((e, i) => {
                     return (
                       <div
                         key={i + "_lastSales"}
@@ -365,8 +365,8 @@ export const Navbar = ({ context }) => {
                 </h1>
               </div>
               <div className="w-full bg-white bg-opacity-10 border-indigo-500 border-2 mb-2 rounded-xl">
-                <div className="w-full flex flex-col my-[1vw] items-center">
-                  {context.state._LastOffers.slice(0, 5).map((e, i) => {
+                <div className="overflow-auto no-scroll-bar h-[8vh] lXs:h-[15vh] w-full flex flex-col my-[1vw] items-center">
+                  {context.state._LastOffers.map((e, i) => {
                     return (
                       <div
                         key={i + "_lastOffers"}
@@ -396,8 +396,8 @@ export const Navbar = ({ context }) => {
                 </h1>
               </div>
               <div className="w-full bg-white bg-opacity-10 border-indigo-500 border-2 mb-2 rounded-xl">
-                <div className="w-full flex flex-col my-[1vw] items-center">
-                  {context.state._LastRegs.slice(0, 5).map((e, i) => {
+                <div className="overflow-auto no-scroll-bar h-[8vh] lXs:h-[15vh] w-full flex flex-col my-[1vw] items-center">
+                  {context.state._LastRegs.map((e, i) => {
                     return (
                       <div
                         key={i + "_lastReg"}

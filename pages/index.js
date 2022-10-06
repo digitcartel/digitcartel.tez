@@ -141,7 +141,7 @@ class Index extends React.Component {
   componentDidMount() {
     this.checkConnection();
     this.initBase();
-    /////fetch999Holders(this);
+    ////fetch999Holders(this);
     ////fetch10kSupply(this);
   }
 
