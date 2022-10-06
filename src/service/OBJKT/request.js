@@ -65,6 +65,9 @@ export const fetchObjktOffersReceived = async (params) => {
           token {
             token_id
             name
+            holders {
+              holder_address
+            }
           }
           bigmap_key
         }

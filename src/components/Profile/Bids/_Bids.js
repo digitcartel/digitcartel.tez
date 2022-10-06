@@ -144,7 +144,7 @@ export const Bids = ({ context }) => {
           _FILTER.ItemsCollectionOffers[1]([
             e.data.offer.reduce((x, y) => {
               return +y.price > +x.price ? y : x;
-            })
+            }),
           ]);
         fetchOwned({
           owner: context.state._account,
@@ -162,12 +162,22 @@ export const Bids = ({ context }) => {
               owner: context.state._account,
               contract: context.state._Contract.NFT,
             }).then(async (e4) => {
+              let i = -1;
+              let result = [];
+              while (++i < e4.data.offer.length) {
+                if (
+                  e4.data.offer[i].token.holders[
+                    e4.data.offer[i].token.holders.length - 1
+                  ].holder_address === context.state._account
+                )
+                  result.push(e4.data.offer[i]);
+              }
               context.setState(
                 {
-                  _OffersReceived: e4.data.offer.length,
+                  _OffersReceived: result.length,
                 },
                 () => {
-                  _FILTER.ItemsBids[1](e4.data);
+                  _FILTER.ItemsBids[1]({ offer: result });
                   _FILTER.Loading[1](false);
                   _FILTER.UpdateReq[1](false);
                   _FILTER.Initialized[1](true);
@@ -345,6 +355,8 @@ export const Bids = ({ context }) => {
       _FILTER.CollectionBidsSelect(_FILTER.CollectionBidsSelectReq[0][1]);
     }
   });
+
+  console.log(_FILTER);
 
   return (
     <>
