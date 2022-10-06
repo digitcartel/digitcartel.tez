@@ -3,13 +3,14 @@ import {
   requestBeaconDisconnection,
 } from "../service/Connector/request";
 import { useRef, useState } from "react";
-import { fetchDomain } from "../service/TezosDomains/request";
+import { fetchAddress, fetchDomain } from "../service/TezosDomains/request";
 import { Offers } from "./Offers/_Offers";
 import { Activity } from "./Activity/_Activity";
 
 export const Navbar = ({ context }) => {
   const InputRef = useRef();
   const InputState = useState(0);
+  const AddressState = useState({});
   const DomainState = useState({});
 
   const Title = () => {
@@ -78,6 +79,7 @@ export const Navbar = ({ context }) => {
   };
 
   const InputResult = () => {
+    console.log(DomainState[0]);
     return (
       <div className="w-[95vw] lXs:w-[60vw] mx-auto">
         {InputState[0] === 1 && (
@@ -95,7 +97,7 @@ export const Navbar = ({ context }) => {
                       {
                         _Object: true,
                         _View: "token",
-                        _Viewed: DomainState[0].domain.name,
+                        _Viewed: AddressState[0].domain.name,
                       },
                       () => {
                         InputState[1](0);
@@ -106,7 +108,7 @@ export const Navbar = ({ context }) => {
               }}
               className="text-black text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] whitespace-nowrap truncate w-full hover:bg-indigo-500 hover:text-white rounded-full text-left"
             >
-              {DomainState[0].domain.name}
+              {AddressState[0].domain.name}
             </button>
             <button
               onClick={() => {
@@ -121,7 +123,7 @@ export const Navbar = ({ context }) => {
                       {
                         _Object: true,
                         _View: "wallet",
-                        _Viewed: DomainState[0].domain.owner,
+                        _Viewed: AddressState[0].domain.owner,
                       },
                       () => {
                         InputState[1](0);
@@ -130,13 +132,16 @@ export const Navbar = ({ context }) => {
                   }
                 );
               }}
-              className="text-black text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] whitespace-nowrap w-auto hover:bg-indigo-500 hover:text-white rounded-full text-left mx-2"
+              className="text-purple-500 font-bold text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] whitespace-nowrap w-auto hover:bg-purple-500 hover:text-white rounded-full text-left mx-2"
             >
-              {DomainState[0].domain.owner.slice(0, 16)}
+              {DomainState[0].reverseRecord &&
+              DomainState[0].reverseRecord.domain.name
+                ? DomainState[0].reverseRecord.domain.name
+                : AddressState[0].domain.owner.slice(0, 16)}
             </button>
             <div className="ml-auto">
               {context.state._account != "" && (
-                <Offers context={context} domain={DomainState[0].domain} />
+                <Offers context={context} domain={AddressState[0].domain} />
               )}
               {context.state._account === "" && (
                 <button
@@ -162,7 +167,7 @@ export const Navbar = ({ context }) => {
               This domain isn't registered yet
             </h1>
             <a
-              href={"https://app.tezos.domains/domain/" + DomainState[0]}
+              href={"https://app.tezos.domains/domain/" + AddressState[0]}
               target="_blank"
               className="ml-auto border-indigo-500 border-2 flex flex-row items-center justify-center rounded-xl px-[1.5vw] lXs:px-[1vw]"
             >
@@ -202,11 +207,16 @@ export const Navbar = ({ context }) => {
           }).then((e3) => {
             if (e3.data.domain === null) {
               InputState[1](2);
-              DomainState[1](tmp + ".tez");
+              AddressState[1](tmp + ".tez");
             }
             if (e3.data.domain !== null) {
-              InputState[1](1);
-              DomainState[1](e3.data);
+              fetchAddress({
+                lookFor: e3.data.domain.owner,
+              }).then((e4) => {
+                InputState[1](1);
+                AddressState[1](e3.data);
+                DomainState[1](e4.data);
+              });
             }
           });
         }
@@ -215,7 +225,7 @@ export const Navbar = ({ context }) => {
 
     if (e.target.value === "" || e.target.value.length < 3) {
       InputState[1](0);
-      DomainState[1]({});
+      AddressState[1]({});
     }
 
     if (e.target.value.length >= 3 && InputState[0] === 0) {
