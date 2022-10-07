@@ -159,9 +159,19 @@ const Map = ({ _FILTER, context }) => {
         {_FILTER.ItemsBids[0].offer.map((e, i) => {
           const Domain = () => {
             return (
-              <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw]">
+              <button
+                onClick={() => {
+                  context.setState({
+                    _Object: true,
+                    _Profile: false,
+                    _View: "token",
+                    _Viewed: e.token.name,
+                  });
+                }}
+                className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] whitespace-nowrap truncate w-full hover:bg-indigo-500 rounded-full text-left"
+              >
                 {e.token.name}
-              </h1>
+              </button>
             );
           };
 
