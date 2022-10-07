@@ -307,7 +307,7 @@ const Map = ({ _FILTER, context }) => {
                   }}
                   className={
                     "ml-2 flex flex-row items-center justify-center rounded-full px-[1.5vw] lXs:px-[1vw] border-indigo-500 border-2 " +
-                    (_FILTER.CollectionBidsSelector[0].includes(e.token.token_id)
+                    (_FILTER.CollectionBidsSelector[0].includes(e.tokenId)
                       ? "bg-indigo-500"
                       : "")
                   }
@@ -315,7 +315,7 @@ const Map = ({ _FILTER, context }) => {
                   <p
                     className={
                       "font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase " +
-                      (_FILTER.CollectionBidsSelector[0].includes(e.token.token_id)
+                      (_FILTER.CollectionBidsSelector[0].includes(e.tokenId)
                         ? "text-white"
                         : "text-indigo-500")
                     }
@@ -372,7 +372,9 @@ const Map = ({ _FILTER, context }) => {
                             }}
                             className={
                               "text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] my-1 " +
-                              (_FILTER.DeBidsSelector[0].includes(e.token.token_id)
+                              (_FILTER.DeBidsSelector[0].includes(
+                                e.token.token_id
+                              )
                                 ? "bg-indigo-500 rounded-full mr-1"
                                 : "")
                             }
@@ -432,7 +434,9 @@ const Map = ({ _FILTER, context }) => {
                             }}
                             className={
                               "text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] my-1 " +
-                              (_FILTER.BidsSelector[0].includes(e.token.token_id)
+                              (_FILTER.BidsSelector[0].includes(
+                                e.token.token_id
+                              )
                                 ? "bg-indigo-500 rounded-full mr-1"
                                 : "")
                             }
@@ -491,7 +495,7 @@ const Map = ({ _FILTER, context }) => {
                             className={
                               "text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] my-1 " +
                               (_FILTER.CollectionBidsSelector[0].includes(
-                                e.token.token_id
+                                e.tokenId
                               )
                                 ? "bg-indigo-500 rounded-full mr-1"
                                 : "")
