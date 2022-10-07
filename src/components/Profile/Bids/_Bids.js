@@ -37,15 +37,18 @@ export const Bids = ({ context }) => {
       let currentBidsSelector = _FILTER.BidsSelector[0];
       if (
         !currentBidsSelected.includes(e) &&
-        !currentBidsSelector.includes(e.tokenId)
+        !currentBidsSelector.includes(e.token.token_id)
       ) {
         currentBidsSelected.push(e);
-        currentBidsSelector.push(e.tokenId);
+        currentBidsSelector.push(e.token.token_id);
         _FILTER.BidsSelector[1](currentBidsSelector);
         _FILTER.BidsSelected[1](currentBidsSelected);
       } else {
         currentBidsSelected.splice(currentBidsSelected.indexOf(e), 1);
-        currentBidsSelector.splice(currentBidsSelector.indexOf(e.tokenId), 1);
+        currentBidsSelector.splice(
+          currentBidsSelector.indexOf(e.token.token_id),
+          1
+        );
         _FILTER.BidsSelector[1](currentBidsSelector);
         _FILTER.BidsSelected[1](currentBidsSelected);
       }
@@ -72,16 +75,16 @@ export const Bids = ({ context }) => {
       let currentDeBidsSelector = _FILTER.DeBidsSelector[0];
       if (
         !currentDeBidsSelected.includes(e) &&
-        !currentDeBidsSelector.includes(e.tokenId)
+        !currentDeBidsSelector.includes(e.token.token_id)
       ) {
         currentDeBidsSelected.push(e);
-        currentDeBidsSelector.push(e.tokenId);
+        currentDeBidsSelector.push(e.token.token_id);
         _FILTER.DeBidsSelector[1](currentDeBidsSelector);
         _FILTER.DeBidsSelected[1](currentDeBidsSelected);
       } else {
         currentDeBidsSelected.splice(currentDeBidsSelected.indexOf(e), 1);
         currentDeBidsSelector.splice(
-          currentDeBidsSelector.indexOf(e.tokenId),
+          currentDeBidsSelector.indexOf(e.token.token_id),
           1
         );
         _FILTER.DeBidsSelector[1](currentDeBidsSelector);
@@ -110,11 +113,11 @@ export const Bids = ({ context }) => {
       let currentCollectionBidsSelector = _FILTER.CollectionBidsSelector[0];
       if (
         !currentCollectionBidsSelected.includes(e) &&
-        !currentCollectionBidsSelector.includes(e.tokenId)
+        !currentCollectionBidsSelector.includes(e.token.token_id)
       ) {
         if (_FILTER.CollectionBidsSelected[0].length === 0) {
           currentCollectionBidsSelected.push(e);
-          currentCollectionBidsSelector.push(e.tokenId);
+          currentCollectionBidsSelector.push(e.token.token_id);
           _FILTER.CollectionBidsSelector[1](currentCollectionBidsSelector);
           _FILTER.CollectionBidsSelected[1](currentCollectionBidsSelected);
         }
@@ -124,7 +127,7 @@ export const Bids = ({ context }) => {
           1
         );
         currentCollectionBidsSelector.splice(
-          currentCollectionBidsSelector.indexOf(e.tokenId),
+          currentCollectionBidsSelector.indexOf(e.token.token_id),
           1
         );
         _FILTER.CollectionBidsSelector[1](currentCollectionBidsSelector);
@@ -291,7 +294,7 @@ export const Bids = ({ context }) => {
                     owner: context.state._account,
                     operator: context.state._Contract.OBJKT,
                     token_id: parseInt(
-                      _FILTER.CollectionBidsSelected[0][i].tokenId
+                      _FILTER.CollectionBidsSelected[0][i].token.token_id
                     ),
                   },
                 },
@@ -303,7 +306,7 @@ export const Bids = ({ context }) => {
             ...contractA.methods
               .fulfill_offer(
                 _FILTER.ItemsCollectionOffers[0][0].bigmap_key,
-                _FILTER.CollectionBidsSelected[0][i].tokenId
+                _FILTER.CollectionBidsSelected[0][i].token.token_id
               )
               .toTransferParams(),
           });
