@@ -111,15 +111,15 @@ class Index extends React.Component {
   async componentDidMount() {
     this.checkConnection();
     this.init();
-    fetch999Holders(this);
+    ////fetch999Holders(this);
     ////fetch10kSupply(this);
   }
 
   componentDidUpdate(pP, pS) {
     if (!pS._Object && this.state._Object) {
       this.setState({
-        _Profile: false
-      })
+        _Profile: false,
+      });
     }
   }
 
