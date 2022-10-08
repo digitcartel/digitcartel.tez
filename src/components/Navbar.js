@@ -46,6 +46,7 @@ export const Navbar = ({ context }) => {
                   () => {
                     context.setState({
                       _Profile: !context.state._Profile,
+                      _Object: false,
                     });
                   }
                 );
