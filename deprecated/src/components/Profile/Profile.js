@@ -1,6 +1,11 @@
 import { Transfer } from "../Pages/Transfer";
 import { Reverse } from "../Pages/Reverse";
 import { Listing } from "../Pages/Listing";
+import {
+  fetchListing,
+  fetchOperator,
+  fetchOwned,
+} from "../../utils/tezosApiRequest";
 
 export const Profile = ({ context }) => {
   return (
@@ -24,7 +29,8 @@ export const Profile = ({ context }) => {
                   },
                   () => {
                     if (context.state._listingView) {
-                      context.fetchListing({
+                      fetchListing({
+                        context: context,
                         less: false,
                         more: false,
                         hash: 0,
@@ -58,7 +64,8 @@ export const Profile = ({ context }) => {
                   },
                   () => {
                     if (context.state._transferView) {
-                      context.fetchOwned({
+                      fetchOwned({
+                        context: context,
                         less: false,
                         more: false,
                         hash: 0,
@@ -92,7 +99,8 @@ export const Profile = ({ context }) => {
                   },
                   () => {
                     if (context.state._operatorView) {
-                      context.fetchOperator({
+                      fetchOperator({
+                        context: context,
                         less: false,
                         more: false,
                         hash: 0,

@@ -1,31 +1,24 @@
-import { ReverseTx } from "./_Tx";
+import { useState } from "react";
+import { fetchListing } from "../../utils/tezosApiRequest";
+import { ListTx } from "./_Tx";
 
 const ItemsMap = ({ context }) => {
+  let Price = useState(0);
+
   const Head = () => {
     return (
       <div className="mt-2 w-full flex flex-row p-[2vw] lXs:p-[1vw] items-center bg-indigo-500 border-2 rounded-xl border-white">
         <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw]">
-          DOMAINS
+          DIGITS
         </h1>
-        <div className="ml-auto border-white border-2 flex flex-row items-center justify-center rounded-xl px-[1.5vw] lXs:px-[1vw]">
+        <div className="ml-auto border-white border-2 flex flex-row items-center justify-center rounded-full px-[1.5vw] lXs:px-[1vw]">
           <p className="text-white font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
-            reverse
+            list
           </p>
         </div>
       </div>
     );
   };
-
-  if (context.state._Operator.domains.items.length === 0) {
-    return (
-      <>
-        <Head />
-        <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw] my-2">
-          All your domains point to your address
-        </h1>
-      </>
-    );
-  }
 
   return (
     <>
@@ -34,46 +27,33 @@ const ItemsMap = ({ context }) => {
         <div className=" bg-white rounded-xl my-2 p-[1.5vw] mt-2">
           <div className="flex flex-row items-center">
             <button
-              className="border-indigo-500 border-2 rounded-xl px-[1.5vw] lXs:px-[1vw] "
+              className="border-indigo-500 border-2 rounded-full px-[1.5vw] lXs:px-[1vw] "
               onClick={() => {
-                ReverseTx(context);
+                ListTx(context, Price[0]);
               }}
             >
               <p className="text-indigo-500 font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
-                transfer
+                list
               </p>
             </button>
             <p className="ml-2 text-indigo-500 font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
-              ADDRESS
+              XTZ
             </p>
             <input
-              className=" text-black bg-transparent text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[2vw]"
-              placeholder="receiver"
+              className=" text-black bg-transparent text-[2.5vw] lXs:text-[1.5vw] px-2"
+              placeholder="price"
+              type="number"
               onChange={(e) => {
-                if (/tz[1-3][1-9A-HJ-NP-Za-km-z]{33}/.test(e.target.value)) {
-                  context.setState({
-                    _batchTxInput: e.target.value,
-                  });
-                } else {
-                  if (/.{3,}(.tez)/.test(e.target.value)) {
-                    context.fetchAddress(e.target.value);
-                  }
-                }
-
-                if (e.target.value == "") {
-                  context.setState({
-                    _batchTxInput: "",
-                  });
-                }
+                Price[1](e.target.value);
               }}
             />
           </div>
           <div className="flex flex-row flex-wrap items-center justify-start">
-            {context.state._SelectOperator.map((e, i) => {
+            {context.state._SelectList.map((e, i) => {
               return (
                 <h1
                   onClick={() => {
-                    let currentSelected = context.state._SelectOperator;
+                    let currentSelected = context.state._SelectList;
                     let currentSelector = context.state._Selector;
                     currentSelected.splice(currentSelected.indexOf(e), 1);
                     currentSelector.splice(
@@ -82,7 +62,7 @@ const ItemsMap = ({ context }) => {
                     );
                     context.setState({
                       _Selector: currentSelector,
-                      _SelectOperator: currentSelected,
+                      _SelectList: currentSelected,
                       _Selected: currentSelected.length > 0 ? true : false,
                     });
                   }}
@@ -116,17 +96,17 @@ const ItemsMap = ({ context }) => {
           </p>
         </div>
       )}
-      {context.state._Operator.domains.items.map((e, i) => {
+      {context.state._Listing.domains.items.map((e, i) => {
         return (
           <div key={i} className="w-full">
-            <div className="w-full flex flex-row rounded-xl py-[2vw] px-[1vw] items-center">
+            <div className="w-full flex flex-row rounded-full py-[2vw] px-[1vw] items-center">
               <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw]">
                 {e.name}
               </h1>
               <button
                 onClick={() => {
                   if (context.state._account != "") {
-                    let currentSelected = context.state._SelectOperator;
+                    let currentSelected = context.state._SelectList;
                     let currentSelector = context.state._Selector;
                     if (
                       !currentSelected.includes(e) &&
@@ -136,7 +116,7 @@ const ItemsMap = ({ context }) => {
                       currentSelector.push(e.tokenId);
                       context.setState({
                         _Selector: currentSelector,
-                        _SelectOperator: currentSelected,
+                        _SelectList: currentSelected,
                         _Selected: true,
                       });
                     } else {
@@ -147,7 +127,7 @@ const ItemsMap = ({ context }) => {
                       );
                       context.setState({
                         _Selector: currentSelector,
-                        _SelectOperator: currentSelected,
+                        _SelectList: currentSelected,
                         _Selected: currentSelected.length > 0 ? true : false,
                       });
                     }
@@ -168,7 +148,7 @@ const ItemsMap = ({ context }) => {
                   }
                 }}
                 className={
-                  "ml-auto flex flex-row items-center justify-center rounded-xl px-[1.5vw] lXs:px-[1vw] border-indigo-500 border-2 " +
+                  "ml-auto flex flex-row items-center justify-center rounded-full px-[1.5vw] lXs:px-[1vw] border-indigo-500 border-2 " +
                   (context.state._Selected
                     ? context.state._Selector.includes(e.tokenId)
                       ? "bg-indigo-500"
@@ -186,7 +166,7 @@ const ItemsMap = ({ context }) => {
                       : "text-indigo-500")
                   }
                 >
-                  transfer
+                  list
                 </p>
               </button>
             </div>
@@ -194,15 +174,16 @@ const ItemsMap = ({ context }) => {
         );
       })}
       <div className="w-full flex flex-row">
-        {context.state._Operator &&
-          context.state._Operator.domains.pageInfo.hasPreviousPage && (
+        {context.state._Listing &&
+          context.state._Listing.domains.pageInfo.hasPreviousPage && (
             <button
-              className="border-indigo-500 border-2 rounded-xl px-[1.5vw] lXs:px-[1vw] mx-auto"
+              className="border-indigo-500 border-2 rounded-full px-[1.5vw] lXs:px-[1vw] mx-auto"
               onClick={() => {
-                context.fetchOperator({
+                fetchListing({
+                  context: context,
                   less: true,
                   more: false,
-                  hash: context.state._Operator.domains.pageInfo.startCursor,
+                  hash: context.state._Listing.domains.pageInfo.startCursor,
                 });
               }}
             >
@@ -211,15 +192,16 @@ const ItemsMap = ({ context }) => {
               </p>
             </button>
           )}
-        {context.state._Operator &&
-          context.state._Operator.domains.pageInfo.hasNextPage && (
+        {context.state._Listing &&
+          context.state._Listing.domains.pageInfo.hasNextPage && (
             <button
-              className="border-indigo-500 border-2 rounded-xl px-[1.5vw] lXs:px-[1vw] mx-auto"
+              className="border-indigo-500 border-2 rounded-full px-[1.5vw] lXs:px-[1vw] mx-auto"
               onClick={() => {
-                context.fetchOperator({
+                fetchListing({
+                  context: context,
                   less: false,
                   more: true,
-                  hash: context.state._Operator.domains.pageInfo.endCursor,
+                  hash: context.state._Listing.domains.pageInfo.endCursor,
                 });
               }}
             >
@@ -233,11 +215,11 @@ const ItemsMap = ({ context }) => {
   );
 };
 
-export const Reverse = ({ context }) => {
+export const Listing = ({ context }) => {
   return (
     <>
-      {context.state._Profile && context.state._operatorView && (
-        <>{context.state._Operator && <ItemsMap context={context} />}</>
+      {context.state._Profile && context.state._listingView && (
+        <>{context.state._Listing && <ItemsMap context={context} />}</>
       )}
     </>
   );

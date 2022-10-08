@@ -1,3 +1,4 @@
+import { fetchFloor, fetchOffer } from "../../utils/tezosApiRequest";
 import { Categories } from "../Categories";
 import { BuyTX } from "./_Tx";
 
@@ -6,6 +7,7 @@ const Header = ({ context }) => {
     <>
       {!context.state._Profile && (
         <>
+          <Categories context={context} />
           <div className="w-full">
             <div className="w-full bg-white flex flex-row rounded-xl p-[2vw] lXs:p-[1vw] items-center">
               <h1 className="text-black text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw]">
@@ -14,21 +16,28 @@ const Header = ({ context }) => {
                   {context.state._floor.toFixed()}tz
                 </span>
               </h1>
-              <button
-                className="ml-auto border-indigo-500 text-black border-2 flex flex-row items-center justify-center rounded-xl px-[1.5vw] lXs:px-[1vw]"
-                onClick={() => {
-                  context.setState({
-                    _FilterOpen: !context.state._FilterOpen,
-                  });
-                }}
+              <a
+                href="https://twitter.com/tezos999club"
+                target="_blank"
+                className="ml-auto flex flex-row items-center justify-center rounded-full px-[1.5vw] lXs:px-[1vw]"
               >
-                <p className="text-indigo-500 font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
-                  {context.state._FilterOpen ? "close" : "club"}
-                </p>
-              </button>
+                <img
+                  src="./icons/twitter.svg"
+                  className="w-4 h-4 lXs:w-8 lXs:h-8"
+                />
+              </a>
+              <a
+                href="https://discord.gg/nA5k4bpuXN"
+                target="_blank"
+                className="flex flex-row items-center justify-center rounded-full px-[1.5vw] lXs:px-[1vw]"
+              >
+                <img
+                  src="./icons/discord.svg"
+                  className="w-4 h-4 lXs:w-8 lXs:h-8"
+                />
+              </a>
             </div>
           </div>
-          {context.state._FilterOpen && <Categories context={context} />}
         </>
       )}
     </>
@@ -42,7 +51,7 @@ const ItemsMap = ({ context }) => {
         <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw]">
           DIGITS
         </h1>
-        <div className="ml-auto border-white border-2 flex flex-row items-center justify-center rounded-xl px-[1.5vw] lXs:px-[1vw]">
+        <div className="ml-auto border-white border-2 flex flex-row items-center justify-center rounded-full px-[1.5vw] lXs:px-[1vw]">
           <p className="text-white font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
             buy
           </p>
@@ -60,7 +69,7 @@ const ItemsMap = ({ context }) => {
           </h1>
           <div className=" bg-white rounded-xl my-2 p-[1.5vw]">
             <button
-              className="border-indigo-500 border-2 rounded-xl px-[1.5vw] lXs:px-[1vw] "
+              className="border-indigo-500 border-2 rounded-full px-[1.5vw] lXs:px-[1vw] "
               onClick={() => {
                 BuyTX(context);
               }}
@@ -151,7 +160,7 @@ const ItemsMap = ({ context }) => {
 
         return (
           <div key={i} className="w-full">
-            <div className="w-full flex flex-row rounded-xl py-[2vw] px-[1vw] items-center">
+            <div className="w-full flex flex-row rounded-full py-[2vw] px-[1vw] items-center">
               <h1 className="text-white text-[2.5vw] lXs:text-[1.5vw] px-[1.5vw] lXs:px-[1vw]">
                 {e.domain.name}
               </h1>
@@ -201,7 +210,7 @@ const ItemsMap = ({ context }) => {
                   }
                 }}
                 className={
-                  "flex flex-row items-center justify-center rounded-xl px-[1.5vw] lXs:px-[1vw] border-indigo-500 border-2 " +
+                  "flex flex-row items-center justify-center rounded-full px-[1.5vw] lXs:px-[1vw] border-indigo-500 border-2 " +
                   (context.state._Selected
                     ? context.state._Selector.includes(e.tokenId)
                       ? "bg-indigo-500"
@@ -230,14 +239,15 @@ const ItemsMap = ({ context }) => {
         {context.state._Offer &&
           context.state._Offer.offers.pageInfo.hasPreviousPage && (
             <button
-              className="border-indigo-500 border-2 rounded-xl px-[1.5vw] lXs:px-[1vw] mx-auto"
+              className="border-indigo-500 border-2 rounded-full px-[1.5vw] lXs:px-[1vw] mx-auto"
               onClick={() => {
-                context.fetchOffer({
+                fetchOffer({
+                  context: context,
                   less: true,
                   more: false,
                   hash: context.state._Offer.offers.pageInfo.startCursor,
                 });
-                context.fetchFloor();
+                fetchFloor(context);
               }}
             >
               <p className="text-indigo-500 font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">
@@ -248,14 +258,15 @@ const ItemsMap = ({ context }) => {
         {context.state._Offer &&
           context.state._Offer.offers.pageInfo.hasNextPage && (
             <button
-              className="border-indigo-500 border-2 rounded-xl px-[1.5vw] lXs:px-[1vw] mx-auto"
+              className="border-indigo-500 border-2 rounded-full px-[1.5vw] lXs:px-[1vw] mx-auto"
               onClick={() => {
-                context.fetchOffer({
+                fetchOffer({
+                  context: context,
                   less: false,
                   more: true,
                   hash: context.state._Offer.offers.pageInfo.endCursor,
                 });
-                context.fetchFloor();
+                fetchFloor(context);
               }}
             >
               <p className="text-indigo-500 font-bold text-[2.5vw] lXs:text-[1.5vw] uppercase">

@@ -1,51 +1,20 @@
 import App from "next/app";
 import "../styles/globals.css";
-
-import { TezosToolkit } from "@taquito/taquito";
-import { BeaconWallet } from "@taquito/beacon-wallet";
-
-const Tezos = new TezosToolkit("https://mainnet.api.tez.ie");
-const Client = new BeaconWallet({
-  name: "digitcartel",
-  preferredNetwork: "mainnet",
-});
+import { Client, Tezos } from "../src/service/Connector/client";
+import { fetchAddress } from "../src/service/TezosDomains/request";
 
 class Core extends App {
   constructor(props) {
     super(props);
 
     this.state = {
-      _Tezos: Tezos,
-      _Wallet: Client,
+      _account: "",
       _connected: 2,
     };
   }
 
-  connect = async () => {
-    try {
-      await this.state._Wallet.client.requestPermissions();
-      this.setState({
-        _connected: 1,
-      });
-    } catch (error) {
-      console.log(error);
-      this.setState(
-        {
-          _connected: 0,
-        },
-        () => {
-          setTimeout(() => {
-            this.setState({
-              _connected: 2,
-            });
-          }, 10000);
-        }
-      );
-    }
-  };
-
   componentDidMount() {
-    this.state._Tezos.setWalletProvider(this.state._Wallet);
+    Tezos.setWalletProvider(Client);
   }
 
   render() {
