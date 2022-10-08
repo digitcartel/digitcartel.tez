@@ -115,6 +115,14 @@ class Index extends React.Component {
     ////fetch10kSupply(this);
   }
 
+  componentDidUpdate(pP, pS) {
+    if (!pS._Object && this.state._Object) {
+      this.setState({
+        _Profile: false
+      })
+    }
+  }
+
   render() {
     return (
       <>
