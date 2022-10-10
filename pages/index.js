@@ -100,12 +100,6 @@ class Index extends React.Component {
       {
         _Contract: this.props.props.contract,
         _DigitCartel: "tz1X4g93kKkH1hkRAnenzUkJe44U61AQoQn6",
-        _Collection: this.props.props.base._Collection,
-        _LastOffers: this.props.props.base._LastOffers,
-        _LastSales: this.props.props.base._LastSales,
-        _LastRegs: this.props.props.base._LastRegs,
-        _TezosPrice: this.props.props.base._TezosPrice,
-        _EthereumPrice: this.props.props.base._EthereumPrice,
       },
       async () => {
         const initBase = async () => {
@@ -207,44 +201,10 @@ export const getStaticProps = async (context) => {
     OBJKT: "KT1WvzYHCNBvDSdwafTHv7nJ1dWmZ8GCYuuC",
   };
 
-  const initBase = async () => {
-    return {
-      _Collection: (
-        await fetchObjktCollection({
-          contract: _Contract.NFT,
-        })
-      ).data.fa[0],
-      _LastRegs: (await fetchTezDomLastReg({ contract: _Contract.NFT })).data
-        .events.items,
-      _LastSales: (
-        await fetchTezDomLastSales({
-          contract: _Contract.NFT,
-        })
-      ).data.events.items,
-      _LastOffers: (
-        await fetchObjktLastOffers({
-          contract: _Contract.NFT,
-        })
-      ).data.offer,
-      _TezosPrice: (
-        await (
-          await fetch("https://api.coingecko.com/api/v3/coins/tezos")
-        ).json()
-      ).market_data.current_price.usd,
-      _EthereumPrice: (
-        await (
-          await fetch("https://api.coingecko.com/api/v3/coins/tezos")
-        ).json()
-      ).market_data.current_price.eth,
-    };
-  };
-
   return {
     props: {
       contract: _Contract,
-      base: await initBase(),
     },
-    revalidate: 10,
   };
 };
 
