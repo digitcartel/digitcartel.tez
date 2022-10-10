@@ -198,6 +198,7 @@ export const getStaticProps = async (context) => {
       contract: _Contract,
       base: await initBase(),
     },
+    revalidate: 10
   };
 };
 
