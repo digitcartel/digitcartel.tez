@@ -154,7 +154,7 @@ class Index extends React.Component {
   }
 }
 
-export const getServerSideProps = async (context) => {
+export const getStaticProps = async (context) => {
   const _Contract = {
     NFT: "KT1GBZmSxmnKJXGMdMLbugPfLyUPmuLSMwKS",
     Market: "KT1Evxe1udtPDGWrkiRsEN3vMDdB6gNpkMPM",
