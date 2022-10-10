@@ -62,7 +62,7 @@ export const Navbar = ({ context }) => {
                 {!context.state._Profile &&
                   (context.state._domain
                     ? context.state._domain
-                    : context.state._account.slice(0, 6))}
+                    : context.state._account && context.state._account.slice(0, 6))}
                 {context.state._Profile && "Close"}
               </p>
             )}
